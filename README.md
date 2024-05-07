@@ -9,6 +9,11 @@ Trabalho em grupo de um desenvolvimento Front-End, criação de um site da respe
 ## 🚀 Execução:
 Clicar em `Go live` - Extensão Live Server de seu VS Code
 
+## 🎯 Público-alvo:
+-
+
+## 🏹 Tecnologias e ferramentas:
+-
 
 ## 👷🏽 Desenvolvedores:
 - [Miguel Fermo](https://github.com/miguelfermo)
