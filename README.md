@@ -12,10 +12,14 @@ Clicar em `Go live` - Extensão Live Server de seu VS Code
 ## 🎯 Público-alvo:
 -
 
-## 🏹 Tecnologias e ferramentas:
+## 📊 Tecnologias e ferramentas:
+-
+
+## 🏹 Diferenciais:
 -
 
 ## 👷🏽 Desenvolvedores:
+
 - [Miguel Fermo](https://github.com/miguelfermo)
 - [Eduardo Ribarski](https://github.com/ribarski)
 - [Taylor Teixeira](https://github.com/taylorteixeira)
