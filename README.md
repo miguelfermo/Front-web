@@ -13,7 +13,10 @@ Clicar em `Go live` - Extensão Live Server de seu VS Code
 -
 
 ## 📊 Tecnologias e ferramentas:
--
+- HTML
+- CSS
+- JavaScript
+- 
 
 ## 🏹 Diferenciais:
 -
