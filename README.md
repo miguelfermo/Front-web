@@ -39,7 +39,7 @@ O público-alvo da plataforma são pessoas que estão em busca de um local segur
 
 -TELA LOGIN: Ao acessar um campo do site, o usuário será levado para uma página na qual ele poderá efetuar o login de uma conta já existente ou criar uma nova conta.
 
--VAQUINHA (CRUD): Área destinada para o usuário criar a vaquinha, fazer alterações, excluir.
+-EDIÇÃO ARRECADAÇÃO (CRUD): Área destinada para o usuário criar a arrecadação, fazer alterações, excluir.
 
 -TELA DO PERFIL (CRUD): ao acessar o perfil o usuário poderá visualizar suas arrecadações criadas, excluir arrecadações, fazer alterações nas arrecadações já existentes.
 
