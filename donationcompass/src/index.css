@@ -10,6 +10,16 @@
     --var04: #58290e;
 }
 
+@font-face {
+    font-family: 'font1';
+    src: url(Midia/Fontes/Simple-Farmhouse.ttf);
+}
+
+@font-face {
+    font-family: 'font2';
+    src: url(Midia/Fontes/SANTELLO.ttf);
+}
+
 ::-webkit-scrollbar {
     width: 7px;
 }
