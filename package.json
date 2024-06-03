@@ -1,0 +1,11 @@
+{
+  "name": "cls",
+  "version": "1.0.0",
+  "description": "O Donation Compass tem como objetivo ser uma plataforma na qual os usuários podem realizar um cadastro e a partir disso, contribuir com movimentos de arrecadações de outros usuários, ou iniciar uma nova arrecadação para um determinado propósito.",
+  "main": "cls",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
