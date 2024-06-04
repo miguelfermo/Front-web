@@ -1,4 +1,4 @@
-# <img src="https://github.com/miguelfermo/Front-web/blob/main/donationcompass/src/Midia/Logo/logo.png" width="30" height="30"> Donation Compass!
+# <img src="https://github.com/miguelfermo/Front-web/blob/main/public/logo.png" width="30" height="30"> Donation Compass!
 O Donation Compass tem como objetivo ser uma plataforma na qual os usuários podem realizar um cadastro e a partir disso, contribuir com movimentos de arrecadações de outros usuários, ou iniciar uma nova arrecadação para um determinado propósito.
 
 ## 👾 Objetivo: 
