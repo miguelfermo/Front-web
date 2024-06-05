@@ -1,13 +1,7 @@
-import HeaderDN from "./Components/IsisComponents/Header"
-import FooterDN from "./Components/IsisComponents/Footer"
+import {RouterProvider } from "react-router-dom"
+import routes from "./router/routes"
 
-const App = () => {
-  return (
-    <div className="w-[85%] m-auto bg-white">
-      <HeaderDN />
-      <FooterDN />
-    </div>
-  )
+
+export default function App() {
+  return <RouterProvider router={routes} />
 }
-
-export default App

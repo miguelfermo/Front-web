@@ -13,12 +13,12 @@
 
 @font-face {
     font-family: 'font1';
-    src: url(../public/Fontes/Simple-Farmhouse.ttf);
+    src: url(../Fontes/Simple-Farmhouse.ttf);
 }
 
 @font-face {
     font-family: 'font2';
-    src: url(../public/Fontes/SANTELLO.ttf);
+    src: url(../Fontes/SANTELLO.ttf);
 }
 
 ::-webkit-scrollbar {

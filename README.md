@@ -1,4 +1,4 @@
-# <img src="https://github.com/miguelfermo/Front-web/blob/main/donationcompass/src/Midia/Logo/logo.png" width="30" height="30"> Donation Compass!
+# <img src="https://github.com/miguelfermo/Front-web/blob/main/public/logo.png" width="30" height="30"> Donation Compass!
 O Donation Compass tem como objetivo ser uma plataforma na qual os usuários podem realizar um cadastro e a partir disso, contribuir com movimentos de arrecadações de outros usuários, ou iniciar uma nova arrecadação para um determinado propósito.
 
 ## 👾 Objetivo: 
@@ -6,10 +6,9 @@ O projeto tem como objetivo desenvolver uma plataforma segura e intuitiva, a qua
 
 ## 🔧 Intalação:
 1. Clone esse repositório com `git clone` ou baixe o código-fonte.
-2. Instalar extensão `live server` em seu computador.
 
 ## 🚀 Execução:
-Clicar em `Go live` - Extensão Live Server de seu VS Code.
+Clicar em `npm run dev` - Extensão Live Server de seu VS Code.
 
 ## 🎯 Público-alvo:
 O público-alvo da plataforma são pessoas que estão em busca de um local seguro onde possam pedir por ajuda financeira por diversos motivos, como vítimas de desastres naturais, incêndios, doenças, dentre vários outros motivos que levam os usuários a buscar uma plataforma para pedir ajuda. Além de usuários interessados em serem beneficiados, há também aqueles usuários que buscam a plataforma para contribuir com pessoas/causas/ONGs.
