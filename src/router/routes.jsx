@@ -6,6 +6,7 @@ import Search from "../Components/TaylorComponents/Search"
 import Donations from "../Components/TaylorComponents/Donations"
 
 import DonationsEdit from "../Components/ErycComponents/DonationsEdit"
+import NavBarEdit from "../Components/ErycComponents/NavBarEdit"
 
 import { createBrowserRouter } from "react-router-dom"
 
@@ -36,7 +37,9 @@ const routes = createBrowserRouter([
       path: "/DonationsEdit",
       element: (
         <div>
+          <NavBarEdit />
           <DonationsEdit />
+          <FooterDN />
         </div>
       ),
     },
