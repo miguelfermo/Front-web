@@ -5,6 +5,8 @@ import Navbar from "../Components/TaylorComponents/Navbar"
 import Search from "../Components/TaylorComponents/Search"
 import Donations from "../Components/TaylorComponents/Donations"
 
+import DonationsEdit from "../Components/ErycComponents/DonationsEdit"
+
 import { createBrowserRouter } from "react-router-dom"
 
 const routes = createBrowserRouter([
@@ -29,6 +31,15 @@ const routes = createBrowserRouter([
       </div>
     ),
   },
+    // Parte do Eryc
+    {
+      path: "/DonationsEdit",
+      element: (
+        <div>
+          <DonationsEdit />
+        </div>
+      ),
+    },
 ])
 
 export default routes
