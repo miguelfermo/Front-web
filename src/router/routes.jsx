@@ -9,6 +9,8 @@ import Donations from "../Components/TaylorComponents/Donations"
 import DonationsEdit from "../Components/ErycComponents/DonationsEdit"
 import NavBarEdit from "../Components/ErycComponents/NavBarEdit"
 
+import PaginaEditarCadastro from "../Components/EduardoComponents/pageEdit"
+
 import { createBrowserRouter } from "react-router-dom"
 
 const routes = createBrowserRouter([
@@ -44,6 +46,11 @@ const routes = createBrowserRouter([
           <FooterDN />
         </div>
       ),
+    },
+     // Parte do Scalco
+    {
+      path: "/pageEdit",
+      element: <PaginaEditarCadastro />,
     },
 ])
 
