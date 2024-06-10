@@ -2,14 +2,21 @@ import  './header.css'
 import '../../index.css'
 import imglogo from "../../assets/logoName.png"
 import imgperfil from "../../assets/iconPerfil.png"
+import { Link } from 'react-router-dom';
 
 function HeaderDN() {
   return (
     <>
         <header className='header'> 
-          <img src={imglogo} className='logo' alt="logo donation compass" />
-          <p className='nome'>Donation Compass</p>
-          <img src={imgperfil} className='perfil' alt="icone perfil" />
+          <Link to="/">
+              <img src={imglogo} className='logo' alt="logo donation compass" />
+            </Link>
+            <Link to="/">
+              <p className='nome'>Donation Compass</p>
+            </Link>
+          <Link to="/Perfil" className="link">
+            <img src={imgperfil} className='perfil' alt="icone perfil" />
+          </Link>
         </header>
     </>
   );

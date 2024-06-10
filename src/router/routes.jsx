@@ -1,5 +1,6 @@
 import HeaderDN from "../Components/IsisComponents/header"
 import FooterDN from "../Components/IsisComponents/Footer"
+import Telainicial from "../Components/IsisComponents/Telainicial"
 
 import Navbar from "../Components/TaylorComponents/Navbar"
 import Search from "../Components/TaylorComponents/Search"
@@ -17,6 +18,7 @@ const routes = createBrowserRouter([
     element: (
       <div>
         <HeaderDN />
+        <Telainicial />
         <FooterDN />
       </div>
     ),

@@ -1,0 +1,70 @@
+div.tela{
+    background-image: url(https://images.pexels.com/photos/697662/pexels-photo-697662.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    align-content: center;
+    overflow-x: hidden;
+}
+
+.conteudo{
+    width: 1000px;
+    height: 400px;
+    margin: auto;
+    border-radius: 10px;
+    position: relative;
+    background-image: linear-gradient(to bottom, rgb(243, 153, 18) 50%, rgb(252, 122, 17));
+    box-shadow: 3px 3px 5px  rgb(68, 43, 14);
+    padding: 15px;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background-color: var(--var04);
+    border-radius: 20px;       
+}
+
+.titulo{
+    font-family: 'font2';
+    font-size: 50px;
+    color: var(--var04);
+    text-align: center;
+}
+
+.p{
+    font-family: 'font2';
+    color: var(--var04);
+}
+
+.navegar{
+    cursor: pointer;
+    position: relative;
+    width: 300px;
+    height: 30px;
+    border-radius: 7px;
+    border: none;
+    background-color: var(--var02);
+    left: 50%;
+    transform: translate(-50%, 0%);
+    box-shadow: 2px 2px 7px rgb(59, 27, 1);
+    margin-top: 15px;
+}
+
+.navegar:hover{
+    transition: .2s;
+    background-color: rgb(255, 123, 0);
+    transition: .2s;
+}
+
+.p_button{
+    font-family: 'font2';
+    color: var(--var04);
+    font-size: 22px;
+    letter-spacing: 2px;
+}

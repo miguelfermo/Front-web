@@ -7,6 +7,7 @@ header{
     box-shadow: 2px 0px 7px rgb(68, 43, 14);
     top: 0;
     z-index: 1;
+    align-items: center;
 }
 
 .logo{
@@ -14,14 +15,11 @@ header{
     height: 55px;
     margin-left: 20px;
     position: relative;
-    align-self: center;
 }
 
 .nome{
     position: relative;
-    text-align: center;
     color: var(--var02);
-    align-content: center;
     margin-left: 15px;
     font-size: 50px;
     font-family: 'font1';
@@ -31,8 +29,6 @@ header{
     width: 45px;
     height: 45px;
     position: relative;
-    display: flex;
-    align-self: center;
-    left: 72%;
     cursor: pointer;
+    left: 1000px;
 }
