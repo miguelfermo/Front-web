@@ -2,7 +2,7 @@ import logo from "../../assets/logoName.png"
 
 const NavBar = () => {
   return (
-    <div className="navBar flex justify-between items-center p-[3rem]">
+    <div className="navBar flex justify-between items-center p-[1rem]">
       <div className="logoDiv">
         <img className="h-16" src={logo} alt="logo" />
       </div>

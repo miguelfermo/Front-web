@@ -2,9 +2,7 @@ import HeaderDN from "../Components/IsisComponents/header"
 import FooterDN from "../Components/IsisComponents/Footer"
 import Telainicial from "../Components/IsisComponents/Telainicial"
 
-import Navbar from "../Components/TaylorComponents/Navbar"
-import Search from "../Components/TaylorComponents/Search"
-import Donations from "../Components/TaylorComponents/Donations"
+import DonationsPage from "../pages/DonationsPage"
 
 import DonationsEdit from "../Components/ErycComponents/DonationsEdit"
 import NavBarEdit from "../Components/ErycComponents/NavBarEdit"
@@ -28,13 +26,7 @@ const routes = createBrowserRouter([
   // Parte do Taylor
   {
     path: "/Donations",
-    element: (
-      <div>
-        <Navbar />
-        <Search />
-        <Donations />
-      </div>
-    ),
+    element: <DonationsPage />,
   },
     // Parte do Eryc
     {
