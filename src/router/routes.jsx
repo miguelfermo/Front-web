@@ -9,6 +9,8 @@ import NavBarEdit from "../Components/ErycComponents/NavBarEdit"
 
 import PaginaEditarCadastro from "../Components/EduardoComponents/pageEdit"
 
+import LoginPage from "../pages/LoginPage"
+
 import { createBrowserRouter } from "react-router-dom"
 
 const routes = createBrowserRouter([
@@ -44,6 +46,11 @@ const routes = createBrowserRouter([
       path: "/pageEdit",
       element: <PaginaEditarCadastro />,
     },
+    // Parte do Miguelindo
+    {
+      path: "/login",
+      element: <LoginPage />,
+    }
 ])
 
 export default routes
