@@ -11,7 +11,7 @@ div.tela{
 
 .conteudo{
     width: 1000px;
-    height: 400px;
+    height: 60%;
     margin: auto;
     border-radius: 10px;
     position: relative;
@@ -58,7 +58,7 @@ div.tela{
 
 .navegar:hover{
     transition: .2s;
-    background-color: rgb(255, 123, 0);
+    background-color: var(--var03);
     transition: .2s;
 }
 

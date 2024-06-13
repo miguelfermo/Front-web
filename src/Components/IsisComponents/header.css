@@ -8,6 +8,7 @@ header{
     top: 0;
     z-index: 1;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .logo{
@@ -28,7 +29,10 @@ header{
 .perfil{
     width: 45px;
     height: 45px;
-    position: relative;
+    position: absolute;
     cursor: pointer;
-    left: 1000px;
+    display: flex;
+    right: 0;
+    transform: translate(0, -50%);
+    margin-right: 30px;
 }
