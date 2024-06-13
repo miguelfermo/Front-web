@@ -14,7 +14,7 @@ function HeaderDN() {
             <Link to="/">
               <p className='nome'>Donation Compass</p>
             </Link>
-          <Link to="/Perfil" className="link">
+          <Link to="/login" className="link">
             <img src={imgperfil} className='perfil' alt="icone perfil" />
           </Link>
         </header>
