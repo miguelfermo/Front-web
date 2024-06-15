@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-// import { FaPen } from "react-icons/fa";
-// import icon from "../../assets/iconPerfil.png";
+import { FaPen } from "react-icons/fa";
+import icon from "../../assets/iconPerfil.png";
 
 export default function DonationsEdit() {
   const [donations, setDonations] = useState([]);
@@ -27,6 +27,14 @@ export default function DonationsEdit() {
         ...input
       }
     ]);
+    setInput({
+      image: icon,
+      title: '',
+      time: '',
+      location: '',
+      desc: '',
+      company: ''
+    });
   };
 
   const editDonation = (index) => {
@@ -40,6 +48,14 @@ export default function DonationsEdit() {
     );
     setDonations(updatedDonations);
     setEditIndex(null);
+    setInput({
+      image: icon,
+      title: '',
+      time: '',
+      location: '',
+      desc: '',
+      company: ''
+    });
   };
 
   const deleteDonation = (index) => {
@@ -80,7 +96,7 @@ export default function DonationsEdit() {
               className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
               onClick={() => editDonation(index)}
             >
-              Editar Doações
+              <FaPen /> Editar Doações
             </button>
             <button
               className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
@@ -91,7 +107,8 @@ export default function DonationsEdit() {
           </div>
         ))}
 
-        <div className="newDonationForm">
+        <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10">
+          <div className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
           <input
             type="text"
             name="image"
@@ -135,10 +152,21 @@ export default function DonationsEdit() {
             placeholder="Company"
           />
           {editIndex !== null ? (
-            <button onClick={saveEditDonation}>Salvar Alterações</button>
+            <button
+              className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
+              onClick={saveEditDonation}
+            >
+              Salvar Alterações
+            </button>
           ) : (
-            <button onClick={addDonation}>Adicionar Doação</button>
+            <button
+              className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
+              onClick={addDonation}
+            >
+              Adicionar Doação
+            </button>
           )}
+          </div>
         </div>
       </div>
     </div>
