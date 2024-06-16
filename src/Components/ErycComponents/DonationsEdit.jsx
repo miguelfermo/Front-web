@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaPen } from "react-icons/fa";
 import icon from "../../assets/iconPerfil.png";
+import { TextField } from '@mui/material';
 
 export default function DonationsEdit() {
   const [donations, setDonations] = useState([]);
@@ -65,7 +65,7 @@ export default function DonationsEdit() {
 
   return (
     <div>
-      <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10">
+      <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10 w-full">
         {donations.map(({ id, image, title, location, desc, company }, index) => (
           <div
             key={id}
@@ -92,81 +92,94 @@ export default function DonationsEdit() {
                 {company}
               </span>
             </div>
-            <button
-              className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
-              onClick={() => editDonation(index)}
-            >
-              <FaPen /> Editar Doações
-            </button>
-            <button
-              className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
-              onClick={() => deleteDonation(index)}
-            >
-              Deletar Doações
-            </button>
+
+            <div className='grid grid-cols-2 gap-4 place-content-stretch'>
+              <button
+                className="rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
+                onClick={() => editDonation(index)}
+              >
+                Editar Doações
+              </button>
+              <button
+                className="rounded bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
+                onClick={() => deleteDonation(index)}
+              >
+                Deletar Doações
+              </button>
+            </div>
           </div>
         ))}
+      </div>
 
-        <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10">
-          <div className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
-          <input
-            type="text"
-            name="image"
-            value={input.image}
-            onChange={handleInputChange}
-            placeholder="Image URL"
-          />
-          <input
-            type="text"
-            name="title"
-            value={input.title}
-            onChange={handleInputChange}
-            placeholder="Title"
-          />
-          <input
-            type="text"
-            name="time"
-            value={input.time}
-            onChange={handleInputChange}
-            placeholder="Time"
-          />
-          <input
-            type="text"
-            name="location"
-            value={input.location}
-            onChange={handleInputChange}
-            placeholder="Location"
-          />
-          <input
-            type="text"
-            name="desc"
-            value={input.desc}
-            onChange={handleInputChange}
-            placeholder="Description"
-          />
-          <input
-            type="text"
-            name="company"
-            value={input.company}
-            onChange={handleInputChange}
-            placeholder="Company"
-          />
+      <div className="flex justify-center py-10">
+        <div className="max-w-md p-4 bg-white rounded shadow-lg">
+          <div className="mb-4">
+            <TextField
+              label="Title"
+              type="text"
+              name="title"
+              value={input.title}
+              onChange={handleInputChange}
+              className="w-full"
+              variant="outlined"
+              size="small"
+            />
+          </div>
+
+          <div className="mb-4">
+            <TextField
+              label="Location"
+              type="text"
+              name="location"
+              value={input.location}
+              onChange={handleInputChange}
+              className="w-full"
+              variant="outlined"
+              size="small"
+            />
+          </div>
+
+          <div className="mb-4">
+            <TextField
+              label="Description"
+              type="text"
+              name="desc"
+              value={input.desc}
+              onChange={handleInputChange}
+              className="w-full"
+              variant="outlined"
+              size="small"
+            />
+          </div>
+
+          <div className="mb-4">
+            <TextField
+              label="Company"
+              type="text"
+              name="company"
+              value={input.company}
+              onChange={handleInputChange}
+              className="w-full"
+              variant="outlined"
+              size="small"
+            />
+          </div>
+
           {editIndex !== null ? (
             <button
-              className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
+              className="rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600 w-full"
               onClick={saveEditDonation}
             >
               Salvar Alterações
             </button>
           ) : (
             <button
-              className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
+              className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600 w-full"
               onClick={addDonation}
             >
               Adicionar Doação
             </button>
           )}
-          </div>
         </div>
       </div>
     </div>
