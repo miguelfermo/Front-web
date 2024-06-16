@@ -1,5 +1,4 @@
 // src/components/Overlay.jsx
-import React from 'react';
 import './Miguelstyles.css';
 
 const Overlay = ({ onSignInClick, onSignUpClick }) => {

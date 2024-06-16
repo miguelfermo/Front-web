@@ -3,8 +3,11 @@ import PropTypes from "prop-types"
 import { AiOutlineCloseCircle, AiOutlineSearch } from "react-icons/ai"
 import { BsHouseDoor } from "react-icons/bs"
 import { CiLocationOn } from "react-icons/ci"
+import { Link } from "react-router-dom"
+import { useUser } from "../../context/UserContext"
 
 const Search = ({ onSearchChange }) => {
+  const { user } = useUser()
   const [searchTerm, setSearchTerm] = useState("")
   const [companyTerm, setCompanyTerm] = useState("")
   const [locationTerm, setLocationTerm] = useState("")
@@ -80,9 +83,11 @@ const Search = ({ onSearchChange }) => {
             />
           </div>
 
-          <button className="bg-orange-600 h-full p-3 px-10 rounded-[10px] text-white cursor-pointer hover:bg-orange-800">
-            Buscar
-          </button>
+          {user && (
+            <button className="bg-orange-600 h-full p-3 px-10 rounded-[10px] text-white cursor-pointer hover:bg-orange-800">
+              <Link to="/DonationsEdit">Criar nova doação</Link>
+            </button>
+          )}
         </div>
       </form>
     </div>

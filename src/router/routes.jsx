@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
     },
      // Parte do Scalco
     {
-      path: "/pageEdit",
+      path: "/userEdit",
       element: <PaginaEditarCadastro />,
     },
     // Parte do Miguelindo
