@@ -6,11 +6,13 @@ import { useUser } from "../../context/UserContext"
 const SignUpForm = () => {
   const navigate = useNavigate()
   const { setUser } = useUser()
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleSignUp = () => {
     // Aqui você deve adicionar a lógica de autenticação
-    setUser({ email })
+    setUser({ name, email, password })
     navigate("/Donations")
   }
 
@@ -22,6 +24,8 @@ const SignUpForm = () => {
           className="input-miguel"
           type="text"
           placeholder="Nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
         <input
@@ -36,6 +40,8 @@ const SignUpForm = () => {
           className="input-miguel"
           type="password"
           placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <div className="btn-grad" id="signup" onClick={handleSignUp}>

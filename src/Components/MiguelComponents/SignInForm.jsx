@@ -7,10 +7,10 @@ const SignInForm = () => {
   const navigate = useNavigate()
   const { setUser } = useUser()
   const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   const handleSignIn = () => {
-    // Aqui você deve adicionar a lógica de autenticação
-    setUser({ email })
+    setUser({ email, password})
     navigate("/Donations")
   }
 
@@ -30,6 +30,8 @@ const SignInForm = () => {
           className="input-miguel"
           type="password"
           placeholder="Senha"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         <a className="a-miguel" href="#">
