@@ -2,9 +2,11 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import logo from "../../assets/logoName.png"
 import { useUser } from "../../context/UserContext"
+import ModalEdit from "../EduardoComponents/ModalEdit"
 
 const NavBar = () => {
   const { user, setUser } = useUser()
+  const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
@@ -13,9 +15,24 @@ const NavBar = () => {
     navigate("/") 
   }
 
+  const usuario = {
+    id: 1,
+    nome: {user},
+    email: '',
+    telefone: ' ',
+    cpf: ' ',
+  };
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   return (
     <div className="navBar flex justify-between items-center p-[1rem]">
@@ -33,14 +50,19 @@ const NavBar = () => {
             </button>
             {dropdownOpen && (
               <ul className="dropdown-menu">
-                <Link to="/userEdit">
-                  <li className="dropdown-item">Editar</li>
-                </Link>
-                <li className="dropdown-item" onClick={handleLogout}>
+               <li className="dropdown-item" onClick={handleOpenModal}>
+                  Editar
+                 </li>
+               <li className="dropdown-item" onClick={handleLogout}>
                   Sair
                 </li>
               </ul>
             )}
+             <ModalEdit
+            open={openModal}
+            onClose={handleCloseModal}
+            data={usuario}
+      />
           </div>
         ) : (
           <>
