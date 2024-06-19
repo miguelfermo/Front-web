@@ -17,7 +17,7 @@ const NavBar = () => {
 
   const usuario = {
     id: 1,
-    nome: {user},
+    nome: user.email,
     email: '',
     telefone: ' ',
     cpf: ' ',
