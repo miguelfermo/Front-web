@@ -69,7 +69,7 @@ export default function DonationsEdit() {
         {donations.map(({ id, image, title, location, desc, company }, index) => (
           <div
             key={id}
-            className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg"
+            className="group group/item singleJob h-[250px] w-[250px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg"
           >
             <span className="flex justify-between items-center gap-4">
               <h1 className="text-[16px] font-semibold text-textColor group-hover:text-black">
@@ -93,15 +93,15 @@ export default function DonationsEdit() {
               </span>
             </div>
 
-            <div className='grid grid-cols-2 gap-4 place-content-stretch'>
+            <div className='grid grid-cols-2 gap-5 place-content-stretch'>
               <button
-                className="rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
+                className="rounded-[10px] bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
                 onClick={() => editDonation(index)}
               >
                 Editar Doações
               </button>
               <button
-                className="rounded bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
+                className="rounded-[10px] bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
                 onClick={() => deleteDonation(index)}
               >
                 Deletar Doações
@@ -174,7 +174,7 @@ export default function DonationsEdit() {
             </button>
           ) : (
             <button
-              className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600 w-full"
+              className="rounded-[10px] bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600 w-full"
               onClick={addDonation}
             >
               Adicionar Doação
