@@ -5,7 +5,7 @@ import { TextField } from '@mui/material';
 export default function DonationsEdit() {
   const [donations, setDonations] = useState([]);
   const [input, setInput] = useState({
-    image: '',
+    image: icon,
     title: '',
     time: '',
     location: '',
