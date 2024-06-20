@@ -33,7 +33,7 @@ const NavBar = () => {
         <img className="h-16" src={logo} alt="logo" />
       </Link>
       <div className="menu flex gap-8">
-        {user && user.email ? (
+        {user && user.name ? (
           <div className="relative">
             <button
               className="menuList text-[#6f6f6f] relative"

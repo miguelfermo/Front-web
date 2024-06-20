@@ -6,11 +6,11 @@ import { useUser } from "../../context/UserContext"
 const SignInForm = () => {
   const navigate = useNavigate()
   const { setUser } = useUser()
-  const [email, setEmail] = useState("")
+  const [name, setName] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSignIn = () => {
-    setUser({ email, password})
+    setUser({ name, password})
     navigate("/Donations")
   }
 
@@ -20,10 +20,10 @@ const SignInForm = () => {
         <h1 className="h1-miguel">Login</h1>
         <input
           className="input-miguel"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Nome"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
         <input
