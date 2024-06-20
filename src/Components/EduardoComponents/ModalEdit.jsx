@@ -1,25 +1,38 @@
-import { useState, useEffect } from "react"
-import { Modal, Box, TextField, Button } from "@mui/material"
-import { useUser } from "../../context/UserContext"
+import React, { useState, useEffect } from "react";
+import { Modal, Box, TextField, Button } from "@mui/material";
+import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const ModalEdit = ({ open, onClose, data }) => {
-  const { setUser } = useUser()
-  const [formData, setFormData] = useState(data)
+  const { setUser } = useUser();
+  const [formData, setFormData] = useState(data);
+  const [formErrors, setFormErrors] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setFormData(data) // Atualiza o estado inicial quando o modal é aberto com novos dados
-  }, [data])
+    setFormData(data);
+  }, [data]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setUser(formData) 
-    onClose() 
-  }
+    e.preventDefault();
+
+    if (formData.name && formData.email && formData.telefone && formData.cpf && formData.password) {
+      setUser(formData);
+      onClose();
+    } else {
+      setFormErrors({ message: "Preencha todos os campos!" });
+    }
+  };
+
+  const handleEditMoreItems = () => {
+    // Navegar para PaginaEditarCadastro com os dados atuais do usuário
+    navigate("/PaginaEditarCadastro", { state: { user: formData } });
+  };
 
   return (
     <Modal
@@ -48,6 +61,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
           />
           <TextField
             label="Email"
@@ -56,6 +70,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
           />
           <TextField
             label="Telefone"
@@ -64,6 +79,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
           />
           <TextField
             label="CPF"
@@ -72,6 +88,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
           />
           <TextField
             label="Senha"
@@ -81,14 +98,23 @@ const ModalEdit = ({ open, onClose, data }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
           />
-          <Button type="submit" variant="contained" color="primary">
-            Editar Dados
-          </Button>
+          {formErrors.message && (
+            <div style={{ color: "red", marginTop: 10 }}>{formErrors.message}</div>
+          )}
+          <Box sx={{ textAlign: "center", marginTop: 2 }}>
+            <Button type="submit" variant="contained" color="primary" style={{ marginRight: 10 }}>
+              Salvar
+            </Button>
+            <Button variant="contained" color="primary" onClick={handleEditMoreItems}>
+              Editar Mais Itens
+            </Button>
+          </Box>
         </form>
       </Box>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalEdit
+export default ModalEdit;

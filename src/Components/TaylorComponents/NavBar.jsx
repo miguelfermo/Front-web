@@ -39,7 +39,7 @@ const NavBar = () => {
               className="menuList text-[#6f6f6f] relative"
               onClick={toggleDropdown}
             >
-              Olá, {user.email} &#9660;
+              Olá, {user.name} &#9660;
             </button>
             {dropdownOpen && (
               <ul className="dropdown-menu">
