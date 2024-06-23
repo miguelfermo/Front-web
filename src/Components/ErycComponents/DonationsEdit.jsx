@@ -1,45 +1,56 @@
-import React, { useState } from 'react';
-import icon from "../../assets/iconPerfil.png";
+import { useState } from 'react';
 import { TextField } from '@mui/material';
+import icon from '../../assets/iconPerfil.png';
+import Modal from './DonationsEditModal';
+
+const initialInputState = {
+  image: icon,
+  title: '',
+  time: '',
+  location: '',
+  desc: '',
+  company: '',
+  value: ''
+};
 
 export default function DonationsEdit() {
   const [donations, setDonations] = useState([]);
-  const [input, setInput] = useState({
-    image: icon,
-    title: '',
-    time: '',
-    location: '',
-    desc: '',
-    company: ''
-  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [input, setInput] = useState(initialInputState);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInput((prev) => ({ ...prev, [name]: value }));
+    setInput((prev) => ({
+      ...prev,
+      [name]: name === 'value' ? parseFloat(value) : value,
+    }));
   };
 
   const addDonation = () => {
+    if (!input.title || !input.location || !input.desc || !input.company || input.value <= 0) {
+      alert("Por favor, preencha todos os campos obrigatórios corretamente.");
+      return;
+    }
+    if (editIndex !== null) {
+      saveEditDonation();
+      return;
+    }
     setDonations((prev) => [
       ...prev,
       {
         id: prev.length + 1,
-        ...input
-      }
+        ...input,
+      },
     ]);
-    setInput({
-      image: icon,
-      title: '',
-      time: '',
-      location: '',
-      desc: '',
-      company: ''
-    });
+    resetInput();
+    setIsModalOpen(false);
   };
 
   const editDonation = (index) => {
     setEditIndex(index);
     setInput(donations[index]);
+    setIsModalOpen(true);
   };
 
   const saveEditDonation = () => {
@@ -48,14 +59,8 @@ export default function DonationsEdit() {
     );
     setDonations(updatedDonations);
     setEditIndex(null);
-    setInput({
-      image: icon,
-      title: '',
-      time: '',
-      location: '',
-      desc: '',
-      company: ''
-    });
+    resetInput();
+    setIsModalOpen(false);
   };
 
   const deleteDonation = (index) => {
@@ -63,125 +68,139 @@ export default function DonationsEdit() {
     setDonations(updatedDonations);
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    resetInput();
+    setIsModalOpen(false);
+  };
+
+  const resetInput = () => {
+    setInput(initialInputState);
+  };
+
   return (
-    <div>
-      <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10 w-full">
-        {donations.map(({ id, image, title, location, desc, company }, index) => (
+    <div className="container mx-auto px-4 py-6">
+      <div className="flex justify-between mb-4">
+        <button
+          className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+          onClick={handleOpenModal}
+        >
+          {donations.length > 0 ? "+ Doações" : "Criar Doações"}
+        </button>
+      </div>
+     
+     <div className="group group/item singleJob h-[520px] w-[1500px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-6 gap-4">
+        {donations.map(({ id, image, title, location, desc, company, value }, index) => (
           <div
             key={id}
-            className="group group/item singleJob h-[250px] w-[250px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg"
+            className="group/item singleJob max-w-[250px] p-4 bg-white rounded-lg shadow-lg hover:shadow-xl"
           >
-            <span className="flex justify-between items-center gap-4">
-              <h1 className="text-[16px] font-semibold text-textColor group-hover:text-black">
-                {title}
-              </h1>
-            </span>
-            <h6 className="text-[#ccc]">{location}</h6>
-            <p className="text-[14px] text-[#959595] pt-[20px] border-t-[2px] mt-[20px] group-hover:text-black">
+            <h1 className="text-lg font-semibold text-gray-700 group-hover:text-black">
+              {title}
+            </h1>
+            <h6 className="text-gray-500">{location}</h6>
+            <p className="text-sm text-gray-600 mt-2 group-hover:text-black">
               {desc}
             </p>
-
-            <div className="company flex items-center gap-2">
+            <div className="company flex items-center gap-2 mt-4">
               <img
                 src={image}
                 title="iconicons"
                 alt="Company logo"
-                className="w-[10%]"
+                className="w-8 h-8 rounded-full"
               />
-              <span className="text-[14px] py-[1rem] block group-hover:text-black">
+              <span className="text-sm text-gray-700 group-hover:text-black">
                 {company}
               </span>
             </div>
-
-            <div className='grid grid-cols-2 gap-5 place-content-stretch'>
+            <div className="bg-green-200 text-green-800 font-bold p-2 mt-2 rounded">
+              {typeof value === 'number' ? `R$ ${value.toFixed(2)}` : 'Valor não disponível'}
+            </div>
+            <div className='grid grid-cols-2 gap-5 mt-4'>
               <button
-                className="rounded-[10px] bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
+                className="rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
                 onClick={() => editDonation(index)}
               >
-                Editar Doações
+                Editar
               </button>
               <button
-                className="rounded-[10px] bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
+                className="rounded bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
                 onClick={() => deleteDonation(index)}
               >
-                Deletar Doações
+                Deletar
               </button>
             </div>
           </div>
         ))}
       </div>
+      </div>
 
-      <div className="flex justify-center py-10">
-        <div className="max-w-md p-4 bg-white rounded shadow-lg">
-          <div className="mb-4">
+      {isModalOpen && (
+        <Modal onClose={handleCloseModal}>
+          <div className="flex flex-col gap-4">
             <TextField
               label="Title"
               type="text"
               name="title"
               value={input.title}
               onChange={handleInputChange}
-              className="w-full"
               variant="outlined"
               size="small"
+              required
             />
-          </div>
-
-          <div className="mb-4">
             <TextField
               label="Location"
               type="text"
               name="location"
               value={input.location}
               onChange={handleInputChange}
-              className="w-full"
               variant="outlined"
               size="small"
+              required
             />
-          </div>
-
-          <div className="mb-4">
             <TextField
               label="Description"
               type="text"
               name="desc"
               value={input.desc}
               onChange={handleInputChange}
-              className="w-full"
               variant="outlined"
               size="small"
+              required
             />
-          </div>
-
-          <div className="mb-4">
             <TextField
               label="Company"
               type="text"
               name="company"
               value={input.company}
               onChange={handleInputChange}
-              className="w-full"
               variant="outlined"
               size="small"
+              required
             />
-          </div>
-
-          {editIndex !== null ? (
+            <TextField
+              label="Value"
+              type="number"
+              name="value"
+              value={input.value}
+              onChange={handleInputChange}
+              variant="outlined"
+              size="small"
+              required
+            />
             <button
-              className="rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600 w-full"
-              onClick={saveEditDonation}
-            >
-              Salvar Alterações
-            </button>
-          ) : (
-            <button
-              className="rounded-[10px] bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600 w-full"
+              className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
               onClick={addDonation}
             >
-              Adicionar Doação
+              {editIndex !== null ? "Salvar Alterações" : "Adicionar Doação"}
             </button>
-          )}
-        </div>
-      </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

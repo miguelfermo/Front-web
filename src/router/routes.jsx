@@ -5,7 +5,6 @@ import Telainicial from "../Components/IsisComponents/Telainicial"
 import DonationsPage from "../pages/DonationsPage"
 
 import DonationsEdit from "../Components/ErycComponents/DonationsEdit"
-import NavBarEdit from "../Components/ErycComponents/NavBarEdit"
 
 import Navbar from "../Components/TaylorComponents/Navbar"
 
@@ -37,9 +36,8 @@ const routes = createBrowserRouter([
     path: "/DonationsEdit",
     element: (
       <div>
-        <NavBarEdit />
+        <Navbar />
         <DonationsEdit />
-        <FooterDN />
       </div>
     ),
   },
