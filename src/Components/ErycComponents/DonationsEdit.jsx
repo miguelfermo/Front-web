@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TextField } from '@mui/material';
 import icon from '../../assets/iconPerfil.png';
 import Modal from './DonationsEditModal';
@@ -18,6 +18,17 @@ export default function DonationsEdit() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [input, setInput] = useState(initialInputState);
+
+  useEffect(() => {
+    const cachedDonations = localStorage.getItem('donations');
+    if (cachedDonations) {
+      setDonations(JSON.parse(cachedDonations));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('donations', JSON.stringify(donations));
+  }, [donations]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,7 +103,7 @@ export default function DonationsEdit() {
         </button>
       </div>
      
-     <div className="group group/item singleJob h-[520px] w-[1500px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
+     <div className="group group/item singleJob h-[500px] w-[1500px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
       <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-6 gap-4">
         {donations.map(({ id, image, title, location, desc, company, value }, index) => (
           <div
@@ -122,13 +133,13 @@ export default function DonationsEdit() {
             </div>
             <div className='grid grid-cols-2 gap-5 mt-4'>
               <button
-                className="rounded bg-green-500 px-4 py-2 font-semibold text-white hover:bg-green-600"
+                className="rounded bg-green-500 px-1 py-2 font-semibold text-white hover:bg-green-600"
                 onClick={() => editDonation(index)}
               >
                 Editar
               </button>
               <button
-                className="rounded bg-red-500 px-4 py-2 font-semibold text-white hover:bg-red-600"
+                className="rounded bg-red-500 px-1 py-2 font-semibold text-white hover:bg-red-600"
                 onClick={() => deleteDonation(index)}
               >
                 Deletar
