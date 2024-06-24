@@ -9,15 +9,23 @@ const NavBar = () => {
   const [openModal, setOpenModal] = useState(false)
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  console.log(user)
 
-  const handleLogout = useCallback(() => {
-    setUser(null)
-    navigate("/")
-  }, [navigate, setUser])
+  const handleLogout = () => {
+    setUser(null) 
+    navigate("/") 
+  }
 
-  const toggleDropdown = useCallback(() => {
-    setDropdownOpen((prev) => !prev)
-  }, [])
+  const usuario = {
+    id: 1,
+    nome: {user},
+    email: '',
+    telefone: ' ',
+    cpf: ' ',
+  };
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen)
+  }
 
   const handleOpenModal = useCallback(() => {
     setOpenModal(true)

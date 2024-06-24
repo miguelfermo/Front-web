@@ -29,9 +29,11 @@ const ModalEdit = ({ open, onClose, data }) => {
     }
   };
 
-  const handleEditMoreItems = () => {
-    // Navegar para PaginaEditarCadastro com os dados atuais do usuário
-    navigate("/PaginaEditarCadastro", { state: { user: formData } });
+  const handleDeleteUser = () => {
+    if (window.confirm("Tem certeza que deseja excluir seu cadastro? Esta ação é irreversível.")) {
+      navigate('/login'); 
+      onClose(); 
+    }
   };
 
   return (
@@ -107,8 +109,8 @@ const ModalEdit = ({ open, onClose, data }) => {
             <Button type="submit" variant="contained" color="primary" style={{ marginRight: 10 }}>
               Salvar
             </Button>
-            <Button variant="contained" color="primary" onClick={handleEditMoreItems}>
-              Editar Mais Itens
+            <Button variant="contained" style={{ backgroundColor: "#f44336", color: "#fff" }} onClick={handleDeleteUser}>
+              Excluir Cadastro
             </Button>
           </Box>
         </form>
