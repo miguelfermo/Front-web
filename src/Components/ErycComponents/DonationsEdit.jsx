@@ -1,51 +1,58 @@
-import { useState, useEffect } from 'react';
-import { TextField } from '@mui/material';
-import icon from '../../assets/iconPerfil.png';
-import Modal from './DonationsEditModal';
+import React, { useState, useEffect } from "react"
+import { TextField } from "@mui/material"
+import icon from "../../assets/iconPerfil.png"
+import Modal from "./DonationsEditModal"
+import { useDonations } from "../../context/DonationsContext"
 
 const initialInputState = {
   image: icon,
-  title: '',
-  time: '',
-  location: '',
-  desc: '',
-  company: '',
-  value: ''
-};
+  title: "",
+  time: "",
+  location: "",
+  desc: "",
+  company: "",
+  value: "",
+}
 
 export default function DonationsEdit() {
-  const [donations, setDonations] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
-  const [input, setInput] = useState(initialInputState);
+  const { donations, setDonations } = useDonations()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editIndex, setEditIndex] = useState(null)
+  const [input, setInput] = useState(initialInputState)
 
   useEffect(() => {
-    const cachedDonations = localStorage.getItem('donations');
+    const cachedDonations = localStorage.getItem("donations")
     if (cachedDonations) {
-      setDonations(JSON.parse(cachedDonations));
+      setDonations(JSON.parse(cachedDonations))
     }
-  }, []);
+  }, [setDonations])
 
   useEffect(() => {
-    localStorage.setItem('donations', JSON.stringify(donations));
-  }, [donations]);
+    localStorage.setItem("donations", JSON.stringify(donations))
+  }, [donations])
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setInput((prev) => ({
       ...prev,
-      [name]: name === 'value' ? parseFloat(value) : value,
-    }));
-  };
+      [name]: name === "value" ? parseFloat(value) : value,
+    }))
+  }
 
   const addDonation = () => {
-    if (!input.title || !input.location || !input.desc || !input.company || input.value <= 0) {
-      alert("Por favor, preencha todos os campos obrigatórios corretamente.");
-      return;
+    if (
+      !input.title ||
+      !input.location ||
+      !input.desc ||
+      !input.company ||
+      input.value <= 0
+    ) {
+      alert("Por favor, preencha todos os campos obrigatórios corretamente.")
+      return
     }
     if (editIndex !== null) {
-      saveEditDonation();
-      return;
+      saveEditDonation()
+      return
     }
     setDonations((prev) => [
       ...prev,
@@ -53,44 +60,44 @@ export default function DonationsEdit() {
         id: prev.length + 1,
         ...input,
       },
-    ]);
-    resetInput();
-    setIsModalOpen(false);
-  };
+    ])
+    resetInput()
+    setIsModalOpen(false)
+  }
 
   const editDonation = (index) => {
-    setEditIndex(index);
-    setInput(donations[index]);
-    setIsModalOpen(true);
-  };
+    setEditIndex(index)
+    setInput(donations[index])
+    setIsModalOpen(true)
+  }
 
   const saveEditDonation = () => {
     const updatedDonations = donations.map((donation, index) =>
       index === editIndex ? { ...donation, ...input } : donation
-    );
-    setDonations(updatedDonations);
-    setEditIndex(null);
-    resetInput();
-    setIsModalOpen(false);
-  };
+    )
+    setDonations(updatedDonations)
+    setEditIndex(null)
+    resetInput()
+    setIsModalOpen(false)
+  }
 
   const deleteDonation = (index) => {
-    const updatedDonations = donations.filter((_, i) => i !== index);
-    setDonations(updatedDonations);
-  };
+    const updatedDonations = donations.filter((_, i) => i !== index)
+    setDonations(updatedDonations)
+  }
 
   const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const handleCloseModal = () => {
-    resetInput();
-    setIsModalOpen(false);
-  };
+    resetInput()
+    setIsModalOpen(false)
+  }
 
   const resetInput = () => {
-    setInput(initialInputState);
-  };
+    setInput(initialInputState)
+  }
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -102,52 +109,56 @@ export default function DonationsEdit() {
           {donations.length > 0 ? "+ Doações" : "Criar Doações"}
         </button>
       </div>
-     
-     <div className="group group/item singleJob h-[500px] w-[1500px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
-      <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-6 gap-4">
-        {donations.map(({ id, image, title, location, desc, company, value }, index) => (
-          <div
-            key={id}
-            className="group/item singleJob max-w-[250px] p-4 bg-white rounded-lg shadow-lg hover:shadow-xl"
-          >
-            <h1 className="text-lg font-semibold text-gray-700 group-hover:text-black">
-              {title}
-            </h1>
-            <h6 className="text-gray-500">{location}</h6>
-            <p className="text-sm text-gray-600 mt-2 group-hover:text-black">
-              {desc}
-            </p>
-            <div className="company flex items-center gap-2 mt-4">
-              <img
-                src={image}
-                title="iconicons"
-                alt="Company logo"
-                className="w-8 h-8 rounded-full"
-              />
-              <span className="text-sm text-gray-700 group-hover:text-black">
-                {company}
-              </span>
-            </div>
-            <div className="bg-green-200 text-green-800 font-bold p-2 mt-2 rounded">
-              {typeof value === 'number' ? `R$ ${value.toFixed(2)}` : 'Valor não disponível'}
-            </div>
-            <div className='grid grid-cols-2 gap-5 mt-4'>
-              <button
-                className="rounded bg-green-500 px-1 py-2 font-semibold text-white hover:bg-green-600"
-                onClick={() => editDonation(index)}
+
+      <div className="group group/item singleJob h-[500px] w-[1500px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-6 gap-4">
+          {donations.map(
+            ({ id, image, title, location, desc, company, value }, index) => (
+              <div
+                key={id}
+                className="group/item singleJob max-w-[250px] p-4 bg-white rounded-lg shadow-lg hover:shadow-xl"
               >
-                Editar
-              </button>
-              <button
-                className="rounded bg-red-500 px-1 py-2 font-semibold text-white hover:bg-red-600"
-                onClick={() => deleteDonation(index)}
-              >
-                Deletar
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+                <h1 className="text-lg font-semibold text-gray-700 group-hover:text-black">
+                  {title}
+                </h1>
+                <h6 className="text-gray-500">{location}</h6>
+                <p className="text-sm text-gray-600 mt-2 group-hover:text-black">
+                  {desc}
+                </p>
+                <div className="company flex items-center gap-2 mt-4">
+                  <img
+                    src={image}
+                    title="iconicons"
+                    alt="Company logo"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <span className="text-sm text-gray-700 group-hover:text-black">
+                    {company}
+                  </span>
+                </div>
+                <div className="bg-green-200 text-green-800 font-bold p-2 mt-2 rounded">
+                  {typeof value === "number"
+                    ? `R$ ${value.toFixed(2)}`
+                    : "Valor não disponível"}
+                </div>
+                <div className="grid grid-cols-2 gap-5 mt-4">
+                  <button
+                    className="rounded bg-green-500 px-1 py-2 font-semibold text-white hover:bg-green-600"
+                    onClick={() => editDonation(index)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="rounded bg-red-500 px-1 py-2 font-semibold text-white hover:bg-red-600"
+                    onClick={() => deleteDonation(index)}
+                  >
+                    Deletar
+                  </button>
+                </div>
+              </div>
+            )
+          )}
+        </div>
       </div>
 
       {isModalOpen && (
@@ -213,5 +224,5 @@ export default function DonationsEdit() {
         </Modal>
       )}
     </div>
-  );
+  )
 }
