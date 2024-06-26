@@ -30,8 +30,6 @@ O foco principal do projeto é desenvolver uma plataforma prática, na qual as p
 - [Eryc Jacinto](https://github.com/erycmj)
 - [Isis Costa](https://github.com/isiscostabb)
 
-## 🚩 Público-alvo:
-O público-alvo da plataforma são pessoas que estão em busca de um local seguro onde possam pedir por ajuda financeira por diversos motivos, como vítimas de desastres naturais, incêndios, doenças, dentre vários outros motivos que levam os usuários a buscar uma plataforma para pedir ajuda. Além de usuários interessados em serem beneficiados, há também aqueles usuários que buscam a plataforma para contribuir com pessoas/causas/ONGs.
 
 ## 🔭 Demonstração do projeto:
 -TELA PRINCIPAL: A Landing Page, primeira página onde o usuário terá contato com a plataforma é onde ele poderá visualizar as arrecadações em altas e visualizar outras ferramentas da aplicação.
