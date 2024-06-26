@@ -110,7 +110,7 @@ export default function DonationsEdit() {
         </button>
       </div>
 
-      <div className="group group/item singleJob h-[500px] w-[1500px] p-[15px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
+      <div className="group group/item singleJob h-[500px] p-[15px] max-h-[500px] max-w-[1500px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
         <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-6 gap-4">
           {donations.map(
             ({ id, image, title, location, desc, company, value }, index) => (
