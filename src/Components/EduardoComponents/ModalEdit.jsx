@@ -61,8 +61,7 @@ const ModalEdit = ({ open, onClose, data }) => {
           <TextField
             label="Nome"
             name="name"
-            value={formData.name || ""}
-            onChange={handleChange}
+            value={data.name}
             fullWidth
             margin="normal"
             required
