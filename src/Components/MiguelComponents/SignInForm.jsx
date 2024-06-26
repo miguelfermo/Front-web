@@ -32,7 +32,6 @@ const SignInForm = () => {
       return
     }
 
-    setUser(user)
     navigate("/Donations")
   }
 

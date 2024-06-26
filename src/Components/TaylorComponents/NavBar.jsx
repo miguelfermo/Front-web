@@ -12,7 +12,7 @@ const NavBar = () => {
   console.log(user)
 
   const handleLogout = () => {
-    setUser(null) 
+    setUser(user) 
     navigate("/") 
   }
 
