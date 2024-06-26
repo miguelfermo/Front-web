@@ -32,7 +32,7 @@ const Donations = ({ searchTerm, companyTerm, locationTerm }) => {
       <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10">
         {filteredData.length > 0 ? (
           filteredData.map(
-            ({ id, image, title, time, location, desc, company }) => (
+            ({ id, image, title, time, location, desc, company, value }) => (
               <div
                 key={id}
                 className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg"
@@ -71,6 +71,7 @@ const Donations = ({ searchTerm, companyTerm, locationTerm }) => {
                       location,
                       desc,
                       company,
+                      value,
                     })
                   }
                   className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"

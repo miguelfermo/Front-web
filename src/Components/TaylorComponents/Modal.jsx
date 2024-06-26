@@ -19,9 +19,6 @@ const Modal = ({ campaign, onClose }) => {
           />
           <div>
             <p className="mb-2">
-              <strong>Tempo:</strong> {campaign.time}
-            </p>
-            <p className="mb-2">
               <strong>Localização:</strong> {campaign.location}
             </p>
             <p className="mb-2">
@@ -30,13 +27,18 @@ const Modal = ({ campaign, onClose }) => {
             <p className="mb-2">
               <strong>Companhia:</strong> {campaign.company}
             </p>
+            <p className="mb-2">
+              <strong>Meta de Doação:</strong> {campaign.value} R$
+            </p>
           </div>
         </div>
         <aside className="mt-6">
           <h3 className="text-xl font-semibold mb-2">Opções de Doação:</h3>
           <ul className="list-disc ml-6">
             <li className="mb-1">Doação em dinheiro</li>
-            <li className="mb-1">Doação em outras formas(Roupas, Alimentos, etc..)</li>
+            <li className="mb-1">
+              Doação em outras formas(Roupas, Alimentos, etc..)
+            </li>
           </ul>
         </aside>
       </div>
