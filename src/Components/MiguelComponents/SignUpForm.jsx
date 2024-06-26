@@ -10,9 +10,28 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleSignUp = () => {
-    // Aqui você deve adicionar a lógica de autenticação
-    setUser({ name, email, password })
+  const handleSignUp = (e) => {
+    e.preventDefault()
+
+    if (!name || !email || !password) {
+      setError("Todos os campos são obrigatórios.")
+      return
+    }
+
+    const users = JSON.parse(localStorage.getItem("users")) || []
+
+    const userExists = users.some(user => user.email === email)
+
+    if (userExists) {
+      setError("Usuário já cadastrado.")
+      return
+    }
+
+    const newUser = { name, email, password }
+    users.push(newUser)
+    localStorage.setItem("users", JSON.stringify(users))
+
+    setUser(newUser)
     navigate("/Donations")
   }
 

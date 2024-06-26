@@ -8,16 +8,39 @@ const SignInForm = () => {
   const { setUser } = useUser()
   const [name, setName] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
-  const handleSignIn = () => {
-    setUser({ name, password})
+  const handleSignIn = (e) => {
+    e.preventDefault()
+
+    if (!name || !password) {
+      setError("Todos os campos são obrigatórios.")
+      return
+    }
+
+    const users = JSON.parse(localStorage.getItem("users")) || []
+
+    const user = users.find(user => user.name === name)
+
+    if (!user) {
+      setError("Usuário não encontrado.")
+      return
+    }
+
+    if (user.password !== password) {
+      setError("Senha incorreta.")
+      return
+    }
+
+    setUser(user)
     navigate("/Donations")
   }
 
   return (
     <div className="form-container sign-in-container">
-      <form className="form-miguel" action="#">
+      <form className="form-miguel" onSubmit={handleSignIn}>
         <h1 className="h1-miguel">Login</h1>
+        {error && <p className="error-message">{error}</p>}
         <input
           className="input-miguel"
           type="text"
@@ -37,9 +60,9 @@ const SignInForm = () => {
         <a className="a-miguel" href="#">
           Esqueceu sua senha?
         </a>
-        <div className="btn-grad" id="signin" onClick={handleSignIn}>
+        <button className="btn-grad" type="submit" id="signin">
           Sign In
-        </div>
+        </button>
       </form>
     </div>
   )
