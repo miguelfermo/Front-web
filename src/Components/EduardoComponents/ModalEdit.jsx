@@ -106,7 +106,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             <div style={{ color: "red", marginTop: 10 }}>{formErrors.message}</div>
           )}
           <Box sx={{ textAlign: "center", marginTop: 2 }}>
-            <Button type="submit" variant="contained" color="primary" style={{ marginRight: 10 }}>
+            <Button type="submit" variant="contained" style={{ backgroundColor: "#dd6b20", color: "#fff", marginRight: 10 }}>
               Salvar
             </Button>
             <Button variant="contained" style={{ backgroundColor: "#f44336", color: "#fff" }} onClick={handleDeleteUser}>
