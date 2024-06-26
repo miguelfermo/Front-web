@@ -31,6 +31,8 @@ const ModalEdit = ({ open, onClose, data }) => {
 
   const handleDeleteUser = () => {
     if (window.confirm("Tem certeza que deseja excluir seu cadastro? Esta ação é irreversível.")) {
+      setUser(null)
+      setFormErrors({ message: "Cadastro excluído com sucesso!" });
       navigate('/login'); 
       onClose(); 
     }

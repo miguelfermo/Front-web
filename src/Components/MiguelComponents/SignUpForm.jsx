@@ -27,11 +27,12 @@ const SignUpForm = () => {
       return
     }
 
-    const newUser = { name, email, password }
-    users.push(newUser)
+    const user = { name, email, password }
+    users.push(user)
+    console.log(user)
     localStorage.setItem("users", JSON.stringify(users))
 
-    setUser(newUser)
+    setUser(user)
     navigate("/Donations")
   }
 
