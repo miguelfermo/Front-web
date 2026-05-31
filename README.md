@@ -27,6 +27,8 @@ O sistema oferece uma interface para usuários criarem conta, acessarem campanha
 
 ## Tecnologias
 
+- Node.js 22
+- npm 10, declarado em `packageManager`
 - React 18
 - Vite
 - React Router DOM
@@ -35,6 +37,54 @@ O sistema oferece uma interface para usuários criarem conta, acessarem campanha
 - Bootstrap
 - React Icons
 - ESLint
+
+## Arquitetura alvo
+
+Foi criada uma estrutura paralela para evolução incremental do projeto, sem migrar as telas existentes nesta etapa. A decisão evita mudanças visuais e reduz risco: primeiro o projeto passa a ter um padrão claro de organização, depois cada tela pode ser migrada com revisão isolada.
+
+```text
+src/
+  app/
+    index.jsx
+    providers/
+      index.jsx
+    router/
+      index.jsx
+  components/
+    ComponentName/
+      index.jsx
+      data.js
+      style.js
+  pages/
+    PageName/
+      index.jsx
+  shared/
+    contexts/
+      ContextName/
+        index.jsx
+    storage/
+      data.js
+  assets/
+  index.css
+  main.jsx
+```
+
+### Regra de organização
+
+- Cada pasta de componente deve ter no máximo `index.jsx`, `data.js` e `style.js`.
+- `index.jsx` deve concentrar a composição do componente.
+- `data.js` deve guardar dados estáticos, mocks ou constantes locais do componente.
+- `style.js` deve centralizar classes, tokens ou objetos de estilo locais.
+- Código compartilhado deve ficar em `src/shared`, não dentro de componentes.
+- Bootstrap da aplicação, providers e rotas devem ficar em `src/app`.
+
+### Motivo da estrutura
+
+- **Baixo acoplamento:** componentes deixam de depender da organização por autor e passam a depender de responsabilidade.
+- **Alta coesão:** arquivos relacionados ao mesmo componente ficam juntos.
+- **Atomicidade:** cada pasta representa uma unidade pequena e previsível.
+- **Evolução incremental:** telas antigas podem ser migradas uma por vez sem reescrever fluxo visual.
+- **Revisão simples:** mudanças ficam localizadas em poucas pastas e com nomes padronizados.
 
 ## Análise dos principais problemas detectados
 
@@ -61,29 +111,26 @@ O sistema oferece uma interface para usuários criarem conta, acessarem campanha
 - `src/main.jsx`: importa `ReactDOM` e `createRoot`, mas usa apenas `ReactDOM.createRoot`, gerando código morto.
 - Contextos em `src/context/UserContext.jsx` e `src/context/DonationsContext.jsx`: não validam `children` e exportam hook/componente no mesmo arquivo, gerando alertas de Fast Refresh no lint.
 
-### Resultado das validações
-
-- `npm run build`: executado com sucesso.
-- `npm run build`: emitiu avisos porque as fontes referenciadas em `src/index.css` (`../Fontes/Simple-Farmhouse.ttf` e `../Fontes/SANTELLO.ttf`) não foram resolvidas no build.
-- `npm run lint`: falhou com 20 erros e 2 avisos, incluindo `setError` indefinido, imports/variáveis não usados e ausência de validação de props.
-
 ## Estratégias de refatoração utilizadas
 
-Nesta entrega, a refatoração aplicada foi documental: o `README.md` foi reestruturado para registrar funcionamento, problemas encontrados, validações executadas, lacunas de testes e instruções de execução. Também foi criado/atualizado o `CHANGELOG.md` no formato recomendado pelo Keep a Changelog.
+Nesta etapa foi aplicada uma refatoração estrutural preparatória:
 
-Não foram alterados componentes, regras de negócio ou estilos da aplicação nesta etapa.
+- Declaração de Node.js 22 em `.nvmrc`, `.node-version`, `package.json` e `package-lock.json`.
+- Atualização do `package-lock.json` para `lockfileVersion: 3`, compatível com npm moderno.
+- Criação de `src/app` para futura centralização de aplicação, providers e rotas.
+- Criação de `src/components` com pastas atômicas e arquivos vazios para migração gradual.
+- Criação de `src/pages` com páginas-alvo separadas por responsabilidade.
+- Criação de `src/shared` para contextos e dados compartilhados.
+- Manutenção das telas legadas sem reajuste visual ou migração funcional nesta etapa.
 
-### Estratégias recomendadas para o código
+### Próximos passos recomendados
 
-- Corrigir primeiro os defeitos funcionais de login, cadastro, logout e acesso defensivo a `location.state`.
-- Normalizar nomes de arquivos e imports para evitar falhas em sistemas case-sensitive.
-- Extrair acesso a `localStorage` para serviços ou hooks específicos, como `useUsersStorage` e `useDonationsStorage`.
-- Separar validação e regra de negócio em funções puras testáveis.
-- Substituir `alert`, `confirm` e `console.log` por feedback controlado na interface e logs apropriados para desenvolvimento.
-- Padronizar a estratégia de estilos para reduzir colisões globais.
-- Criar componentes reutilizáveis para botões, campos de formulário, mensagens de erro e modais.
-- Gerar IDs estáveis para campanhas com `crypto.randomUUID()` ou biblioteca apropriada.
-- Tratar dados ausentes ou inválidos vindos do `localStorage` antes de renderizar listas e filtros.
+- Migrar uma tela por vez da estrutura legada para a estrutura alvo.
+- Corrigir primeiro cadastro, login, logout e busca, pois são defeitos funcionais.
+- Extrair acesso a `localStorage` para funções compartilhadas.
+- Substituir `alert`, `confirm` e `console.log` por feedback controlado.
+- Padronizar estilos gradualmente em `style.js`.
+- Adicionar testes após extrair regras de negócio para funções testáveis.
 
 ## Testes implementados e cobertura
 
@@ -98,21 +145,33 @@ Não há testes automatizados implementados neste projeto no estado atual.
 
 - Testes unitários para validação de cadastro, login, logout e filtros de campanhas.
 - Testes de componentes para `SignInForm`, `SignUpForm`, `Search`, `Donations`, `DonationsEdit`, `NavBar` e `ModalEdit`.
-- Testes de integração para cadastro, login, criação de campanha, edição de campanha e listagem filtrada.
-- Testes end-to-end para as rotas principais (`/`, `/login`, `/Donations`, `/DonationsEdit`).
-- Meta inicial de cobertura sugerida: 70% para componentes e regras centrais após extração da lógica para funções testáveis.
+- Testes de integração para cadastro, login, criação de campanha e listagem filtrada.
+- Testes end-to-end para as rotas principais.
+- Meta inicial de cobertura sugerida: 70% para componentes e regras centrais após extração da lógica.
 
 ## Instalação e execução
 
 ### Pré-requisitos
 
-- Node.js instalado.
-- npm instalado.
+- Node.js 22.
+- npm 10 ou superior.
+
+O projeto declara Node 22 em:
+
+- `.nvmrc`
+- `.node-version`
+- `package.json`
 
 ### Instalar dependências
 
 ```bash
 npm install
+```
+
+Se o npm global estiver desatualizado, use Corepack:
+
+```bash
+corepack npm install
 ```
 
 ### Executar em desenvolvimento
@@ -145,7 +204,7 @@ npm run preview
 npm run lint
 ```
 
-No estado atual, o lint falha e deve ser usado como lista objetiva de correções pendentes antes de considerar o projeto pronto para integração contínua.
+No estado atual, o lint ainda reflete problemas da estrutura legada e deve ser usado como lista objetiva de correções pendentes.
 
 ## Desenvolvedores
 
