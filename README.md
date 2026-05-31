@@ -213,3 +213,4 @@ No estado atual, o lint ainda reflete problemas da estrutura legada e deve ser u
 - [Taylor Teixeira](https://github.com/taylorteixeira)
 - [Eryc Jacinto](https://github.com/erycmj)
 - [Isis Costa](https://github.com/isiscostabb)
+- [Edrik Steiner](https://github.com/edrikfsteiner)
