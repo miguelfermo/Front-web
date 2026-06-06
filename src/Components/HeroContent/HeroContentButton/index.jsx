@@ -1,0 +1,13 @@
+import { Link } from "react-router-dom";
+
+export function HeroContentButton() {
+    return (
+        <div className="flex justify-center m-4">
+            <Link to="/Donations">
+                <button className="w-72 rounded-lg bg-yellow-600 py-2 text-2xl font-bold tracking-widest text-yellow-900 shadow-md transition-colors duration-200 hover:bg-orange-800">
+                    NAVEGAR
+                </button>
+            </Link>
+        </div>
+    )
+}

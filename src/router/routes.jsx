@@ -1,6 +1,4 @@
-import HeaderDN from "../Components/IsisComponents/header"
-import FooterDN from "../Components/IsisComponents/Footer"
-import Telainicial from "../Components/IsisComponents/Telainicial"
+import HeroScreen from "../pages/Hero"
 
 import DonationsPage from "../pages/DonationsPage"
 
@@ -15,14 +13,11 @@ import LoginPage from "../pages/LoginPage"
 import { createBrowserRouter } from "react-router-dom"
 
 const routes = createBrowserRouter([
-  // Parte da Isis
   {
     path: "/",
     element: (
       <div>
-        <HeaderDN />
-        <Telainicial />
-        <FooterDN />
+        <HeroScreen />
       </div>
     ),
   },

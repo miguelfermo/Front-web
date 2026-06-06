@@ -1,5 +1,5 @@
 import { AiFillInstagram, AiOutlineGithub, AiOutlineTwitter } from "react-icons/ai"
-import logo from "../../assets/logoName.png"
+import logo from "../../assets/logo-name.png"
 
 
 const FooterDiv = () => {
