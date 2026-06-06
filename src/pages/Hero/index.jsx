@@ -1,4 +1,4 @@
-import Footer from "../../components/Footer/Footer"
+import Footer from "../../components/Footer/index"
 import HeaderScreen from "../../components/Header/index"
 import { HeroContent } from "../../components/HeroContent/index"
 

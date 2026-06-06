@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 z-10 flex h-16 w-full items-center bg-amber-900">
+    <header className="fixed flex h-16 w-full items-center bg-amber-900">
       <Link to="/" className="ml-5">
         <img src={imglogo} className="h-12 w-auto" alt="logo donation compass" />
       </Link>
