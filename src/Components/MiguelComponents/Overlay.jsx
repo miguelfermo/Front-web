@@ -1,19 +1,16 @@
-// src/components/Overlay.jsx
-import './Miguelstyles.css';
-
 const Overlay = ({ onSignInClick, onSignUpClick }) => {
     return (
-        <div className="overlay-container">
-            <div className="overlay">
-                <div className="overlay-panel overlay-left">
-                    <h1 className='h1-miguel'>Bem-Vindo de Volta!</h1>
-                    <p className='p-miguel'>Continue de onde você começou!</p>
-                    <div className="btn-grad" id="signIn" onClick={onSignInClick}>Sign In</div>
+        <div className="absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-transform duration-600 ease-in-out z-40">
+            <div className="bg-gradient-to-r from-orange-500 to-orange-700 text-white relative left-full h-full w-full transform transition-transform duration-600 ease-in-out flex" style={{backgroundImage: 'linear-gradient(to right, #e26e3d 52%, #7e4b18)'}}>
+                <div className="absolute flex flex-col items-center justify-center top-0 h-full w-1/2 px-10 text-center transform transition-transform duration-600 ease-in-out -translate-x-1/5">
+                    <h1 className='text-4xl font-bold'>Bem-Vindo de Volta!</h1>
+                    <p className='text-sm font-light leading-5 tracking-wider my-5 mx-0'>Continue de onde você começou!</p>
+                    <div className="bg-gradient-to-r from-white to-gray-100 text-purple-700 font-bold py-3 px-12 my-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" onClick={onSignInClick}>Sign In</div>
                 </div>
-                <div className="overlay-panel overlay-right">
-                    <h1 className='h1-miguel'>Novo por aqui?</h1>
-                    <p className='p-miguel'>Cadastre-se para uma nova aventura</p>
-                    <div className="btn-grad" id="signUp" onClick={onSignUpClick}>Sign Up</div>
+                <div className="absolute right-0 flex flex-col items-center justify-center top-0 h-full w-1/2 px-10 text-center transform transition-transform duration-600 ease-in-out">
+                    <h1 className='text-4xl font-bold'>Novo por aqui?</h1>
+                    <p className='text-sm font-light leading-5 tracking-wider my-5 mx-0'>Cadastre-se para uma nova aventura</p>
+                    <div className="bg-gradient-to-r from-white to-gray-100 text-purple-700 font-bold py-3 px-12 my-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" onClick={onSignUpClick}>Sign Up</div>
                 </div>
             </div>
         </div>
