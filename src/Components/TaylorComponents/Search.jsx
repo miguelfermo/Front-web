@@ -17,14 +17,14 @@ const Search = ({ onSearchChange }) => {
   }
 
   return (
-    <div className="searchDiv grid gap-7 bg-greyIsh rounded-[10px] p-[3rem]">
+    <div className="grid gap-7 bg-greyIsh rounded-lg p-12">
       <form action="" onSubmit={(e) => e.preventDefault()}>
-        <div className="firstDiv flex justify-between items-center rounded-[8px] gap-[70px] bg-white p-5 shadow-lg shadow-greyIsh-700">
+        <div className="flex justify-between items-center rounded-lg gap-20 bg-white p-5 shadow-lg shadow-greyIsh-700">
           <div className="flex gap-2 items-center">
-            <AiOutlineSearch className="text-[25px] icon" />
+            <AiOutlineSearch className="text-2xl cursor-pointer" />
             <input
               type="text"
-              className="bg-transparent text-blue-500 focus:outline-none w-[100%]"
+              className="bg-transparent text-blue-500 focus:outline-none w-full"
               placeholder="Pesquise sua vaquinha"
               value={searchTerm}
               onChange={(e) => {
@@ -33,7 +33,7 @@ const Search = ({ onSearchChange }) => {
               }}
             />
             <AiOutlineCloseCircle
-              className="text-[30px] text-[#a5a6a6] hover:text-textColor icon cursor-pointer"
+              className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
               onClick={() => {
                 setSearchTerm("")
                 handleSearchChange()
@@ -42,10 +42,10 @@ const Search = ({ onSearchChange }) => {
           </div>
 
           <div className="flex gap-2 items-center">
-            <BsHouseDoor className="text-[25px] icon" />
+            <BsHouseDoor className="text-2xl cursor-pointer" />
             <input
               type="text"
-              className="bg-transparent text-blue-500 focus:outline-none w-[100%]"
+              className="bg-transparent text-blue-500 focus:outline-none w-full"
               placeholder="Pesquise por companhia"
               value={companyTerm}
               onChange={(e) => {
@@ -54,7 +54,7 @@ const Search = ({ onSearchChange }) => {
               }}
             />
             <AiOutlineCloseCircle
-              className="text-[30px] text-[#a5a6a6] hover:text-textColor icon cursor-pointer"
+              className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
               onClick={() => {
                 setCompanyTerm("")
                 handleSearchChange()
@@ -63,10 +63,10 @@ const Search = ({ onSearchChange }) => {
           </div>
 
           <div className="flex gap-2 items-center">
-            <CiLocationOn className="text-[25px] icon" />
+            <CiLocationOn className="text-2xl cursor-pointer" />
             <input
               type="text"
-              className="bg-transparent text-blue-500 focus:outline-none w-[100%]"
+              className="bg-transparent text-blue-500 focus:outline-none w-full"
               placeholder="Pesquisa por local"
               value={locationTerm}
               onChange={(e) => {
@@ -75,7 +75,7 @@ const Search = ({ onSearchChange }) => {
               }}
             />
             <AiOutlineCloseCircle
-              className="text-[30px] text-[#a5a6a6] hover:text-textColor icon cursor-pointer"
+              className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
               onClick={() => {
                 setLocationTerm("")
                 handleSearchChange()

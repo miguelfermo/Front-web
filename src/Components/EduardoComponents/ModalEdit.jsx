@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Box, TextField, Button } from "@mui/material";
 import { useUser } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
@@ -38,85 +37,84 @@ const ModalEdit = ({ open, onClose, data }) => {
     }
   };
 
+  if (!open) return null;
+
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
-          boxShadow: 24,
-          p: 4,
-        }}
-      >
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-8 w-full max-w-md mx-4">
+        <h2 className="text-2xl font-bold mb-6">Editar Cadastro</h2>
         <form onSubmit={handleSubmit}>
-          <TextField
-            label="Nome"
+          <input
+            type="text"
+            placeholder="Nome"
             name="name"
             value={data.name}
-            fullWidth
-            margin="normal"
-            required
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+            readOnly
           />
-          <TextField
-            label="Email"
+          <input
+            type="email"
+            placeholder="Email"
             name="email"
             value={formData.email || ""}
             onChange={handleChange}
-            fullWidth
-            margin="normal"
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <TextField
-            label="Telefone"
+          <input
+            type="tel"
+            placeholder="Telefone"
             name="telefone"
             value={formData.telefone || ""}
             onChange={handleChange}
-            fullWidth
-            margin="normal"
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <TextField
-            label="CPF"
+          <input
+            type="text"
+            placeholder="CPF"
             name="cpf"
             value={formData.cpf || ""}
             onChange={handleChange}
-            fullWidth
-            margin="normal"
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <TextField
-            label="Senha"
-            name="password"
+          <input
             type="password"
+            placeholder="Senha"
+            name="password"
             value={formData.password || ""}
             onChange={handleChange}
-            fullWidth
-            margin="normal"
+            className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
           {formErrors.message && (
-            <div style={{ color: "red", marginTop: 10 }}>{formErrors.message}</div>
+            <div className="text-red-500 mb-4">{formErrors.message}</div>
           )}
-          <Box sx={{ textAlign: "center", marginTop: 2 }}>
-            <Button type="submit" variant="contained" style={{ backgroundColor: "#dd6b20", color: "#fff", marginRight: 10 }}>
+          <div className="flex gap-4 justify-center mt-6">
+            <button 
+              type="submit" 
+              className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+            >
               Salvar
-            </Button>
-            <Button variant="contained" style={{ backgroundColor: "#f44336", color: "#fff" }} onClick={handleDeleteUser}>
+            </button>
+            <button 
+              type="button"
+              onClick={handleDeleteUser}
+              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+            >
               Excluir Cadastro
-            </Button>
-          </Box>
+            </button>
+          </div>
         </form>
-      </Box>
-    </Modal>
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
   );
 };
 

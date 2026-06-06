@@ -36,25 +36,25 @@ const NavBar = () => {
   }, [])
 
   return (
-    <div className="navBar flex justify-between items-center p-[1rem]">
+    <div className="flex justify-between items-center p-4">
       <Link to="/Donations">
         <img className="h-16" src={logo} alt="logo" />
       </Link>
-      <div className="menu flex gap-8">
+      <div className="flex gap-8">
         {user && user.name ? (
           <div className="relative">
             <button
-              className="menuList text-[#6f6f6f] relative"
+              className="text-gray-500 hover:text-gray-700 relative"
               onClick={toggleDropdown}
             >
-              Olá, {user.name} &#9660;
+              Olá, {user.name} ▼
             </button>
             {dropdownOpen && (
-              <ul className="dropdown-menu">
-                <li className="dropdown-item" onClick={handleOpenModal}>
+              <ul className="absolute top-full right-0 z-50 flex flex-col bg-white border border-gray-300 border-t-0 rounded-b-lg shadow-md p-2">
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleOpenModal}>
                   Editar
                 </li>
-                <li className="dropdown-item" onClick={handleLogout}>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
                   Sair
                 </li>
               </ul>
@@ -62,15 +62,15 @@ const NavBar = () => {
             <ModalEdit
               open={openModal}
               onClose={handleCloseModal}
-              data={user} // Passa os dados do usuário atual para o modal
+              data={user}
             />
           </div>
         ) : (
           <>
-            <li className="menuList text-[#6f6f6f] hover:text-orange-600">
+            <li className="text-gray-500 hover:text-orange-600 list-none cursor-pointer">
               <Link to="/login">Login</Link>
             </li>
-            <li className="menuList text-[#6f6f6f] hover:text-orange-600">
+            <li className="text-gray-500 hover:text-orange-600 list-none cursor-pointer">
               <Link to="/login">Register</Link>
             </li>
           </>
@@ -78,6 +78,10 @@ const NavBar = () => {
       </div>
     </div>
   )
+}
+
+export default NavBar
+}
 }
 
 export default NavBar

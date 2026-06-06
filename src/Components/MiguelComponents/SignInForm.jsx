@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import "./Miguelstyles.css"
 import { useUser } from "../../context/UserContext"
 
 const SignInForm = () => {
@@ -36,12 +35,12 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="form-container sign-in-container">
-      <form className="form-miguel" onSubmit={handleSignIn}>
-        <h1 className="h1-miguel">Login</h1>
-        {error && <p className="error-message">{error}</p>}
+    <div className="absolute top-0 left-0 w-1/2 h-full z-20 transition-transform duration-600 ease-in-out">
+      <form className="bg-white flex flex-col items-center justify-center py-0 px-12 h-full text-center" onSubmit={handleSignIn}>
+        <h1 className="text-4xl font-bold m-0 mb-1">Login</h1>
+        {error && <p className="text-red-500 mt-2.5">{error}</p>}
         <input
-          className="input-miguel"
+          className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="text"
           placeholder="Nome"
           value={name}
@@ -49,17 +48,17 @@ const SignInForm = () => {
           required
         />
         <input
-          className="input-miguel"
+          className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <a className="a-miguel" href="#">
+        <a className="text-gray-800 text-sm no-underline my-4" href="#">
           Esqueceu sua senha?
         </a>
-        <button className="btn-grad" type="submit" id="signin">
+        <button className="bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" type="submit" id="signin">
           Sign In
         </button>
       </form>

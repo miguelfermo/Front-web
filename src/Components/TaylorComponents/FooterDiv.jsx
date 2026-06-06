@@ -4,46 +4,45 @@ import logo from "../../assets/logoName.png"
 
 const FooterDiv = () => {
   return (
-   
-    <div className="footer p-[5rem] mb-4 bg-orange-600 rounded-[10px] gap-8 grid grid-cols-5 m-auto items-start justify-center">
+    <div className="p-20 mb-4 bg-orange-600 rounded-lg gap-8 grid grid-cols-5 m-auto items-start justify-center">
       
       <div>
-      <div className="logoDiv">
-        <img className="h-40rem" src={logo} alt="" />
+      <div>
+        <img className="h-40" src={logo} alt="" />
       </div>
       </div>
     
-     <div className="grid ">
-      <span className="divTitle text-[18px] font-semibold pb-[1.5rem] text-white">
+     <div className="grid">
+      <span className="text-lg font-semibold pb-6 text-white">
          Recursos
       </span>
       <div className="grid gap-3">
-       <li className="text-white opacity-[.7] hover:opacity-[1]">Empresa</li>
-       <li className="text-white opacity-[.7] hover:opacity-[1]">Suporte</li>
-       <li className="text-white opacity-[.7] hover:opacity-[1]">Feedback</li>
-       <li className="text-white opacity-[.7] hover:opacity-[1]">Contato</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">Empresa</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">Suporte</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">Feedback</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">Contato</li>
       </div>
      </div>
 
-     <div className="grid ">
-      <span className="divTitle text-[18px] font-semibold pb-[1.5rem] text-white">
+     <div className="grid">
+      <span className="text-lg font-semibold pb-6 text-white">
          Empresa
       </span>
       <div className="grid gap-3">
-       <li className="text-white opacity-[.7] hover:opacity-[1]">Sobre nós</li>
-       <li className="text-white opacity-[.7] hover:opacity-[1]">Noticias</li>
-       <li className="text-white opacity-[.7] hover:opacity-[1]">FAQ</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">Sobre nós</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">Noticias</li>
+       <li className="text-white opacity-70 hover:opacity-100 list-none">FAQ</li>
       </div>
      </div>
 
-     <div className="grid ">
-      <span className="divTitle text-[18px] font-semibold pb-[1.5rem] text-white">
+     <div className="grid">
+      <span className="text-lg font-semibold pb-6 text-white">
          Contato
       </span>
-       <div className="icons flex gap-4 py-[1rem]">
-        <AiFillInstagram className="bg-white p-[8px] h-[35px] w-[35px] rounded-full icon text-orange-600" href="" target="_black"/>
-          <AiOutlineGithub className=" bg-white p-[8px] h-[35px] w-[35px] rounded-full icon text-orange-600" href="" target="_black"/>
-          <AiOutlineTwitter className="bg-white p-[8px] h-[35px] w-[35px] rounded-full icon text-orange-600" href="" target="_black"/>
+       <div className="flex gap-4 py-4">
+        <AiFillInstagram className="bg-white p-2 h-9 w-9 rounded-full cursor-pointer text-orange-600" />
+          <AiOutlineGithub className="bg-white p-2 h-9 w-9 rounded-full cursor-pointer text-orange-600" />
+          <AiOutlineTwitter className="bg-white p-2 h-9 w-9 rounded-full cursor-pointer text-orange-600" />
       </div>
      </div>
     </div>
