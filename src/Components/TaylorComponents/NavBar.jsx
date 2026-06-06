@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import logo from "../../assets/logoName.png"
+import logo from "../../assets/logo-name.png"
 import { useUser } from "../../context/UserContext"
 import ModalEdit from "../EduardoComponents/ModalEdit"
 

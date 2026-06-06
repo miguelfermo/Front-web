@@ -40,3 +40,232 @@ O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.
 - Edição e exclusão de cadastro de usuário.
 - Persistência local de usuários e campanhas via `localStorage`.
 - Configuração inicial com React, Vite, Tailwind CSS, Material UI, Bootstrap, React Router e ESLint.
+
+## [1.0.1] - 2026-06-05
+
+### Adicionado
+- Estrutura modular em src/components, organizada por contexto e responsabilidade.
+- Página HeroScreen responsável pela composição da tela inicial.
+- Componentes especializados para título, textos, botões e cartões da seção Hero.
+- Arquivo data.js para centralização dos conteúdos estáticos da tela inicial.
+- Organização hierárquica de componentes visando reutilização e escalabilidade.
+- Padronização de nomes de imagens utilizando convenção kebab-case.
+
+### Alterado
+- Reestruturação da arquitetura do front-end para uma abordagem baseada em componentes.
+- Substituição da implementação monolítica da antiga TelaInicial.jsx.
+- Remoção dos arquivos CSS específicos em favor da utilização de Tailwind CSS.
+- Simplificação da rota principal através da abstração da página HeroScreen.
+- Padronização da organização dos arquivos utilizando index.jsx.
+
+
+### Refatorado
+- Extração do conteúdo estático da interface para estruturas de dados independentes.
+- Separação entre conteúdo, layout e apresentação.
+- Redução do acoplamento entre componentes.
+- Aumento da coesão através do agrupamento de arquivos relacionados.
+- Melhoria da legibilidade e manutenção do código.
+- Melhorias de Arquitetura
+
+## Antes
+
+A arquitetura anterior possuía:
+- Componentes concentrando múltiplas responsabilidades.
+- Mistura entre conteúdo, layout e estilização.
+- Arquivos CSS independentes para cada componente.
+- Estrutura de diretórios sem separação clara por domínio.
+- Alto acoplamento entre as partes da página principal.
+- Grande quantidade de conteúdo estático diretamente dentro dos componentes.
+
+## Depois
+
+A arquitetura passou a adotar:
+- Componentização em múltiplos níveis.
+- Componentes com responsabilidade única.
+- Centralização dos dados em arquivos específicos.
+- Estrutura baseada em contexto funcional.
+- Separação entre apresentação e conteúdo.
+- Reutilização e composição de componentes.
+- Padronização de nomenclatura e organização.
+- Code Smells Identificados e Tratados
+- Large Class / God Component
+
+### Situação anterior
+TelaInicial.jsx concentrava:
+- Layout;
+- Conteúdo textual;
+- Estrutura da página;
+- Navegação;
+- Estilização.
+
+Caracterizando um componente excessivamente grande e com múltiplas responsabilidades.
+
+### Solução aplicada
+- Quebra do componente em unidades menores.
+
+Criação de:
+- HeroScreen
+- HeroContent
+- HeroCard
+- HeroContentTitle
+- HeroContentParagraph
+- HeroContentButton
+
+Prática aplicada
+- Single Responsibility Principle (SRP);
+- Component Composition;
+
+Alta coesão.
+- Divergent Change
+- Situação anterior
+
+Qualquer alteração textual ou estrutural exigia modificações em um único arquivo extenso.
+
+## Solução aplicada
+
+Separação do conteúdo em data.js, permitindo alterações independentes da estrutura visual.
+
+Prática aplicada
+Separation of Concerns;
+Encapsulamento.
+Shotgun Surgery
+Situação anterior
+
+Mudanças em elementos da Hero exigiam alterações em vários trechos do mesmo componente.
+
+Solução aplicada
+
+Separação em componentes especializados e reutilizáveis.
+
+Prática aplicada
+Componentização;
+Baixo acoplamento.
+Duplicated Code
+Situação anterior
+
+Estruturas semelhantes de títulos e parágrafos tendiam a se repetir.
+
+Solução aplicada
+
+Criação de componentes reutilizáveis.
+
+Prática aplicada
+DRY (Don't Repeat Yourself).
+Primitive Obsession
+Situação anterior
+
+Grande quantidade de textos hardcoded dentro do JSX.
+
+Solução aplicada
+
+Centralização das informações em data.js.
+
+Prática aplicada
+- Data Driven Components;
+- Separation of Concerns.
+- Inconsistent Naming
+- Situação anterior
+
+Existência de nomenclaturas inconsistentes:
+- HeaderDN;
+- Telainicial;
+- arquivos com diferentes padrões de escrita.
+
+### Solução aplicada
+
+Padronização da nomenclatura dos componentes e imagens.
+
+### Prática aplicada
+- Convention over Configuration;
+- Consistência semântica.
+- Excessive Coupling
+
+### Situação anterior
+A rota principal precisava conhecer diretamente:
+- Header;
+- TelaInicial;
+- Footer.
+
+### Solução aplicada
+Introdução da abstração HeroScreen.
+
+Prática aplicada
+- Encapsulamento;
+- Baixo acoplamento.
+- CSS Scattering
+
+Situação anterior
+Estilos distribuídos em múltiplos arquivos:
+- header.css;
+- footer.css;
+- telainicial.css.
+
+Gerando maior dispersão e dificuldade de manutenção.
+
+Solução aplicada
+Adoção de Tailwind CSS.
+
+Prática aplicada
+- Colocation;
+- Utility First CSS.
+- Baixa Coesão da Estrutura
+
+Situação anterior
+- Arquivos relacionados encontravam-se dispersos dentro de uma única pasta.
+
+### Arquitetura Antiga
+src
+|___Components
+    |___IsiComponents
+        |___footer.css
+        |___Footer.jsx
+        |___header.css
+        |___Header.jsx
+        |___TelaInicial.css
+        |___TelaInicial.jsx
+
+### Solução aplicada
+
+Organização baseada em contexto:
+components
+├── Header
+├── Footer
+├── HeroContent
+   ├── HeroCard
+   ├── HeroContentTitle
+   ├── HeroContentParagraph
+   ├── HeroContentButton
+   ├── data.js
+   └── index.jsx
+
+Prática aplicada
+- High Cohesion;
+- Feature-Oriented Structure.
+
+Princípios de Clean Code Aplicados
+- Single Responsibility Principle (SRP);
+- Separation of Concerns (SoC);
+- DRY (Don't Repeat Yourself);
+- Baixo acoplamento;
+- Alta coesão;
+- Encapsulamento;
+- Component Composition;
+- Convention over Configuration;
+- Data Driven Components;
+- Feature-Oriented Structure;
+- Utility First CSS;
+- Maior legibilidade e manutenibilidade;
+- Maior escalabilidade da arquitetura;
+- Melhor reutilização dos componentes;
+- Redução da complexidade ciclomática dos componentes de alto nível.
+
+### Resultado Esperado
+
+A nova arquitetura proporciona:
+- Melhor legibilidade do código;
+- Maior facilidade de manutenção;
+- Menor impacto de futuras alterações;
+- Maior reutilização de componentes;
+- Maior escalabilidade da aplicação;
+- Redução do acoplamento entre módulos;
+- Melhor aderência às práticas de Clean Code e princípios SOLID.
