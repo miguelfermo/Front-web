@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { TextField } from "@mui/material"
-import icon from "../../assets/iconPerfil.png"
+import icon from "../../assets/icon-perfil.png"
 import Modal from "./DonationsEditModal"
 import { useDonations } from "../../context/DonationsContext"
 
