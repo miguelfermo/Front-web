@@ -12,8 +12,18 @@ const Search = ({ onSearchChange }) => {
   const [companyTerm, setCompanyTerm] = useState("")
   const [locationTerm, setLocationTerm] = useState("")
 
-  const handleSearchChange = () => {
-    onSearchChange({ searchTerm, companyTerm, locationTerm })
+  const updateSearchTerms = (field, value) => {
+    const nextTerms = {
+      searchTerm,
+      companyTerm,
+      locationTerm,
+      [field]: value,
+    }
+
+    setSearchTerm(nextTerms.searchTerm)
+    setCompanyTerm(nextTerms.companyTerm)
+    setLocationTerm(nextTerms.locationTerm)
+    onSearchChange(nextTerms)
   }
 
   return (
@@ -27,17 +37,11 @@ const Search = ({ onSearchChange }) => {
               className="bg-transparent text-blue-500 focus:outline-none w-full"
               placeholder="Pesquise sua vaquinha"
               value={searchTerm}
-              onChange={(e) => {
-                setSearchTerm(e.target.value)
-                handleSearchChange()
-              }}
+              onChange={(e) => updateSearchTerms("searchTerm", e.target.value)}
             />
             <AiOutlineCloseCircle
               className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
-              onClick={() => {
-                setSearchTerm("")
-                handleSearchChange()
-              }}
+              onClick={() => updateSearchTerms("searchTerm", "")}
             />
           </div>
 
@@ -48,17 +52,11 @@ const Search = ({ onSearchChange }) => {
               className="bg-transparent text-blue-500 focus:outline-none w-full"
               placeholder="Pesquise por companhia"
               value={companyTerm}
-              onChange={(e) => {
-                setCompanyTerm(e.target.value)
-                handleSearchChange()
-              }}
+              onChange={(e) => updateSearchTerms("companyTerm", e.target.value)}
             />
             <AiOutlineCloseCircle
               className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
-              onClick={() => {
-                setCompanyTerm("")
-                handleSearchChange()
-              }}
+              onClick={() => updateSearchTerms("companyTerm", "")}
             />
           </div>
 
@@ -69,17 +67,11 @@ const Search = ({ onSearchChange }) => {
               className="bg-transparent text-blue-500 focus:outline-none w-full"
               placeholder="Pesquisa por local"
               value={locationTerm}
-              onChange={(e) => {
-                setLocationTerm(e.target.value)
-                handleSearchChange()
-              }}
+              onChange={(e) => updateSearchTerms("locationTerm", e.target.value)}
             />
             <AiOutlineCloseCircle
               className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
-              onClick={() => {
-                setLocationTerm("")
-                handleSearchChange()
-              }}
+              onClick={() => updateSearchTerms("locationTerm", "")}
             />
           </div>
 

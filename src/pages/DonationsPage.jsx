@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import Navbar from "../Components/TaylorComponents/Navbar"
+import Navbar from "../Components/TaylorComponents/NavBar"
 import Search from "../Components/TaylorComponents/Search"
 import Donations from "../Components/TaylorComponents/Donations"
 

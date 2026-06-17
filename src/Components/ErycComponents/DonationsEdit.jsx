@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
-import { TextField } from "@mui/material"
 import icon from "../../assets/icon-perfil.png"
 import Modal from "./DonationsEditModal"
 import { useDonations } from "../../context/DonationsContext"
+import { readStorage, writeStorage } from "../../shared/storage/localStorage"
 
 const initialInputState = {
   image: icon,
@@ -14,28 +14,34 @@ const initialInputState = {
   value: "",
 }
 
+const getNextDonationId = (donations) => {
+  const numericIds = donations
+    .map((donation) => Number(donation.id))
+    .filter(Number.isFinite)
+
+  return numericIds.length > 0 ? Math.max(...numericIds) + 1 : 1
+}
+
 export default function DonationsEdit() {
   const { donations, setDonations } = useDonations()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editIndex, setEditIndex] = useState(null)
   const [input, setInput] = useState(initialInputState)
+  const [formError, setFormError] = useState("")
 
   useEffect(() => {
-    const cachedDonations = localStorage.getItem("donations")
-    if (cachedDonations) {
-      setDonations(JSON.parse(cachedDonations))
-    }
+    setDonations(readStorage("donations", []))
   }, [setDonations])
 
   useEffect(() => {
-    localStorage.setItem("donations", JSON.stringify(donations))
+    writeStorage("donations", donations)
   }, [donations])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setInput((prev) => ({
       ...prev,
-      [name]: name === "value" ? parseFloat(value) : value,
+      [name]: name === "value" && value !== "" ? parseFloat(value) : value,
     }))
   }
 
@@ -45,9 +51,9 @@ export default function DonationsEdit() {
       !input.location ||
       !input.desc ||
       !input.company ||
-      input.value <= 0
+      Number(input.value) <= 0
     ) {
-      alert("Por favor, preencha todos os campos obrigatórios corretamente.")
+      setFormError("Preencha todos os campos obrigatorios corretamente.")
       return
     }
     if (editIndex !== null) {
@@ -57,17 +63,19 @@ export default function DonationsEdit() {
     setDonations((prev) => [
       ...prev,
       {
-        id: prev.length + 1,
+        id: getNextDonationId(prev),
         ...input,
       },
     ])
     resetInput()
+    setFormError("")
     setIsModalOpen(false)
   }
 
   const editDonation = (index) => {
     setEditIndex(index)
     setInput(donations[index])
+    setFormError("")
     setIsModalOpen(true)
   }
 
@@ -78,6 +86,7 @@ export default function DonationsEdit() {
     setDonations(updatedDonations)
     setEditIndex(null)
     resetInput()
+    setFormError("")
     setIsModalOpen(false)
   }
 
@@ -87,11 +96,14 @@ export default function DonationsEdit() {
   }
 
   const handleOpenModal = () => {
+    setFormError("")
     setIsModalOpen(true)
   }
 
   const handleCloseModal = () => {
     resetInput()
+    setEditIndex(null)
+    setFormError("")
     setIsModalOpen(false)
   }
 
@@ -164,6 +176,7 @@ export default function DonationsEdit() {
       {isModalOpen && (
         <Modal onClose={handleCloseModal}>
           <div className="flex flex-col gap-4">
+            {formError && <p className="text-sm text-red-600">{formError}</p>}
             <input
               type="text"
               placeholder="Title"

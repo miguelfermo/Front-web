@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 const Overlay = ({ onSignInClick, onSignUpClick }) => {
     return (
         <div className="absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-transform duration-600 ease-in-out z-40">
@@ -16,5 +18,10 @@ const Overlay = ({ onSignInClick, onSignUpClick }) => {
         </div>
     );
 };
+
+Overlay.propTypes = {
+    onSignInClick: PropTypes.func.isRequired,
+    onSignUpClick: PropTypes.func.isRequired,
+}
 
 export default Overlay;

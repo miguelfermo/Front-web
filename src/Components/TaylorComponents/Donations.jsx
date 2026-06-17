@@ -4,6 +4,8 @@ import { BiTimeFive } from "react-icons/bi";
 import Modal from "./Modal";
 import { useDonations } from '../../context/DonationsContext';
 
+const normalizeSearchValue = (value) => String(value ?? "").toLowerCase()
+
 const Donations = ({ searchTerm, companyTerm, locationTerm }) => {
   const { donations } = useDonations()
   const [selectedCampaign, setSelectedCampaign] = useState(null)
@@ -11,9 +13,9 @@ const Donations = ({ searchTerm, companyTerm, locationTerm }) => {
 
   const filteredData = donations.filter((donation) => {
     return (
-      donation.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      donation.company.toLowerCase().includes(companyTerm.toLowerCase()) &&
-      donation.location.toLowerCase().includes(locationTerm.toLowerCase())
+      normalizeSearchValue(donation.title).includes(normalizeSearchValue(searchTerm)) &&
+      normalizeSearchValue(donation.company).includes(normalizeSearchValue(companyTerm)) &&
+      normalizeSearchValue(donation.location).includes(normalizeSearchValue(locationTerm))
     )
   })
 
