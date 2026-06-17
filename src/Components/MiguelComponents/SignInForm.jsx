@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useUser } from "../../context/UserContext"
+import { readStorage } from "../../shared/storage/localStorage"
 
 const SignInForm = () => {
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ const SignInForm = () => {
       return
     }
 
-    const users = JSON.parse(localStorage.getItem("users")) || []
+    const users = readStorage("users", [])
 
     const user = users.find(user => user.name === name)
 
@@ -31,6 +32,7 @@ const SignInForm = () => {
       return
     }
 
+    setUser(user)
     navigate("/Donations")
   }
 

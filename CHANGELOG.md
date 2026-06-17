@@ -26,7 +26,38 @@ O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.
 - As telas legadas foram mantidas sem reajuste visual nesta etapa.
 - Os arquivos da nova estrutura de componentes foram criados vazios ou mínimos para servir como base de migração.
 - O projeto ainda não possui suíte de testes automatizados nem ferramenta de cobertura.
-- O lint ainda aponta problemas existentes na estrutura legada.
+- O lint foi estabilizado na versao `1.0.2`; novas pendencias devem ser tratadas em versoes futuras.
+
+## [1.0.2] - 2026-06-17
+
+### Corrigido
+
+- Removidas duplicacoes de JSX/export em `SignUpForm.jsx` e `NavBar.jsx`.
+- Corrigidos imports com capitalizacao incorreta em `Hero/index.jsx` e `router/routes.jsx`.
+- Corrigido login para atualizar o usuario autenticado no contexto.
+- Corrigido logout para limpar a sessao com `setUser(null)`.
+- Corrigida busca de doacoes para enviar os valores atualizados ao componente pai.
+- Corrigidos filtros de doacoes para tolerar dados incompletos vindos do storage.
+- Corrigida geracao de IDs de doacoes para evitar colisoes apos exclusoes.
+- Protegida a pagina de edicao de cadastro contra acesso sem `location.state`.
+
+### Refatorado
+
+- Criado `src/shared/storage/localStorage.js` para centralizar leitura e escrita no browser storage.
+- Substituidos `alert`, `confirm` e `console.log` por feedback controlado na interface.
+- Ajustado `main.jsx` para usar `createRoot` diretamente.
+- Adicionada validacao de `children` nos providers legados.
+
+### Alterado
+
+- Atualizada a versao do pacote para `1.0.2`.
+- Atualizado `package-lock.json` para `lockfileVersion: 3`.
+- Declarada a dependencia `prop-types`, ja utilizada por componentes existentes.
+
+### Validado
+
+- `npm run lint`.
+- `npm run build`.
 
 ## [1.0.0] - 2026-05-30
 

@@ -115,7 +115,7 @@ src/
 
 Nesta etapa foi aplicada uma refatoração estrutural preparatória:
 
-- Declaração de Node.js 22 em `.nvmrc`, `.node-version`, `package.json` e `package-lock.json`.
+- Declaração de Node.js 22 e npm 10 em `package.json`.
 - Atualização do `package-lock.json` para `lockfileVersion: 3`, compatível com npm moderno.
 - Criação de `src/app` para futura centralização de aplicação, providers e rotas.
 - Criação de `src/components` com pastas atômicas e arquivos vazios para migração gradual.
@@ -123,12 +123,18 @@ Nesta etapa foi aplicada uma refatoração estrutural preparatória:
 - Criação de `src/shared` para contextos e dados compartilhados.
 - Manutenção das telas legadas sem reajuste visual ou migração funcional nesta etapa.
 
+### Status da versao 1.0.2
+
+Esta etapa estabiliza a aplicacao para execucao e organiza o refactor em tres ideias de commit:
+
+- `fix: restore app build and routes`: remove duplicacoes de JSX/export, corrige imports com capitalizacao incorreta e ajusta o bootstrap React.
+- `fix: repair auth search and donation flows`: atualiza login/logout, busca com estado correto, filtros defensivos e IDs de doacao sem colisao apos exclusoes.
+- `refactor: centralize browser storage access`: concentra leitura e escrita de `localStorage` em `src/shared/storage/localStorage.js` e substitui `alert`, `confirm` e `console.log` por feedback controlado.
+
 ### Próximos passos recomendados
 
 - Migrar uma tela por vez da estrutura legada para a estrutura alvo.
-- Corrigir primeiro cadastro, login, logout e busca, pois são defeitos funcionais.
-- Extrair acesso a `localStorage` para funções compartilhadas.
-- Substituir `alert`, `confirm` e `console.log` por feedback controlado.
+- Migrar cadastro, login, doacoes e edicao de usuario para a estrutura alvo em `src/app`, `src/pages` e `src/shared`.
 - Padronizar estilos gradualmente em `style.js`.
 - Adicionar testes após extrair regras de negócio para funções testáveis.
 
@@ -156,11 +162,7 @@ Não há testes automatizados implementados neste projeto no estado atual.
 - Node.js 22.
 - npm 10 ou superior.
 
-O projeto declara Node 22 em:
-
-- `.nvmrc`
-- `.node-version`
-- `package.json`
+O projeto declara Node 22 e npm 10 em `package.json`.
 
 ### Instalar dependências
 

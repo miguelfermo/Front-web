@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useUser } from "../../context/UserContext"
+import { readStorage, writeStorage } from "../../shared/storage/localStorage"
 
 const SignUpForm = () => {
   const navigate = useNavigate()
@@ -18,7 +19,7 @@ const SignUpForm = () => {
       return
     }
 
-    const users = JSON.parse(localStorage.getItem("users")) || []
+    const users = readStorage("users", [])
 
     const userExists = users.some(user => user.email === email)
 
@@ -29,8 +30,7 @@ const SignUpForm = () => {
 
     const user = { name, email, password }
     users.push(user)
-    console.log(user)
-    localStorage.setItem("users", JSON.stringify(users))
+    writeStorage("users", users)
 
     setUser(user)
     navigate("/Donations")
@@ -69,11 +69,6 @@ const SignUpForm = () => {
           Sign Up
         </button>
       </form>
-    </div>
-  )
-}
-
-export default SignUpForm
     </div>
   )
 }

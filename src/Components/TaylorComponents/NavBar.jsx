@@ -9,20 +9,13 @@ const NavBar = () => {
   const [openModal, setOpenModal] = useState(false)
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  console.log(user)
 
   const handleLogout = () => {
-    setUser(user) 
-    navigate("/") 
+    setUser(null)
+    setDropdownOpen(false)
+    navigate("/")
   }
 
-  const usuario = {
-    id: 1,
-    nome: {user},
-    email: '',
-    telefone: ' ',
-    cpf: ' ',
-  };
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen)
   }
@@ -78,10 +71,6 @@ const NavBar = () => {
       </div>
     </div>
   )
-}
-
-export default NavBar
-}
 }
 
 export default NavBar
