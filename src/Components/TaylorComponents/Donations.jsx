@@ -29,7 +29,7 @@ const Donations = ({ searchTerm, companyTerm, locationTerm }) => {
 
   return (
     <div>
-      <div className="jobContainer flex gap-10 justify-center flex-wrap items-center py-10">
+      <div className="flex gap-10 justify-center flex-wrap items-center py-10">
         {filteredData.length > 0 ? (
           filteredData.map(
             ({ id, image, title, time, location, desc, company, value }) => (

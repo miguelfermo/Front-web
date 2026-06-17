@@ -103,53 +103,53 @@ export default function DonationsEdit() {
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between mb-4">
         <button
-          className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+          className="bg-blue-500 hover:bg-blue-600 px-4 py-2 font-semibold text-white rounded transition-colors"
           onClick={handleOpenModal}
         >
           {donations.length > 0 ? "+ Doações" : "Criar Doações"}
         </button>
       </div>
 
-      <div className="group group/item singleJob h-[500px] p-[15px] max-h-[500px] max-w-[1500px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-500/700 hover:shadow-lg overflow-y-auto rounded border p-3">
-        <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-6 gap-4">
+      <div className="bg-white rounded-lg shadow-lg p-4 overflow-y-auto max-h-96">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           {donations.map(
             ({ id, image, title, location, desc, company, value }, index) => (
               <div
                 key={id}
-                className="group/item singleJob max-w-[250px] p-4 bg-white rounded-lg shadow-lg hover:shadow-xl"
+                className="bg-white rounded-lg shadow hover:shadow-xl transition-shadow p-4"
               >
-                <h1 className="text-lg font-semibold text-gray-700 group-hover:text-black">
+                <h1 className="text-lg font-semibold text-gray-700 hover:text-black">
                   {title}
                 </h1>
-                <h6 className="text-gray-500">{location}</h6>
-                <p className="text-sm text-gray-600 mt-2 group-hover:text-black">
+                <h6 className="text-gray-500 text-sm">{location}</h6>
+                <p className="text-sm text-gray-600 mt-2 hover:text-black">
                   {desc}
                 </p>
-                <div className="company flex items-center gap-2 mt-4">
+                <div className="flex items-center gap-2 mt-4">
                   <img
                     src={image}
                     title="iconicons"
                     alt="Company logo"
                     className="w-8 h-8 rounded-full"
                   />
-                  <span className="text-sm text-gray-700 group-hover:text-black">
+                  <span className="text-sm text-gray-700 hover:text-black">
                     {company}
                   </span>
                 </div>
-                <div className="bg-green-200 text-green-800 font-bold p-2 mt-2 rounded">
+                <div className="bg-green-200 text-green-800 font-bold p-2 mt-2 rounded text-sm">
                   {typeof value === "number"
                     ? `R$ ${value.toFixed(2)}`
                     : "Valor não disponível"}
                 </div>
-                <div className="grid grid-cols-2 gap-5 mt-4">
+                <div className="grid grid-cols-2 gap-2 mt-4">
                   <button
-                    className="rounded bg-green-500 px-1 py-2 font-semibold text-white hover:bg-green-600"
+                    className="bg-green-500 hover:bg-green-600 px-2 py-2 font-semibold text-white rounded transition-colors text-sm"
                     onClick={() => editDonation(index)}
                   >
                     Editar
                   </button>
                   <button
-                    className="rounded bg-red-500 px-1 py-2 font-semibold text-white hover:bg-red-600"
+                    className="bg-red-500 hover:bg-red-600 px-2 py-2 font-semibold text-white rounded transition-colors text-sm"
                     onClick={() => deleteDonation(index)}
                   >
                     Deletar
@@ -164,58 +164,53 @@ export default function DonationsEdit() {
       {isModalOpen && (
         <Modal onClose={handleCloseModal}>
           <div className="flex flex-col gap-4">
-            <TextField
-              label="Title"
+            <input
               type="text"
+              placeholder="Title"
               name="title"
               value={input.title}
               onChange={handleInputChange}
-              variant="outlined"
-              size="small"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            <TextField
-              label="Location"
+            <input
               type="text"
+              placeholder="Location"
               name="location"
               value={input.location}
               onChange={handleInputChange}
-              variant="outlined"
-              size="small"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            <TextField
-              label="Description"
+            <input
               type="text"
+              placeholder="Description"
               name="desc"
               value={input.desc}
               onChange={handleInputChange}
-              variant="outlined"
-              size="small"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            <TextField
-              label="Company"
+            <input
               type="text"
+              placeholder="Company"
               name="company"
               value={input.company}
               onChange={handleInputChange}
-              variant="outlined"
-              size="small"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
-            <TextField
-              label="Value"
+            <input
               type="number"
+              placeholder="Value"
               name="value"
               value={input.value}
               onChange={handleInputChange}
-              variant="outlined"
-              size="small"
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
             <button
-              className="rounded bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
+              className="bg-blue-500 hover:bg-blue-600 px-4 py-2 font-semibold text-white rounded transition-colors"
               onClick={addDonation}
             >
               {editIndex !== null ? "Salvar Alterações" : "Adicionar Doação"}

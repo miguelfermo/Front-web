@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import "./Miguelstyles.css"
 import { useUser } from "../../context/UserContext"
 
 const SignUpForm = () => {
@@ -9,6 +8,7 @@ const SignUpForm = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
 
   const handleSignUp = (e) => {
     e.preventDefault()
@@ -37,11 +37,12 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="form-container sign-up-container">
-      <form className="form-miguel" action="#">
-        <h1 className="h1-miguel">Crie sua Conta!</h1>
+    <div className="absolute top-0 left-0 w-1/2 h-full opacity-0 z-10 transition-all duration-600 ease-in-out">
+      <form className="bg-white flex flex-col items-center justify-center py-0 px-12 h-full text-center" onSubmit={handleSignUp}>
+        <h1 className="text-4xl font-bold m-0 mb-1">Crie sua Conta!</h1>
+        {error && <p className="text-red-500 mt-2.5">{error}</p>}
         <input
-          className="input-miguel"
+          className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="text"
           placeholder="Nome"
           value={name}
@@ -49,7 +50,7 @@ const SignUpForm = () => {
           required
         />
         <input
-          className="input-miguel"
+          className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="email"
           placeholder="Email"
           value={email}
@@ -57,17 +58,22 @@ const SignUpForm = () => {
           required
         />
         <input
-          className="input-miguel"
+          className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="password"
           placeholder="Senha"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <div className="btn-grad" id="signup" onClick={handleSignUp}>
+        <button className="bg-gradient-to-r from-orange-700 to-orange-500 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" type="submit">
           Sign Up
-        </div>
+        </button>
       </form>
+    </div>
+  )
+}
+
+export default SignUpForm
     </div>
   )
 }

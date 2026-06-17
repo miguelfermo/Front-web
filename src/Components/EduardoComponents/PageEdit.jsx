@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Box, Button, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 export default function PaginaEditarCadastro({ onSave }) {
@@ -21,103 +20,95 @@ export default function PaginaEditarCadastro({ onSave }) {
   };
 
   return (
-    <Box
-      sx={{
-        maxWidth: 600,
-        margin: 'auto',
-        marginTop: 4,
-        padding: 3,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 8,
-      }}
-    >
-      <Typography variant="h5" align="center" gutterBottom>
-        Editar Cadastro
-      </Typography>
+    <div className="max-w-2xl mx-auto mt-8 p-6 bg-gray-100 rounded-xl">
+      <h2 className="text-2xl font-bold text-center mb-6">Editar Cadastro</h2>
       <form onSubmit={handleSubmit}>
-        <TextField
-          label="Nome Completo"
+        <input
+          type="text"
+          placeholder="Nome Completo"
           name="name"
           value={formData.name || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          required
         />
-        <TextField
-          label="Email"
+        <input
+          type="email"
+          placeholder="Email"
           name="email"
           value={formData.email || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          required
         />
-        <TextField
-          label="Telefone"
+        <input
+          type="tel"
+          placeholder="Telefone"
           name="telefone"
           value={formData.telefone || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          required
         />
-        <TextField
-          label="CPF"
+        <input
+          type="text"
+          placeholder="CPF"
           name="cpf"
           value={formData.cpf || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          required
         />
-        <TextField
-          label="CEP"
+        <input
+          type="text"
+          placeholder="CEP"
           name="cep"
           value={formData.cep || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-        <TextField
-          label="Logradouro"
+        <input
+          type="text"
+          placeholder="Logradouro"
           name="logradouro"
           value={formData.logradouro || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-        <TextField
-          label="Senha"
-          name="senha"
+        <input
           type="password"
+          placeholder="Senha"
+          name="senha"
           value={formData.senha || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          required
         />
-        <TextField
-          label="Confirmação de Senha"
-          name="confirmacao"
+        <input
           type="password"
+          placeholder="Confirmação de Senha"
+          name="confirmacao"
           value={formData.confirmacao || ''}
           onChange={handleChange}
-          fullWidth
-          margin="normal"
-          variant="outlined"
+          className="w-full px-4 py-2 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+          required
         />
-        <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-          <Button type="submit" variant="contained" color="primary" style={{ marginRight: 10 }}>
+        <div className="flex gap-4 justify-center">
+          <button 
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+          >
             Salvar
-          </Button>
-          <Button variant="outlined" onClick={() => window.history.back()}>
+          </button>
+          <button 
+            type="button"
+            onClick={() => window.history.back()}
+            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+          >
             Cancelar
-          </Button>
-        </Box>
+          </button>
+        </div>
       </form>
-    </Box>
+    </div>
   );
 }
