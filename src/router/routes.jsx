@@ -4,9 +4,9 @@ import DonationsPage from "../pages/DonationsPage"
 
 import DonationsEdit from "../Components/ErycComponents/DonationsEdit"
 
-import Navbar from "../Components/TaylorComponents/Navbar"
+import Navbar from "../Components/TaylorComponents/NavBar"
 
-import PaginaEditarCadastro from "../Components/EduardoComponents/pageEdit"
+import PaginaEditarCadastro from "../Components/EduardoComponents/PageEdit"
 
 import LoginPage from "../pages/LoginPage"
 

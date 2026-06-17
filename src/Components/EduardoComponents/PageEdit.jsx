@@ -1,23 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from "react"
+import PropTypes from "prop-types"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export default function PaginaEditarCadastro({ onSave }) {
-  const location = useLocation();
-  const [formData, setFormData] = useState(location.state.user || {});
+  const location = useLocation()
+  const navigate = useNavigate()
+  const userFromRoute = location.state?.user
+  const [formData, setFormData] = useState(userFromRoute || {})
 
   useEffect(() => {
-    setFormData(location.state.user || {});
-  }, [location.state.user]);
+    setFormData(userFromRoute || {})
+  }, [userFromRoute])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData((previousData) => ({ ...previousData, [name]: value }))
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave(formData);
-  };
+    e.preventDefault()
+
+    if (onSave) {
+      onSave(formData)
+      return
+    }
+
+    navigate("/Donations")
+  }
 
   return (
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-gray-100 rounded-xl">
@@ -110,5 +119,9 @@ export default function PaginaEditarCadastro({ onSave }) {
         </div>
       </form>
     </div>
-  );
+  )
+}
+
+PaginaEditarCadastro.propTypes = {
+  onSave: PropTypes.func,
 }
