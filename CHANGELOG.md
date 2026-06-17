@@ -20,6 +20,17 @@ O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.
 
 - Atualizado `package-lock.json` para `lockfileVersion: 3`, gerado por npm moderno via Corepack.
 - Atualizado `README.md` para refletir Node 22, organização proposta e estratégia incremental.
+- Atualizado `package.json` para remover dependências de interface legadas (`@mui/material`, `@emotion/react`, `@emotion/styled`, `bootstrap`, `mui`).
+- Simplificado `src/index.css` para manter apenas configurações globais, fontes e Tailwind.
+- Refatorados componentes legados para Tailwind CSS com classes utilitárias em vez de arquivos CSS isolados.
+
+### Refatorado
+
+- Projeto completamente migrado para Tailwind CSS em Header, Footer, TelaInicial, login, cadastro, modais e listagens.
+- Componentes de `MiguelComponents`, `EduardoComponents`, `ErycComponents` e `TaylorComponents` adaptados para Tailwind.
+- Mantido apenas `src/Components/MiguelComponents/LayoutStyles.css` para animações específicas de transição de painel.
+- Atualizado `tailwind.config.js` com cores e fontes customizadas.
+- Documentação de limpeza e finalização consolidada no `CHANGELOG.md`.
 
 ### Observado
 
