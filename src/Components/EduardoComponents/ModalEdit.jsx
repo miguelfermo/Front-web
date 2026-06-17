@@ -118,22 +118,23 @@ const ModalEdit = ({ open, onClose, data }) => {
           {formErrors.message && (
             <div className="text-red-500 mb-4">{formErrors.message}</div>
           )}
-          <div className="flex gap-4 justify-center mt-6">
-            <button
-              type="submit"
-              className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-            >
-              Salvar
-            </button>
-            <button
-              type="button"
-              onClick={handleDeleteUser}
-              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-            >
-              Excluir Cadastro
-            </button>
-          </div>
-          {isDeleteConfirmationOpen && (
+          {!isDeleteConfirmationOpen ? (
+            <div className="flex gap-4 justify-center mt-6">
+              <button
+                type="submit"
+                className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+              >
+                Salvar
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteUser}
+                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
+              >
+                Excluir Cadastro
+              </button>
+            </div>
+          ) : (
             <div className="flex gap-4 justify-center mt-4">
               <button
                 type="button"
