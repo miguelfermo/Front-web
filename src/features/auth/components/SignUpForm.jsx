@@ -1,39 +1,27 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useUser } from "../../context/UserContext"
-import { readStorage, writeStorage } from "../../shared/storage/localStorage"
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
 const SignUpForm = () => {
   const navigate = useNavigate()
-  const { setUser } = useUser()
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const { register } = useAuth()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSignUp = (e) => {
     e.preventDefault()
-
     if (!name || !email || !password) {
-      setError("Todos os campos são obrigatórios.")
+      setError('Todos os campos são obrigatórios.')
       return
     }
-
-    const users = readStorage("users", [])
-
-    const userExists = users.some(user => user.email === email)
-
-    if (userExists) {
-      setError("Usuário já cadastrado.")
-      return
+    try {
+      register({ name, email, password })
+      navigate('/Donations')
+    } catch (err) {
+      setError(err.message)
     }
-
-    const user = { name, email, password }
-    users.push(user)
-    writeStorage("users", users)
-
-    setUser(user)
-    navigate("/Donations")
   }
 
   return (
@@ -65,7 +53,10 @@ const SignUpForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="bg-gradient-to-r from-orange-700 to-orange-500 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" type="submit">
+        <button
+          className="bg-gradient-to-r from-orange-700 to-orange-500 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l"
+          type="submit"
+        >
           Cadastrar
         </button>
       </form>

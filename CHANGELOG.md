@@ -4,6 +4,104 @@ Todas as mudanças relevantes deste projeto serão documentadas neste arquivo.
 
 O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/), e este projeto segue versionamento semântico sempre que aplicável.
 
+## [1.1.0] - 2026-06-18
+
+### Adicionado
+
+- Estrutura `src/features/auth/` com separação por responsabilidade: `components/`, `context/`, `hooks/`, `services/` e `pages/`.
+- `src/features/auth/services/authService.js` centralizando toda a lógica de autenticação: `login`, `register`, `logout`, `updateUser`, `deleteUser` e `initAuth`.
+- `src/features/auth/context/AuthProvider.jsx` substituindo `UserContext`: expõe `user`, `login`, `register`, `logout`, `updateUser`, `deleteUser` e `loading`.
+- `src/features/auth/hooks/useAuth.js` como ponto único de acesso ao contexto de autenticação.
+- `src/features/auth/components/RequireAuth.jsx` protegendo rotas privadas (`/Donations`, `/DonationsEdit`) com redirecionamento automático para `/login`.
+- `src/shared/api/apiClient.js` com instância Axios centralizada, pronta para interceptors futuros.
+- Persistência de sessão: usuário autenticado é restaurado do `localStorage` ao recarregar a página via `authService.initAuth`.
+
+### Alterado
+
+- `src/main.jsx` substituindo `UserProvider` por `AuthProvider`.
+- `src/app/router/index.jsx` corrigindo import de `LoginPage` (apontava para stub `pages/Login/index.jsx` que retornava `null`) e adicionando `RequireAuth` nas rotas protegidas.
+- `NavBar.jsx` migrado de `useUser` para `useAuth`; logout agora chama `logout()` do contexto em vez de `setUser(null)` direto.
+- `Search.jsx` migrado de `useUser` para `useAuth`.
+- `ModalEdit.jsx` migrado de `useUser` para `useAuth`; edição e exclusão de cadastro delegadas para `updateUser` e `deleteUser` do contexto, removendo manipulação direta de `localStorage`.
+
+### Removido
+
+- `src/Components/MiguelComponents/Layout.jsx` substituído por `AuthLayout.jsx`.
+- `src/Components/MiguelComponents/SignInForm.jsx` movido para `features/auth/components/`.
+- `src/Components/MiguelComponents/SignUpForm.jsx` movido para `features/auth/components/`.
+- `src/Components/MiguelComponents/Overlay.jsx` movido para `features/auth/components/`.
+- `src/Components/MiguelComponents/LayoutStyles.css` movido para `features/auth/components/`.
+- `src/Components/MiguelComponents/Miguelstyles.css` removido (CSS legado substituído por Tailwind).
+- `src/pages/LoginPage.jsx` e `src/pages/Login/index.jsx` substituídos por `features/auth/pages/LoginPage.jsx`.
+- `src/context/UserContext.jsx` substituído por `AuthProvider`; imports atualizados em todos os consumidores.
+
+### Refatorado
+
+- Separação clara de responsabilidades no fluxo de autenticação: UI (`SignInForm`, `SignUpForm`) não acessa mais `localStorage` diretamente; toda persistência passa pelo `authService`.
+- `AuthLayout.jsx` encapsula o contêiner animado de login/cadastro, isolando o estado de painel (`rightPanelActive`) da página.
+
+### Code Smells Identificados e Tratados
+
+#### Inappropriate Intimacy / Feature Envy
+
+**Situação anterior:**
+`SignInForm` e `SignUpForm` acessavam `localStorage` diretamente, misturando lógica de UI com lógica de persistência. `ModalEdit` também manipulava `localStorage` diretamente para editar e deletar usuários.
+
+**Solução aplicada:**
+Criação de `authService.js` centralizando toda operação de armazenamento. Os componentes de UI passaram a delegar ao contexto via `useAuth`.
+
+**Prática aplicada:**
+- Single Responsibility Principle (SRP);
+- Separation of Concerns (SoC).
+
+#### God Context / Large Class
+
+**Situação anterior:**
+`UserContext` expunha `setUser` diretamente, fazendo com que qualquer componente pudesse mutá-lo livremente sem controle de side effects (sem persistir no `localStorage`, sem limpar sessão, etc.).
+
+**Solução aplicada:**
+`AuthProvider` expõe apenas ações nomeadas (`login`, `logout`, `register`, `updateUser`, `deleteUser`), ocultando o setter e garantindo que toda mutação de estado seja acompanhada de persistência.
+
+**Prática aplicada:**
+- Encapsulamento;
+- Command Pattern.
+
+#### Dead Code / Stub
+
+**Situação anterior:**
+`src/pages/Login/index.jsx` retornava `null`. O router importava esse stub, tornando a rota `/login` completamente inoperante.
+
+**Solução aplicada:**
+Arquivo removido e router atualizado para importar a `LoginPage` real de `features/auth/pages/`.
+
+**Prática aplicada:**
+- Remoção de código morto;
+- Clean routing.
+
+#### Missing Route Protection
+
+**Situação anterior:**
+Rotas `/Donations` e `/DonationsEdit` eram acessíveis sem autenticação via URL direta.
+
+**Solução aplicada:**
+`RequireAuth` envolve as rotas privadas, redirecionando para `/login` quando não há usuário autenticado.
+
+**Prática aplicada:**
+- Defensive Programming;
+- Separation of Concerns.
+
+#### Scattered Architecture (Feature Scattering)
+
+**Situação anterior:**
+Código de autenticação distribuído em `src/Components/MiguelComponents/`, `src/pages/`, `src/context/` e `src/shared/contexts/` sem agrupamento por feature.
+
+**Solução aplicada:**
+Toda a feature de autenticação consolidada em `src/features/auth/` seguindo estrutura feature-based.
+
+**Prática aplicada:**
+- High Cohesion;
+- Feature-Oriented Structure.
+
 ### Adicionado
 
 - Atualização feita para Node.js 22 em `package.json`.

@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom"
 import DonationManagerPage from "../../pages/DonationManager"
 import DonationsPage from "../../pages/Donations"
 import HomePage from "../../pages/Home"
-import LoginPage from "../../pages/Login"
+import LoginPage from "../../features/auth/pages/LoginPage"
+import RequireAuth from "../../features/auth/components/RequireAuth"
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/Donations",
-    element: <DonationsPage />,
+    element: <RequireAuth><DonationsPage /></RequireAuth>,
   },
   {
     path: "/DonationsEdit",
-    element: <DonationManagerPage />,
+    element: <RequireAuth><DonationManagerPage /></RequireAuth>,
   },
 ])
 

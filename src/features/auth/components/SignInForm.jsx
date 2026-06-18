@@ -1,39 +1,26 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useUser } from "../../context/UserContext"
-import { readStorage } from "../../shared/storage/localStorage"
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
 const SignInForm = () => {
   const navigate = useNavigate()
-  const { setUser } = useUser()
-  const [name, setName] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const { login } = useAuth()
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSignIn = (e) => {
     e.preventDefault()
-
     if (!name || !password) {
-      setError("Todos os campos são obrigatórios.")
+      setError('Todos os campos são obrigatórios.')
       return
     }
-
-    const users = readStorage("users", [])
-
-    const user = users.find(user => user.name === name)
-
-    if (!user) {
-      setError("Usuário não encontrado.")
-      return
+    try {
+      login({ name, password })
+      navigate('/Donations')
+    } catch (err) {
+      setError(err.message)
     }
-    
-    if (user.password !== password) {
-      setError("Senha incorreta.")
-      return
-    }
-
-    setUser(user)
-    navigate("/Donations")
   }
 
   return (
@@ -60,7 +47,10 @@ const SignInForm = () => {
         <a className="text-gray-800 text-sm no-underline my-4" href="#">
           Esqueceu sua senha?
         </a>
-        <button className="bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" type="submit" id="signin">
+        <button
+          className="bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l"
+          type="submit"
+        >
           Entrar
         </button>
       </form>

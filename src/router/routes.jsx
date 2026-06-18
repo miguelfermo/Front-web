@@ -8,7 +8,8 @@ import Navbar from "../Components/TaylorComponents/NavBar"
 
 import PaginaEditarCadastro from "../Components/EduardoComponents/PageEdit"
 
-import LoginPage from "../pages/LoginPage"
+import LoginPage from "../features/auth/pages/LoginPage"
+import RequireAuth from "../features/auth/components/RequireAuth"
 
 import { createBrowserRouter } from "react-router-dom"
 
@@ -24,26 +25,30 @@ const routes = createBrowserRouter([
   // Parte do Taylor
   {
     path: "/Donations",
-    element: <DonationsPage />,
+    element: <RequireAuth><DonationsPage /></RequireAuth>,
   },
   // Parte do Eryc
   {
     path: "/DonationsEdit",
     element: (
-      <div>
-        <Navbar />
-        <DonationsEdit />
-      </div>
+      <RequireAuth>
+        <div>
+          <Navbar />
+          <DonationsEdit />
+        </div>
+      </RequireAuth>
     ),
   },
   // Parte do Scalco
   {
     path: "/PaginaEditarCadastro",
     element: (
-      <div>
-        <Navbar />
-        <PaginaEditarCadastro />
-      </div>
+      <RequireAuth>
+        <div>
+          <Navbar />
+          <PaginaEditarCadastro />
+        </div>
+      </RequireAuth>
     ),
   },
   // Parte do Miguelindo
