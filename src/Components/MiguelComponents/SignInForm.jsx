@@ -37,7 +37,7 @@ const SignInForm = () => {
   }
 
   return (
-    <div className="absolute top-0 left-0 w-1/2 h-full z-20 transition-transform duration-600 ease-in-out">
+    <div className="absolute top-0 left-0 w-1/2 h-full z-[2] transition-transform duration-[600ms] ease-in-out">
       <form className="bg-white flex flex-col items-center justify-center py-0 px-12 h-full text-center" onSubmit={handleSignIn}>
         <h1 className="text-4xl font-bold m-0 mb-1">Login</h1>
         {error && <p className="text-red-500 mt-2.5">{error}</p>}
@@ -61,7 +61,7 @@ const SignInForm = () => {
           Esqueceu sua senha?
         </a>
         <button className="bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" type="submit" id="signin">
-          Sign In
+          Entrar
         </button>
       </form>
     </div>

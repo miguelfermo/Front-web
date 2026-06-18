@@ -16,7 +16,7 @@ const Layout = () => {
 
     return (
         <div 
-          className={`relative overflow-hidden w-96 max-w-full min-h-96 rounded-lg shadow-2xl bg-white transition-all duration-600 ease-in-out ${
+          className={`relative overflow-hidden w-[768px] max-w-full min-h-[480px] rounded-lg shadow-2xl bg-white transition-all duration-[600ms] ease-in-out ${
             rightPanelActive ? 'right-panel-active' : ''
           }`} 
           id="container"
