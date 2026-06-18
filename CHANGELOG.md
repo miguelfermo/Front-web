@@ -4,8 +4,6 @@ Todas as mudanças relevantes deste projeto serão documentadas neste arquivo.
 
 O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/), e este projeto segue versionamento semântico sempre que aplicável.
 
-## [Não publicado]
-
 ### Adicionado
 
 - Atualização feita para Node.js 22 em `package.json`.
@@ -311,3 +309,6 @@ A nova arquitetura proporciona:
 - Maior escalabilidade da aplicação;
 - Redução do acoplamento entre módulos;
 - Melhor aderência às práticas de Clean Code e princípios SOLID.
+
+## [1.0.2] - 2026-06-17
+Organização das cores para seguir mesmo padrão do css antigo e remoção de arquivos de contextualização para limpeza do repositório
