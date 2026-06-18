@@ -4,10 +4,10 @@ import { AiOutlineCloseCircle, AiOutlineSearch } from "react-icons/ai"
 import { BsHouseDoor } from "react-icons/bs"
 import { CiLocationOn } from "react-icons/ci"
 import { Link } from "react-router-dom"
-import { useUser } from "../../context/UserContext"
+import { useAuth } from "../../features/auth/hooks/useAuth"
 
 const Search = ({ onSearchChange }) => {
-  const { user } = useUser()
+  const { user } = useAuth()
   const [searchTerm, setSearchTerm] = useState("")
   const [companyTerm, setCompanyTerm] = useState("")
   const [locationTerm, setLocationTerm] = useState("")

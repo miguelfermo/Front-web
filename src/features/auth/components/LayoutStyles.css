@@ -1,9 +1,5 @@
 /* Layout animations for sign in/up transitions */
 
-.right-panel-active {
-  /* Sign up form becomes visible */
-}
-
 .right-panel-active > div:nth-child(1) {
   /* SignUpForm */
   transform: translateX(100%);
@@ -50,4 +46,3 @@
     z-index: 5;
   }
 }
-
