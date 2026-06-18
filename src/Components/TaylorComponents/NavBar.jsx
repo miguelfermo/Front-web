@@ -1,17 +1,17 @@
 import { useState, useCallback } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import logo from "../../assets/logo-name.png"
-import { useUser } from "../../context/UserContext"
+import { useAuth } from "../../features/auth/hooks/useAuth"
 import ModalEdit from "../EduardoComponents/ModalEdit"
 
 const NavBar = () => {
-  const { user, setUser } = useUser()
+  const { user, logout } = useAuth()
   const [openModal, setOpenModal] = useState(false)
   const navigate = useNavigate()
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const handleLogout = () => {
-    setUser(null)
+    logout()
     setDropdownOpen(false)
     navigate("/")
   }

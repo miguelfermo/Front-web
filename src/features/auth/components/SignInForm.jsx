@@ -1,43 +1,30 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { useUser } from "../../context/UserContext"
-import { readStorage } from "../../shared/storage/localStorage"
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
 const SignInForm = () => {
   const navigate = useNavigate()
-  const { setUser } = useUser()
-  const [name, setName] = useState("")
-  const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+  const { login } = useAuth()
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
 
   const handleSignIn = (e) => {
     e.preventDefault()
-
     if (!name || !password) {
-      setError("Todos os campos são obrigatórios.")
+      setError('Todos os campos são obrigatórios.')
       return
     }
-
-    const users = readStorage("users", [])
-
-    const user = users.find(user => user.name === name)
-
-    if (!user) {
-      setError("Usuário não encontrado.")
-      return
+    try {
+      login({ name, password })
+      navigate('/Donations')
+    } catch (err) {
+      setError(err.message)
     }
-    
-    if (user.password !== password) {
-      setError("Senha incorreta.")
-      return
-    }
-
-    setUser(user)
-    navigate("/Donations")
   }
 
   return (
-    <div className="absolute top-0 left-0 w-1/2 h-full z-20 transition-transform duration-600 ease-in-out">
+    <div className="absolute top-0 left-0 w-1/2 h-full z-[2] transition-transform duration-[600ms] ease-in-out">
       <form className="bg-white flex flex-col items-center justify-center py-0 px-12 h-full text-center" onSubmit={handleSignIn}>
         <h1 className="text-4xl font-bold m-0 mb-1">Login</h1>
         {error && <p className="text-red-500 mt-2.5">{error}</p>}
@@ -60,8 +47,11 @@ const SignInForm = () => {
         <a className="text-gray-800 text-sm no-underline my-4" href="#">
           Esqueceu sua senha?
         </a>
-        <button className="bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l" type="submit" id="signin">
-          Sign In
+        <button
+          className="bg-gradient-to-r from-orange-500 to-orange-700 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l"
+          type="submit"
+        >
+          Entrar
         </button>
       </form>
     </div>

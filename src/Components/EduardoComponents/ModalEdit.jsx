@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { useNavigate } from "react-router-dom"
-import { useUser } from "../../context/UserContext"
-import { readStorage, writeStorage } from "../../shared/storage/localStorage"
+import { useAuth } from "../../features/auth/hooks/useAuth"
 
 const emptyUser = {
   name: "",
@@ -13,7 +12,7 @@ const emptyUser = {
 }
 
 const ModalEdit = ({ open, onClose, data }) => {
-  const { setUser } = useUser()
+  const { updateUser, deleteUser } = useAuth()
   const navigate = useNavigate()
   const [formData, setFormData] = useState(data || emptyUser)
   const [formErrors, setFormErrors] = useState({})
@@ -38,13 +37,7 @@ const ModalEdit = ({ open, onClose, data }) => {
       return
     }
 
-    const users = readStorage("users", [])
-    const updatedUsers = users.map((user) =>
-      user.email === data?.email ? { ...user, ...formData } : user
-    )
-
-    writeStorage("users", updatedUsers)
-    setUser(formData)
+    updateUser(formData)
     onClose()
   }
 
@@ -54,11 +47,7 @@ const ModalEdit = ({ open, onClose, data }) => {
   }
 
   const confirmDeleteUser = () => {
-    const users = readStorage("users", [])
-    const updatedUsers = users.filter((user) => user.email !== formData.email)
-
-    writeStorage("users", updatedUsers)
-    setUser(null)
+    deleteUser(formData.email)
     navigate("/login")
     onClose()
   }
