@@ -193,22 +193,40 @@ npm run build
 
 # Testes e Cobertura
 
-Atualmente o projeto não possui suíte de testes automatizados.
+O projeto possui suíte de testes unitários implementada com Vitest e Testing Library.
 
-Cobertura atual:
+## Executar testes
 
-* Cobertura automatizada: 0%
+```bash
+npm test
+```
 
-## Testes Planejados
+## Executar testes com cobertura
 
-* Testes unitários para autenticação;
-* Testes unitários para filtros;
-* Testes de componentes;
-* Testes de integração dos fluxos principais.
+```bash
+npx vitest run --coverage
+```
 
-Meta futura:
+## Cobertura atual
 
-* Aproximadamente 50% de cobertura dos principais fluxos.
+| Métrica    | Cobertura |
+| ---------- | --------- |
+| Statements | 93,95%    |
+| Branches   | 95,00%    |
+| Functions  | 87,23%    |
+| Lines      | 94,24%    |
+
+## Suítes implementadas
+
+* `authService.test.js` — login, registro, logout, update, delete e initAuth;
+* `localStorage.test.js` — leitura, escrita e fallback do storage compartilhado;
+* `AuthProvider.test.jsx` — estado de autenticação via contexto;
+* `RequireAuth.test.jsx` — proteção de rotas privadas;
+* `SignInForm.test.jsx` — formulário de login e tratamento de erros;
+* `SignUpForm.test.jsx` — formulário de cadastro e tratamento de erros;
+* `Donations.test.jsx` — listagem, filtro e abertura de modal;
+* `Modal.test.jsx` — exibição de detalhes e fechamento;
+* `Search.test.jsx` — inputs de busca e limpeza de campos.
 
 ---
 

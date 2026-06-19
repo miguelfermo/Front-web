@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import PropTypes from "prop-types"
 import { AiOutlineCloseCircle, AiOutlineSearch } from "react-icons/ai"
 import { BsHouseDoor } from "react-icons/bs"

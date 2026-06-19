@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.1.1] - 2026-06-19
+
+### Corrigido
+
+- Removidos `import React` desnecessários em todos os arquivos JSX e de teste (React 18 com transform automático não exige o import).
+- Adicionados imports explícitos de `beforeEach` e `vi` do Vitest nos arquivos de teste que usavam as funções como globais implícitas, resolvendo erro `no-undef` do ESLint.
+- Adicionado `// eslint-disable-next-line react/prop-types` no mock de `DonationsProvider` em `Donations.test.jsx`, onde prop-types não é aplicável a funções de mock.
+- Corrigido `vitest.config.js` para incluir `@vitejs/plugin-react`, habilitando o transform JSX automático nos arquivos de teste.
+
+### Alterado
+
+- `AuthContext` extraído de `AuthProvider.jsx` para `src/features/auth/context/AuthContext.js`, eliminando o aviso `react-refresh/only-export-components` que impedia `npm run lint` de passar com zero warnings.
+- `useAuth.js` atualizado para importar `AuthContext` de `AuthContext.js` em vez de reexportá-lo de `AuthProvider.jsx`.
+- `AuthProvider.test.jsx` atualizado para importar `useAuth` de `../hooks/useAuth` em vez de `./AuthProvider`.
+
+### Adicionado
+
+- Dependência `@vitest/coverage-v8` para geração de relatório de cobertura via `npx vitest run --coverage`.
+
+### Code Smells Identificados e Tratados
+
+#### Improper Input Validation / NaN Safety
+
+**Situação anterior:**
+A validação de `input.value` em `DonationsEdit.jsx` usava `Number(input.value) <= 0`. Como `NaN <= 0` retorna `false` em JavaScript, entradas não-numéricas passavam pela validação sem serem bloqueadas.
+
+**Solução aplicada:**
+Condição alterada para `isNaN(Number(input.value)) || Number(input.value) <= 0`, rejeitando explicitamente valores que não convertam em número válido.
+
+**Prática aplicada:**
+- Defensive Programming;
+- Null/NaN Safety.
+
 Todas as mudanças relevantes deste projeto serão documentadas neste arquivo.
 
 O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/), e este projeto segue versionamento semântico sempre que aplicável.
