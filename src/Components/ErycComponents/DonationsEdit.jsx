@@ -51,7 +51,7 @@ export default function DonationsEdit() {
       !input.location ||
       !input.desc ||
       !input.company ||
-      Number(input.value) <= 0
+      isNaN(Number(input.value)) || Number(input.value) <= 0
     ) {
       setFormError("Preencha todos os campos obrigatorios corretamente.")
       return
