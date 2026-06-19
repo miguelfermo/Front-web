@@ -1,5 +1,4 @@
-import React from 'react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Donations from './Donations'
 import { DonationsProvider } from '../../context/DonationsContext'
@@ -11,6 +10,7 @@ const donations = [
 
 vi.mock('../../context/DonationsContext', () => ({
   useDonations: () => ({ donations }),
+  // eslint-disable-next-line react/prop-types
   DonationsProvider: ({ children }) => <>{children}</>,
 }))
 
