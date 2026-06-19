@@ -10,6 +10,9 @@ O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.
 
 - Estrutura `src/features/auth/` com separação por responsabilidade: `components/`, `context/`, `hooks/`, `services/` e `pages/`.
 - `src/features/auth/services/authService.js` centralizando toda a lógica de autenticação: `login`, `register`, `logout`, `updateUser`, `deleteUser` e `initAuth`.
+- Suíte de testes unitários com `Vitest`, incluindo `src/features/auth/services/authService.test.js` e `src/shared/storage/localStorage.test.js`.
+- Dependência de ambiente `happy-dom` adicionada para execução de testes em `Vitest`, evitando conflito compatibilidade ESM/CJS com `jsdom`.
+- Script `npm test` para execução da suíte de testes.
 - `src/features/auth/context/AuthProvider.jsx` substituindo `UserContext`: expõe `user`, `login`, `register`, `logout`, `updateUser`, `deleteUser` e `loading`.
 - `src/features/auth/hooks/useAuth.js` como ponto único de acesso ao contexto de autenticação.
 - `src/features/auth/components/RequireAuth.jsx` protegendo rotas privadas (`/Donations`, `/DonationsEdit`) com redirecionamento automático para `/login`.
@@ -22,6 +25,7 @@ O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.
 - `src/app/router/index.jsx` corrigindo import de `LoginPage` (apontava para stub `pages/Login/index.jsx` que retornava `null`) e adicionando `RequireAuth` nas rotas protegidas.
 - `NavBar.jsx` migrado de `useUser` para `useAuth`; logout agora chama `logout()` do contexto em vez de `setUser(null)` direto.
 - `Search.jsx` migrado de `useUser` para `useAuth`.
+- Correção da suíte de testes `Vitest`: adicionados imports de `React` em arquivos JSX, ajustados mocks e validações em `SignInForm`, `SignUpForm`, `Search`, `Modal` e `Donations` para rodar com `happy-dom`.
 - `ModalEdit.jsx` migrado de `useUser` para `useAuth`; edição e exclusão de cadastro delegadas para `updateUser` e `deleteUser` do contexto, removendo manipulação direta de `localStorage`.
 
 ### Removido

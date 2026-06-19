@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { AiOutlineCloseCircle, AiOutlineSearch } from "react-icons/ai"
 import { BsHouseDoor } from "react-icons/bs"
@@ -40,6 +40,7 @@ const Search = ({ onSearchChange }) => {
               onChange={(e) => updateSearchTerms("searchTerm", e.target.value)}
             />
             <AiOutlineCloseCircle
+              data-testid="search-close"
               className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
               onClick={() => updateSearchTerms("searchTerm", "")}
             />
@@ -55,6 +56,7 @@ const Search = ({ onSearchChange }) => {
               onChange={(e) => updateSearchTerms("companyTerm", e.target.value)}
             />
             <AiOutlineCloseCircle
+              data-testid="company-close"
               className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
               onClick={() => updateSearchTerms("companyTerm", "")}
             />
@@ -70,6 +72,7 @@ const Search = ({ onSearchChange }) => {
               onChange={(e) => updateSearchTerms("locationTerm", e.target.value)}
             />
             <AiOutlineCloseCircle
+              data-testid="location-close"
               className="text-3xl text-gray-400 hover:text-textColor cursor-pointer"
               onClick={() => updateSearchTerms("locationTerm", "")}
             />
