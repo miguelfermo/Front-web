@@ -10,7 +10,13 @@ export default function Card({
             className={`
                 rounded-lg
                 shadow
+                mt-4
                 p-4
+                max-w-sm
+                bg-white
+                flex
+                flex-col
+                min-w-[19%]
                 ${className}
             `}
             {...rest}

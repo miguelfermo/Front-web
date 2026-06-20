@@ -7,7 +7,7 @@ export default function DonationList({
     onDelete,
 }) {
     return (
-        <div className="grid gap-4">
+        <div className="flex flex-row mt-4 gap-4 flex-wrap justify-start">
             {donations.map((donation, index) => (
                 <DonationCard
                     key={donation.id}
