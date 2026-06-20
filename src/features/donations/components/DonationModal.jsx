@@ -6,8 +6,6 @@ export default function DonationModal({
     onClose,
     children,
 }) {
-    if (!isOpen) return null;
-
     return (
         <Modal
             isOpen={isOpen}
