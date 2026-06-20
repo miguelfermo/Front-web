@@ -50,7 +50,7 @@ export function useDonation() {
     };
 
     const saveDonation = () => {
-        if (!validateForm()) return;
+        if (!validateForm()) return false;
 
         setDonations((previousDonations) => {
             if (editingDonationId !== null) {
@@ -69,6 +69,8 @@ export function useDonation() {
 
         setEditingDonationId(null);
         resetForm();
+
+        return true;
     };
 
     const editDonation = (index) => {
