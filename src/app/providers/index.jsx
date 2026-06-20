@@ -1,12 +1,12 @@
 import PropTypes from "prop-types"
-import { DonationsProvider } from "../../shared/contexts/Donations"
-import { UserProvider } from "../../shared/contexts/User"
+import { AuthProvider } from "@/features/auth/context/AuthProvider"
+import DonationsProvider from "@/features/donations/context/DonationsProvider"
 
 export default function AppProviders({ children }) {
   return (
-    <UserProvider>
+    <AuthProvider>
       <DonationsProvider>{children}</DonationsProvider>
-    </UserProvider>
+    </AuthProvider>
   )
 }
 

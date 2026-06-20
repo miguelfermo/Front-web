@@ -22,7 +22,7 @@ const Modal = ({ campaign, onClose }) => {
               <strong>Localização:</strong> {campaign.location}
             </p>
             <p className="mb-2">
-              <strong>Descrição:</strong> {campaign.desc}
+              <strong>Descrição:</strong> {campaign.description}
             </p>
             <p className="mb-2">
               <strong>Companhia:</strong> {campaign.company}

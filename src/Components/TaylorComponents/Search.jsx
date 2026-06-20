@@ -80,7 +80,7 @@ const Search = ({ onSearchChange }) => {
 
           {user && (
             <button className="bg-orange-600 h-full p-3 px-10 rounded-[10px] text-white cursor-pointer hover:bg-orange-800">
-              <Link to="/DonationsEdit">Criar nova doação</Link>
+              <Link to="/donations/edit/">Criar nova doação</Link>
             </button>
           )}
         </div>
