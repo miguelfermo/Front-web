@@ -1,18 +1,3 @@
-import { createContext, useState } from "react"
-import PropTypes from "prop-types"
-
-const DonationsContext = createContext(null)
-
-export function DonationsProvider({ children }) {
-  const [donations, setDonations] = useState([])
-
-  return (
-    <DonationsContext.Provider value={{ donations, setDonations }}>
-      {children}
-    </DonationsContext.Provider>
-  )
-}
-
-DonationsProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-}
+/* eslint-disable react-refresh/only-export-components */
+export { default as DonationsProvider } from "@/features/donations/context/DonationsProvider"
+export { useDonations } from "@/features/donations/context/useDonations"

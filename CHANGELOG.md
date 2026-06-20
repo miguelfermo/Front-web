@@ -1,5 +1,34 @@
 # Changelog
 
+## [1.1.2] - 2026-06-20
+
+### Added
+
+- `jsconfig.json` com alias `@/` apontando para `src/`, alinhando o projeto com a estrutura FSD usada nas camadas principais.
+- `AppProviders` em `src/app/providers`, consolidando o bootstrap global da aplicação.
+
+### Changed
+
+- `src/main.jsx` passou a inicializar a aplicação por meio de `src/app`.
+- `src/app/router/index.jsx` passou a ser a definição ativa das rotas da aplicação.
+- `src/pages/DonationsPage.jsx` e `src/pages/Hero/index.jsx` foram alinhados ao alias `@/`.
+
+### Fixed
+
+- Os wrappers de `src/shared/contexts/Donations` e `src/shared/contexts/User` voltaram a reutilizar as implementações legadas, preservando o comportamento dos consumidores antigos.
+- O wrapper de `src/App.jsx` deixou de usar reexportação auto-referente e voltou a compor o app explicitamente.
+- Avisos do ESLint sobre `react-refresh/only-export-components` foram tratados nos wrappers de contexto.
+
+### Removed
+
+- Wiring duplicado de providers em `src/main.jsx`.
+- Implementação duplicada de contexto em `src/shared/contexts`, substituída por reexportação compatível.
+
+### Refactored
+
+- Rotas e providers foram centralizados em `src/app`, reduzindo a dispersão entre bootstrap antigo e novo.
+- A compatibilidade com o legado em `src/Components` e `src/context` foi preservada sem alterar layout, comportamento ou regras de negócio.
+
 ## [1.1.1] - 2026-06-19
 
 ### Corrigido
