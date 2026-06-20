@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Button from "../../../shared/ui/Button";
+import Button from "@/shared/ui/Button";
 
 export default function AddDonationButton({
     hasDonations,

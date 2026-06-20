@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import Button from "../../../shared/ui/Button";
-import Card from "../../../shared/ui/Card";
+import Card from "@/shared/ui/Card";
+import Subtitle from "@/shared/ui/Subtitle";
+import Paragraph from "@/shared/ui/Paragraph";
+import ActionButtons from "@/shared/ui/ActionButtons";
 
 export default function DonationCard({
     donation,
@@ -9,31 +11,22 @@ export default function DonationCard({
 }) {
     return (
         <Card>
-            <h2>{donation.title}</h2>
+            <Subtitle>{donation.title}</Subtitle>
 
-            <p>{donation.location}</p>
+            <Paragraph>Localização: {donation.location}</Paragraph>
 
-            <p>{donation.description}</p>
+            <Paragraph>Descrição: {donation.description}</Paragraph>
 
-            <p>{donation.company}</p>
+            <Paragraph>Companhia: {donation.company}</Paragraph>
 
-            <p>R$ {donation.value}</p>
+            <Paragraph>R$ {donation.value}</Paragraph>
 
-            <div className="flex gap-2 mt-4">
-                <Button
-                    variant="primary"
-                    onClick={onEdit}
-                >
-                    Editar
-                </Button>
-
-                <Button
-                    variant="danger"
-                    onClick={onDelete}
-                >
-                    Deletar
-                </Button>
-            </div>
+            <ActionButtons
+                primaryText="Editar"
+                secondaryText="Deletar"
+                onPrimaryClick={onEdit}
+                onSecondaryClick={onDelete}
+            />
         </Card>
     );
 }

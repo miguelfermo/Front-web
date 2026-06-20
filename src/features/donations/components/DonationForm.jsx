@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
-import Input from "../../../shared/ui/Input";
-import Button from "../../../shared/ui/Button";
+import Input from "@/shared/ui/Input";
+import Subtitle from "@/shared/ui/Subtitle";
+import Paragraph from "@/shared/ui/Paragraph";
+import ActionButtons from "@/shared/ui/ActionButtons";
 
 export default function DonationForm({
     input,
@@ -11,17 +13,17 @@ export default function DonationForm({
     isEditing,
 }) {
     return (
-        <>
-            <h2 className="text-xl font-bold mb-4">
+        <div>
+            <Subtitle className="text-xl font-bold mb-4">
                 {isEditing
                     ? "Editar Doação"
                     : "Adicionar Doação"}
-            </h2>
+            </Subtitle>
 
             {formError && (
-                <p className="text-red-500 mb-3">
+                <Paragraph className="text-red-500 mb-3">
                     {formError}
-                </p>
+                </Paragraph>
             )}
 
             <Input
@@ -60,24 +62,13 @@ export default function DonationForm({
                 onChange={onChange}
             />
 
-            <div className="flex gap-2 mt-4">
-                <Button
-                    variant="primary"
-                    onClick={onSave}
-                >
-                    {isEditing
-                        ? "Salvar Alterações"
-                        : "Salvar"}
-                </Button>
-
-                <Button
-                    variant="danger"
-                    onClick={onCancel}
-                >
-                    Cancelar
-                </Button>
-            </div>
-        </>
+            <ActionButtons
+                primaryText="Salvar"
+                secondaryText="Cancelar"
+                onPrimaryClick={onSave}
+                onSecondaryClick={onCancel}
+            />
+        </div>
     );
 }
 

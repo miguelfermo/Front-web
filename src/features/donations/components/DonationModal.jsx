@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import Modal from "../../../shared/ui/Modal";
+import Modal from "@/shared/ui/Modal";
 
 export default function DonationModal({
     isOpen,
