@@ -20,7 +20,7 @@ export default function DonationsEditPage() {
     } = useDonations();
 
     return (
-        <div className="container mx-auto px-4 py-6">
+        <div className="m-6 px-4 py-6 bg-gray-100 rounded shadow max-h-screen overflow-y-auto">
             <AddDonationButton
                 hasDonations={donations.length > 0}
                 onClick={openDonationModal}
@@ -43,7 +43,13 @@ export default function DonationsEditPage() {
                     input={input}
                     formError={formError}
                     onChange={handleInputChange}
-                    onSave={saveDonation}
+                    onSave={() => {
+                        const saved = saveDonation();
+
+                        if (saved) {
+                            closeDonationModal();
+                        }
+                    }}
                     onCancel={closeDonationModal}
                     isEditing={isEditing}
                 />
