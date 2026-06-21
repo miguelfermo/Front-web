@@ -1,27 +1,49 @@
 import { createBrowserRouter } from "react-router-dom"
-import DonationManagerPage from "../../pages/DonationManager"
-import DonationsPage from "../../pages/Donations"
-import HomePage from "../../pages/Home"
-import LoginPage from "../../features/auth/pages/LoginPage"
-import RequireAuth from "../../features/auth/components/RequireAuth"
+import HeroScreen from "@/pages/Hero"
+import DonationsPage from "@/pages/DonationsPage"
+import DonationsEditPage from "@/features/donations/pages/DonationsEditPage"
+import LoginPage from "@/features/auth/pages/LoginPage"
+import RequireAuth from "@/features/auth/components/RequireAuth"
+import Navbar from "@/Components/TaylorComponents/NavBar"
+import PaginaEditarCadastro from "@/Components/EduardoComponents/PageEdit"
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <HeroScreen />,
+  },
+  {
+    path: "/Donations",
+    element: (
+      <RequireAuth>
+        <DonationsPage />
+      </RequireAuth>
+    ),
+  },
+  {
+    path: "/donations/edit/",
+    element: (
+      <RequireAuth>
+        <div>
+          <Navbar />
+          <DonationsEditPage />
+        </div>
+      </RequireAuth>
+    ),
+  },
+  {
+    path: "/PaginaEditarCadastro",
+    element: (
+      <RequireAuth>
+        <div>
+          <Navbar />
+          <PaginaEditarCadastro />
+        </div>
+      </RequireAuth>
+    ),
   },
   {
     path: "/login",
     element: <LoginPage />,
   },
-  {
-    path: "/Donations",
-    element: <RequireAuth><DonationsPage /></RequireAuth>,
-  },
-  {
-    path: "/DonationsEdit",
-    element: <RequireAuth><DonationManagerPage /></RequireAuth>,
-  },
 ])
-
-export default router

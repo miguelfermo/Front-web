@@ -1,54 +1,127 @@
+import { useState } from "react"
 import PropTypes from "prop-types"
+import { BiTimeFive } from "react-icons/bi"
+import Modal from "./Modal"
+import { useDonations } from "../../context/DonationsContext"
 
-const Modal = ({ campaign, onClose }) => {
+const normalizeSearchValue = (value) => String(value ?? "").toLowerCase()
+
+const matchesFilters = (
+  donation,
+  { searchTerm, companyTerm, locationTerm },
+) => {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl mx-4 md:mx-auto">
-        <button
-          className="text-red-500 font-bold text-lg mb-4"
-          onClick={onClose}
-        >
-          Fechar
-        </button>
-        <h2 className="text-2xl font-bold mb-4">{campaign.title}</h2>
-        <div className="flex gap-4">
-          <img
-            src={campaign.image}
-            alt="Company logo"
-            className="w-16 h-16 rounded-full"
-          />
-          <div>
-            <p className="mb-2">
-              <strong>Localização:</strong> {campaign.location}
-            </p>
-            <p className="mb-2">
-              <strong>Descrição:</strong> {campaign.desc}
-            </p>
-            <p className="mb-2">
-              <strong>Companhia:</strong> {campaign.company}
-            </p>
-            <p className="mb-2">
-              <strong>Meta de Doação:</strong> {campaign.value} R$
-            </p>
-          </div>
-        </div>
-        <aside className="mt-6">
-          <h3 className="text-xl font-semibold mb-2">Opções de Doação:</h3>
-          <ul className="list-disc ml-6">
-            <li className="mb-1">Doação em dinheiro</li>
-            <li className="mb-1">
-              Doação em outras formas(Roupas, Alimentos, etc..)
-            </li>
-          </ul>
-        </aside>
+    normalizeSearchValue(donation.title).includes(
+      normalizeSearchValue(searchTerm),
+    ) &&
+    normalizeSearchValue(donation.company).includes(
+      normalizeSearchValue(companyTerm),
+    ) &&
+    normalizeSearchValue(donation.location).includes(
+      normalizeSearchValue(locationTerm),
+    )
+  )
+}
+
+const DonationCard = ({ donation, onDonate }) => {
+  const { image, title, time, location, desc, company } = donation
+
+  return (
+    <div className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
+      <span className="flex justify-between items-center gap-4">
+        <h1 className="text-[16px] font-semibold text-textColor group-hover:text-black">
+          {title}
+        </h1>
+        <span className="flex items-center text-[#ccc] gap-1">
+          <BiTimeFive /> {time}
+        </span>
+      </span>
+      <h6 className="text-[#ccc]">{location}</h6>
+      <p className="text-[14px] text-[#959595] pt-[20px] border-t-[2px] mt-[20px] group-hover:text-black">
+        {desc}
+      </p>
+
+      <div className="company flex items-center gap-2">
+        <img
+          src={image}
+          title="iconicons"
+          alt="Company logo"
+          className="w-[10%]"
+        />
+        <span className="text-[14px] py-[1rem] block group-hover:text-black">
+          {company}
+        </span>
       </div>
+      <button
+        onClick={() => onDonate(donation)}
+        className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
+      >
+        Doar
+      </button>
     </div>
   )
 }
 
-Modal.propTypes = {
-  campaign: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
+DonationCard.propTypes = {
+  donation: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    image: PropTypes.string,
+    title: PropTypes.string,
+    time: PropTypes.string,
+    location: PropTypes.string,
+    desc: PropTypes.string,
+    company: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
+  onDonate: PropTypes.func.isRequired,
 }
 
-export default Modal
+const Donations = ({ searchTerm, companyTerm, locationTerm }) => {
+  const { donations } = useDonations()
+  const [selectedCampaign, setSelectedCampaign] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const filteredDonations = donations.filter((donation) =>
+    matchesFilters(donation, { searchTerm, companyTerm, locationTerm }),
+  )
+
+  const openModal = (campaign) => {
+    setSelectedCampaign(campaign)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setSelectedCampaign(null)
+    setIsModalOpen(false)
+  }
+
+  return (
+    <div>
+      <div className="flex gap-10 justify-center flex-wrap items-center py-10">
+        {filteredDonations.length > 0 ? (
+          filteredDonations.map((donation) => (
+            <DonationCard
+              key={donation.id}
+              donation={donation}
+              onDonate={openModal}
+            />
+          ))
+        ) : (
+          <p>Nenhum resultado encontrado.</p>
+        )}
+      </div>
+
+      {isModalOpen && (
+        <Modal campaign={selectedCampaign} onClose={closeModal} />
+      )}
+    </div>
+  )
+}
+
+Donations.propTypes = {
+  searchTerm: PropTypes.string.isRequired,
+  companyTerm: PropTypes.string.isRequired,
+  locationTerm: PropTypes.string.isRequired,
+}
+
+export default Donations

@@ -6,26 +6,26 @@ import ModalEdit from "../EduardoComponents/ModalEdit"
 
 const NavBar = () => {
   const { user, logout } = useAuth()
-  const [openModal, setOpenModal] = useState(false)
   const navigate = useNavigate()
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const handleLogout = () => {
     logout()
-    setDropdownOpen(false)
+    setIsDropdownOpen(false)
     navigate("/")
   }
 
   const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen)
+    setIsDropdownOpen((previousState) => !previousState)
   }
 
-  const handleOpenModal = useCallback(() => {
-    setOpenModal(true)
+  const openEditModal = useCallback(() => {
+    setIsEditModalOpen(true)
   }, [])
 
-  const handleCloseModal = useCallback(() => {
-    setOpenModal(false)
+  const closeEditModal = useCallback(() => {
+    setIsEditModalOpen(false)
   }, [])
 
   return (
@@ -42,19 +42,25 @@ const NavBar = () => {
             >
               Olá, {user.name} ▼
             </button>
-            {dropdownOpen && (
+            {isDropdownOpen && (
               <ul className="absolute top-full right-0 z-50 flex flex-col bg-white border border-gray-300 border-t-0 rounded-b-lg shadow-md p-2">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleOpenModal}>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={openEditModal}
+                >
                   Editar
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleLogout}>
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={handleLogout}
+                >
                   Sair
                 </li>
               </ul>
             )}
             <ModalEdit
-              open={openModal}
-              onClose={handleCloseModal}
+              open={isEditModalOpen}
+              onClose={closeEditModal}
               data={user}
             />
           </div>

@@ -1,16 +1,13 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import App from "./App"
+import App from "@/app"
 import "./index.css"
-import { AuthProvider } from "./features/auth/context/AuthProvider"
-import { DonationsProvider } from "./context/DonationsContext"
+import AppProviders from "@/app/providers"
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProvider>
-      <DonationsProvider>
+    <AppProviders>
         <App />
-      </DonationsProvider>
-    </AuthProvider>
+    </AppProviders>
   </StrictMode>
 )
