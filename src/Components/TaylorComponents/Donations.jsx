@@ -3,6 +3,9 @@ import PropTypes from "prop-types"
 import { BiTimeFive } from "react-icons/bi"
 import Modal from "./Modal"
 import { useDonations } from "../../context/DonationsContext"
+import Button from "@/shared/ui/Button"
+import Paragraph from "@/shared/ui/Paragraph"
+import Title from "@/shared/ui/Title"
 
 const normalizeSearchValue = (value) => String(value ?? "").toLowerCase()
 
@@ -29,35 +32,29 @@ const DonationCard = ({ donation, onDonate }) => {
   return (
     <div className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">
       <span className="flex justify-between items-center gap-4">
-        <h1 className="text-[16px] font-semibold text-textColor group-hover:text-black">
+        <Title className="text-[16px] font-semibold text-textColor group-hover:text-black">
           {title}
-        </h1>
+        </Title>
         <span className="flex items-center text-[#ccc] gap-1">
           <BiTimeFive /> {time}
         </span>
       </span>
       <h6 className="text-[#ccc]">{location}</h6>
-      <p className="text-[14px] text-[#959595] pt-[20px] border-t-[2px] mt-[20px] group-hover:text-black">
+      <Paragraph className="text-[14px] text-[#959595] pt-[20px] border-t-[2px] mt-[20px] group-hover:text-black">
         {desc}
-      </p>
+      </Paragraph>
 
       <div className="company flex items-center gap-2">
-        <img
-          src={image}
-          title="iconicons"
-          alt="Company logo"
-          className="w-[10%]"
-        />
-        <span className="text-[14px] py-[1rem] block group-hover:text-black">
+        <Paragraph className="text-[14px] py-[1rem] block group-hover:text-black">
           {company}
-        </span>
+        </Paragraph>
       </div>
-      <button
+      <Button
         onClick={() => onDonate(donation)}
         className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
       >
         Doar
-      </button>
+      </Button>
     </div>
   )
 }

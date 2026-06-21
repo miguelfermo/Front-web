@@ -2,6 +2,10 @@ import { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../features/auth/hooks/useAuth"
+import Subtitle from "@/shared/ui/Subtitle"
+import Input from "@/shared/ui/Input"
+import Button from "@/shared/ui/Button"
+import ActionButtons from "@/shared/ui/ActionButtons"
 
 const emptyUser = {
   name: "",
@@ -57,9 +61,9 @@ const ModalEdit = ({ open, onClose, data }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 w-full max-w-md mx-4">
-        <h2 className="text-2xl font-bold mb-6">Editar Cadastro</h2>
+        <Subtitle className="text-2xl font-bold mb-6">Editar Cadastro</Subtitle>
         <form onSubmit={handleSubmit}>
-          <input
+          <Input
             type="text"
             placeholder="Nome"
             name="name"
@@ -68,7 +72,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <input
+          <Input
             type="email"
             placeholder="Email"
             name="email"
@@ -77,7 +81,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <input
+          <Input
             type="tel"
             placeholder="Telefone"
             name="telefone"
@@ -86,7 +90,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <input
+          <Input
             type="text"
             placeholder="CPF"
             name="cpf"
@@ -95,7 +99,7 @@ const ModalEdit = ({ open, onClose, data }) => {
             className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
             required
           />
-          <input
+          <Input
             type="password"
             placeholder="Senha"
             name="password"
@@ -108,49 +112,35 @@ const ModalEdit = ({ open, onClose, data }) => {
             <div className="text-red-500 mb-4">{formErrors.message}</div>
           )}
           {!isDeleteConfirmationOpen ? (
-            <div className="flex gap-4 justify-center mt-6">
-              <button
-                type="submit"
-                className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-              >
-                Salvar
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteUser}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-              >
-                Excluir Cadastro
-              </button>
-            </div>
+            <ActionButtons
+              primaryText="Salvar"
+              secondaryText="Excluir"
+              onPrimaryClick={handleSubmit}
+              onSecondaryClick={handleDeleteUser}
+              primaryVariant="primary"
+              secondaryVariant="danger"
+            />
           ) : (
-            <div className="flex gap-4 justify-center mt-4">
-              <button
-                type="button"
-                onClick={confirmDeleteUser}
-                className="bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-              >
-                Confirmar exclusao
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsDeleteConfirmationOpen(false)
-                  setFormErrors({})
-                }}
-                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-              >
-                Cancelar
-              </button>
-            </div>
+            <ActionButtons
+              primaryText="Confirmar"
+              secondaryText="Cancelar"
+              onPrimaryClick={confirmDeleteUser}
+              onSecondaryClick={() => {
+                setIsDeleteConfirmationOpen(false)
+                setFormErrors({})
+              }}
+              primaryVariant="danger"
+              secondaryVariant="secondary"
+            />
           )}
         </form>
-        <button
+        <Button
+          variant="danger"
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
         >
           X
-        </button>
+        </Button>
       </div>
     </div>
   )

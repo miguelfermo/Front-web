@@ -5,6 +5,8 @@ import { BsHouseDoor } from "react-icons/bs"
 import { CiLocationOn } from "react-icons/ci"
 import { Link } from "react-router-dom"
 import { useAuth } from "../../features/auth/hooks/useAuth"
+import Button from "@/shared/ui/Button"
+import Input from "@/shared/ui/Input"
 
 const INITIAL_TERMS = {
   searchTerm: "",
@@ -51,7 +53,7 @@ const Search = ({ onSearchChange }) => {
             ({ name, icon: Icon, placeholder, closeTestId }) => (
               <div className="flex gap-2 items-center" key={name}>
                 <Icon className="text-2xl cursor-pointer" />
-                <input
+                <Input
                   type="text"
                   className="bg-transparent text-blue-500 focus:outline-none w-full"
                   placeholder={placeholder}
@@ -68,9 +70,9 @@ const Search = ({ onSearchChange }) => {
           )}
 
           {user && (
-            <button className="bg-orange-600 h-full p-3 px-10 rounded-[10px] text-white cursor-pointer hover:bg-orange-800">
-              <Link to="/DonationsEdit">Criar nova doação</Link>
-            </button>
+            <Button className="bg-orange-600 h-full p-3 px-10 rounded-[10px] text-white cursor-pointer hover:bg-orange-800">
+              <Link to="/donations/edit">Nova doação</Link>
+            </Button>
           )}
         </div>
       </form>

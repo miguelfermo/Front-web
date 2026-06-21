@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import { BiTimeFive } from "react-icons/bi"
 import Modal from "./Modal"
 import { useDonations } from "../../context/DonationsContext"
+import Button from "@/shared/ui/Button"
 
 const normalizeSearchValue = (value) => String(value ?? "").toLowerCase()
 
@@ -42,22 +43,16 @@ const DonationCard = ({ donation, onDonate }) => {
       </p>
 
       <div className="company flex items-center gap-2">
-        <img
-          src={image}
-          title="iconicons"
-          alt="Company logo"
-          className="w-[10%]"
-        />
         <span className="text-[14px] py-[1rem] block group-hover:text-black">
           {company}
         </span>
       </div>
-      <button
+      <Button
         onClick={() => onDonate(donation)}
         className="border-[2px] rounded-[10px] block p-[10px] w-full text-[14px] font-semibold text-textColor hover:bg-gray-400 group-hover/item:text-textColor group-hover:text-black"
       >
         Doar
-      </button>
+      </Button>
     </div>
   )
 }

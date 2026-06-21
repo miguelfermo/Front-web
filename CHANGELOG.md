@@ -477,3 +477,6 @@ A nova arquitetura proporciona:
 
 ## [1.0.2] - 2026-06-17
 Organização das cores para seguir mesmo padrão do css antigo e remoção de arquivos de contextualização para limpeza do repositório
+
+## [1.0.3] - 2026-06-21
+Aplicação de componentes em todas as telas que faziam uso da estrutura antiga/individual dos mesmos.

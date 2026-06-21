@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { useLocation, useNavigate } from "react-router-dom"
+import ActionButtons from "@/shared/ui/ActionButtons"
+import Input from "@/shared/ui/Input"
 
 export default function PaginaEditarCadastro({ onSave }) {
   const location = useLocation()
@@ -32,7 +34,7 @@ export default function PaginaEditarCadastro({ onSave }) {
     <div className="max-w-2xl mx-auto mt-8 p-6 bg-gray-100 rounded-xl">
       <h2 className="text-2xl font-bold text-center mb-6">Editar Cadastro</h2>
       <form onSubmit={handleSubmit}>
-        <input
+        <Input
           type="text"
           placeholder="Nome Completo"
           name="name"
@@ -41,7 +43,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           required
         />
-        <input
+        <Input
           type="email"
           placeholder="Email"
           name="email"
@@ -50,7 +52,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           required
         />
-        <input
+        <Input
           type="tel"
           placeholder="Telefone"
           name="telefone"
@@ -59,7 +61,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           required
         />
-        <input
+        <Input
           type="text"
           placeholder="CPF"
           name="cpf"
@@ -68,7 +70,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           required
         />
-        <input
+        <Input
           type="text"
           placeholder="CEP"
           name="cep"
@@ -76,7 +78,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           onChange={handleChange}
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-        <input
+        <Input
           type="text"
           placeholder="Logradouro"
           name="logradouro"
@@ -84,7 +86,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           onChange={handleChange}
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
         />
-        <input
+        <Input
           type="password"
           placeholder="Senha"
           name="senha"
@@ -93,7 +95,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           required
         />
-        <input
+        <Input
           type="password"
           placeholder="Confirmação de Senha"
           name="confirmacao"
@@ -102,21 +104,14 @@ export default function PaginaEditarCadastro({ onSave }) {
           className="w-full px-4 py-2 mb-6 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
           required
         />
-        <div className="flex gap-4 justify-center">
-          <button 
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-          >
-            Salvar
-          </button>
-          <button 
-            type="button"
-            onClick={() => window.history.back()}
-            className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg transition-colors"
-          >
-            Cancelar
-          </button>
-        </div>
+        <ActionButtons
+          primaryText="Salvar"
+          secondaryText="Cancelar"
+          onPrimaryClick={handleSubmit}
+          onSecondaryClick={() => navigate("/Donations")}
+          primaryVariant="primary"
+          secondaryVariant="secondary"
+        />
       </form>
     </div>
   )
