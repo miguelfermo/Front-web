@@ -1,33 +1,34 @@
 # Changelog
 
-## [1.1.2] - 2026-06-20
+## [1.1.2] - 2026-06-21
 
-### Added
+### Refatorado
 
-- `jsconfig.json` com alias `@/` apontando para `src/`, alinhando o projeto com a estrutura FSD usada nas camadas principais.
-- `AppProviders` em `src/app/providers`, consolidando o bootstrap global da aplicação.
+- `Donations.jsx`: extraído subcomponente `DonationCard` para a renderização de cada item da lista; extraída função `matchesFilters` para a lógica de filtragem, antes embutida diretamente no `.filter`.
+- `Modal.jsx`: `campaign` passou a ser desestruturado no topo do componente em vez de repetir `campaign.title`, `campaign.location`, etc.; lista de opções de doação extraída para a constante `DONATION_OPTIONS`, renderizada via `.map`.
+- `NavBar.jsx`: estados e handlers renomeados para maior clareza semântica (`openModal` → `isEditModalOpen`, `dropdownOpen` → `isDropdownOpen`, `handleOpenModal`/`handleCloseModal` → `openEditModal`/`closeEditModal`).
+- `Search.jsx`: os três campos de busca (termo, empresa, local), antes blocos JSX quase idênticos, unificados em um array de configuração `SEARCH_FIELDS` mapeado; os três `useState` separados consolidados em um único estado `terms`.
+- `FooterDiv.jsx`: listas de links "Recursos"/"Empresa" extraídas para as constantes `RESOURCE_LINKS`/`COMPANY_LINKS` e renderizadas por um novo subcomponente `FooterLinkList`; ícones sociais extraídos para o array `SOCIAL_ICONS` e renderizados via `.map`; indentação do arquivo corrigida.
 
-### Changed
+### Code Smells Identificados e Tratados
 
-- `src/main.jsx` passou a inicializar a aplicação por meio de `src/app`.
-- `src/app/router/index.jsx` passou a ser a definição ativa das rotas da aplicação.
-- `src/pages/DonationsPage.jsx` e `src/pages/Hero/index.jsx` foram alinhados ao alias `@/`.
+#### Duplicated Code / Long Method
 
-### Fixed
+**Situação anterior:**
+Em `src/Components/TaylorComponents/`, vários componentes repetiam blocos de JSX quase idênticos (campos de busca em `Search.jsx`, links e ícones em `FooterDiv.jsx`, acesso repetido a propriedades de `campaign` em `Modal.jsx`) e concentravam lógica de renderização e filtragem em funções únicas e extensas (`Donations.jsx`).
 
-- Os wrappers de `src/shared/contexts/Donations` e `src/shared/contexts/User` voltaram a reutilizar as implementações legadas, preservando o comportamento dos consumidores antigos.
-- O wrapper de `src/App.jsx` deixou de usar reexportação auto-referente e voltou a compor o app explicitamente.
-- Avisos do ESLint sobre `react-refresh/only-export-components` foram tratados nos wrappers de contexto.
+**Solução aplicada:**
+Extração de subcomponentes (`DonationCard`, `FooterLinkList`), de funções auxiliares (`matchesFilters`) e de estruturas de dados (`SEARCH_FIELDS`, `DONATION_OPTIONS`, `RESOURCE_LINKS`, `COMPANY_LINKS`, `SOCIAL_ICONS`), eliminando duplicação e reduzindo o tamanho e a complexidade dos componentes principais.
 
-### Removed
+**Prática aplicada:**
+- DRY (Don't Repeat Yourself);
+- Single Responsibility Principle (SRP);
+- Data Driven Components.
 
-- Wiring duplicado de providers em `src/main.jsx`.
-- Implementação duplicada de contexto em `src/shared/contexts`, substituída por reexportação compatível.
+### Observado
 
-### Refactored
-
-- Rotas e providers foram centralizados em `src/app`, reduzindo a dispersão entre bootstrap antigo e novo.
-- A compatibilidade com o legado em `src/Components` e `src/context` foi preservada sem alterar layout, comportamento ou regras de negócio.
+- Nenhuma classe CSS, texto, `data-testid`, prop ou estrutura de DOM foi alterada nesta versão.
+- Suítes de teste existentes (`Donations.test.jsx`, `Modal.test.jsx`, `Search.test.jsx`) continuam válidas sem necessidade de ajustes.
 
 ## [1.1.1] - 2026-06-19
 
