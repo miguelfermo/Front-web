@@ -1,14 +1,14 @@
 import { describe, expect, it, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import Donations from './Donations'
-import { DonationsProvider } from '../../context/DonationsContext'
+import { DonationsProvider } from '@/context/DonationsContext'
 
 const donations = [
   { id: 1, image: 'image1.png', title: 'Campanha A', time: '2h', location: 'São Paulo', desc: 'Descrição A', company: 'Empresa A', value: '1000' },
   { id: 2, image: 'image2.png', title: 'Campanha B', time: '5h', location: 'Rio', desc: 'Descrição B', company: 'Empresa B', value: '2000' },
 ]
 
-vi.mock('../../context/DonationsContext', () => ({
+vi.mock('@/context/DonationsContext', () => ({
   useDonations: () => ({ donations }),
   // eslint-disable-next-line react/prop-types
   DonationsProvider: ({ children }) => <>{children}</>,

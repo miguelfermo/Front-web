@@ -4,7 +4,7 @@ import DonationsPage from "@/pages/DonationsPage"
 import DonationsEditPage from "@/features/donations/pages/DonationsEditPage"
 import LoginPage from "@/features/auth/pages/LoginPage"
 import RequireAuth from "@/features/auth/components/RequireAuth"
-import Navbar from "@/Components/TaylorComponents/NavBar"
+import Navbar from "@/features/donations/components/NavBar"
 import PaginaEditarCadastro from "@/Components/EduardoComponents/PageEdit"
 
 export const router = createBrowserRouter([

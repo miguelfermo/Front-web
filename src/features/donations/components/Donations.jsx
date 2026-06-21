@@ -2,7 +2,7 @@ import { useState } from "react"
 import PropTypes from "prop-types"
 import { BiTimeFive } from "react-icons/bi"
 import Modal from "./Modal"
-import { useDonations } from "../../context/DonationsContext"
+import { useDonations } from "@/context/DonationsContext"
 import Button from "@/shared/ui/Button"
 import Paragraph from "@/shared/ui/Paragraph"
 import Title from "@/shared/ui/Title"
@@ -27,7 +27,7 @@ const matchesFilters = (
 }
 
 const DonationCard = ({ donation, onDonate }) => {
-  const { image, title, time, location, desc, company } = donation
+  const { title, time, location, desc, company } = donation
 
   return (
     <div className="group group/item singleJob w-[250px] p-[20px] bg-white rounded-[10px] hover:bg-greyIsh bg-opacity-60 shadow-lg shadow-greyIsh-400/700 hover:shadow-lg">

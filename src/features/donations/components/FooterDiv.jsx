@@ -4,7 +4,7 @@ import {
   AiOutlineGithub,
   AiOutlineTwitter,
 } from "react-icons/ai"
-import logo from "../../assets/logo-name.png"
+import logo from "@/assets/logo-name.png"
 
 const RESOURCE_LINKS = ["Empresa", "Suporte", "Feedback", "Contato"]
 const COMPANY_LINKS = ["Sobre nós", "Noticias", "FAQ"]

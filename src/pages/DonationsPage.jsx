@@ -1,8 +1,8 @@
 import { useState } from "react"
 
-import Navbar from "@/Components/TaylorComponents/NavBar"
-import Search from "@/Components/TaylorComponents/Search"
-import Donations from "@/Components/TaylorComponents/Donations"
+import Navbar from "@/features/donations/components/NavBar"
+import Search from "@/features/donations/components/Search"
+import Donations from "@/features/donations/components/Donations"
 
 const DonationsPage = () => {
   const [searchTerms, setSearchTerms] = useState({

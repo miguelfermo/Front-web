@@ -5,7 +5,7 @@ import Search from './Search'
 
 const mockOnSearchChange = vi.fn()
 
-vi.mock('../../features/auth/hooks/useAuth', () => ({
+vi.mock('@/features/auth/hooks/useAuth', () => ({
   useAuth: () => ({ user: { name: 'Alice' } }),
 }))
 

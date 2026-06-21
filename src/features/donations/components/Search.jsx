@@ -4,7 +4,7 @@ import { AiOutlineCloseCircle, AiOutlineSearch } from "react-icons/ai"
 import { BsHouseDoor } from "react-icons/bs"
 import { CiLocationOn } from "react-icons/ci"
 import { Link } from "react-router-dom"
-import { useAuth } from "../../features/auth/hooks/useAuth"
+import { useAuth } from "@/features/auth/hooks/useAuth"
 import Button from "@/shared/ui/Button"
 import Input from "@/shared/ui/Input"
 
