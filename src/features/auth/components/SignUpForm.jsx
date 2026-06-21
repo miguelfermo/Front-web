@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import Button from '@/shared/ui/Button'
+import Input from '@/shared/ui/Input'
+import Title from '@/shared/ui/Title'
 
 const SignUpForm = () => {
   const navigate = useNavigate()
@@ -27,9 +30,9 @@ const SignUpForm = () => {
   return (
     <div className="absolute top-0 left-0 w-1/2 h-full opacity-0 z-[1] transition-all duration-[600ms] ease-in-out">
       <form className="bg-white flex flex-col items-center justify-center py-0 px-12 h-full text-center" onSubmit={handleSignUp}>
-        <h1 className="text-4xl font-bold m-0 mb-1">Crie sua Conta!</h1>
+        <Title className="text-4xl font-bold m-0 mb-1">Crie sua Conta!</Title>
         {error && <p className="text-red-500 mt-2.5">{error}</p>}
-        <input
+        <Input
           className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="text"
           placeholder="Nome"
@@ -37,7 +40,7 @@ const SignUpForm = () => {
           onChange={(e) => setName(e.target.value)}
           required
         />
-        <input
+        <Input
           className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="email"
           placeholder="Email"
@@ -45,7 +48,7 @@ const SignUpForm = () => {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <input
+        <Input
           className="bg-gray-200 border-none py-2 px-4 my-2 w-full text-sm"
           type="password"
           placeholder="Senha"
@@ -53,12 +56,13 @@ const SignUpForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button
+        <Button
+          name="Cadastrar"
           className="bg-gradient-to-r from-orange-700 to-orange-500 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l"
           type="submit"
         >
           Cadastrar
-        </button>
+        </Button>
       </form>
     </div>
   )

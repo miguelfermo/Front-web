@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import logo from "../../assets/logo-name.png"
 import { useAuth } from "../../features/auth/hooks/useAuth"
 import ModalEdit from "../EduardoComponents/ModalEdit"
+import Button from "@/shared/ui/Button"
 
 const NavBar = () => {
   const { user, logout } = useAuth()
@@ -36,12 +37,12 @@ const NavBar = () => {
       <div className="flex gap-8">
         {user && user.name ? (
           <div className="relative">
-            <button
+            <Button
               className="text-gray-500 hover:text-gray-700 relative"
               onClick={toggleDropdown}
             >
               Olá, {user.name} ▼
-            </button>
+            </Button>
             {isDropdownOpen && (
               <ul className="absolute top-full right-0 z-50 flex flex-col bg-white border border-gray-300 border-t-0 rounded-b-lg shadow-md p-2">
                 <li
