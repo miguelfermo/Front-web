@@ -1,70 +1,111 @@
 # Donation Compass
 
-Donation Compass é uma aplicação web em React + Vite para cadastro, busca, visualização e gerenciamento de campanhas de doação. O estado de autenticação e das campanhas é persistido localmente no navegador, sem backend nesta versão.
+Donation Compass e uma aplicacao web em React + Vite para cadastro, busca, visualizacao e gerenciamento de campanhas de doacao. Nesta versao, a sessao do usuario e os dados das campanhas ficam no navegador, sem backend.
 
-## Descrição do software
+## Resumo
 
-O sistema permite que usuários se autentiquem, naveguem por campanhas, filtrem resultados e gerenciem campanhas quando estiverem autenticados.
+O projeto foi reorganizado para uma arquitetura orientada por features. A aplicacao hoje separa bootstrap, rotas, estado global, componentes compartilhados e features de dominio, com uma migracao incremental feita para reduzir acoplamento e facilitar manutencao.
 
-### Principais funcionalidades
+## Arquitetura atual
 
-- Login e cadastro de usuários
-- Proteção de rotas privadas
-- Listagem e busca de campanhas de doação
-- Criação, edição e exclusão de campanhas
-- Edição de dados cadastrais
-- Persistência local com `localStorage`
+### `src/app`
 
-## Arquitetura do projeto
+Camada de inicializacao da aplicacao.
 
-O projeto foi organizado de forma incremental, mantendo a base funcional existente e reduzindo acoplamento onde havia duplicação real.
+- `src/app/index.jsx` monta o `RouterProvider`
+- `src/app/providers/index.jsx` compoe os providers globais
+- `src/app/router/index.jsx` centraliza as rotas
 
-- `src/app`: bootstrap da aplicação, provedor global e roteamento
-- `src/features/auth`: autenticação, contexto, serviços, páginas e componentes da feature
-- `src/features/donations`: fluxo de gerenciamento de doações
-- `src/shared`: componentes reutilizáveis, storage, APIs e wrappers de contexto
-- `src/pages`: páginas de composição
-- `src/Components`: camada legada mantida como compatibilidade enquanto a migração continua
+### `src/features/auth`
 
-O alias `@/` aponta para `src/`, padronizando imports a partir das camadas principais.
+Fluxo de autenticacao e edicao de cadastro.
 
-## Principais problemas detectados
+- `components/`: `AuthLayout`, `Overlay`, `SignInForm`, `SignUpForm`, `ProfileEditModal`, `RequireAuth`
+- `context/`: `AuthContext` e `AuthProvider`
+- `hooks/`: `useAuth`
+- `pages/`: `LoginPage` e `PageEdit`
+- `services/`: `authService`
 
-- Bootstrap duplicado entre `src/App.jsx`, `src/app/index.jsx` e `src/main.jsx`
-- Definições paralelas de rotas em `src/router/routes.jsx` e `src/app/router/index.jsx`
-- Duplicação de contexto entre `src/context` e `src/shared/contexts`
-- Imports profundos e inconsistentes em páginas ativas
-- Estrutura legada em `src/Components` ainda necessária para parte do fluxo
+### `src/features/donations`
 
-## Estratégias de refatoração utilizadas
+Fluxo de campanhas, filtragem, edicao e modal de interacao.
 
-- Centralização do bootstrap em `src/app`
-- Compatibilidade por reexportação para evitar quebra de consumidores legados
-- Consolidação do provider root em `AppProviders`
-- Padronização de imports com alias `@/`
-- Manutenção do comportamento e do layout existentes
-- Refatoração mínima, sem extração desnecessária de componentes
+- `components/`: `NavBar`, `Search`, `Donations`, `DonationCard`, `DonationForm`, `DonationList`, `DonationModal`, `AddDonationButton`, `EmptyDonationState`, `FooterDiv`, `Modal`
+- `context/`: `DonationsContext` e `DonationsProvider`
+- `hooks/`: `useDonation` e `useDonations`
+- `pages/`: `DonationsPage` e `DonationsEditPage`
+- `services/`: `donationService`, `donationStorage`, `userDonationStorage`
+- `utils/`: `initialInputState`
 
-## Testes implementados
+### `src/features/hero`
 
-- `authService.test.js`
-- `AuthProvider.test.jsx`
-- `RequireAuth.test.jsx`
-- `SignInForm.test.jsx`
-- `SignUpForm.test.jsx`
-- `localStorage.test.js`
-- `Donations.test.jsx`
-- `Search.test.jsx`
-- `Modal.test.jsx`
+Landing page institucional.
 
-## Cobertura dos testes
+- `components/`: `HeroHeader`, `HeroContent`, `HeroCard`, `HeroContentButton`, `HeroFooter`
+- `data/`: `heroData`
+- `pages/`: `HeroPage`
 
-Métrica medida com `npx vitest run --coverage`:
+### `src/shared`
 
-- Statements: 93.95%
-- Branches: 95%
-- Functions: 87.23%
-- Lines: 94.24%
+Codigo reutilizavel entre features.
+
+- `shared/ui`: `Button`, `Input`, `Card`, `Modal`, `Title`, `Subtitle`, `Paragraph`, `ActionButtons`
+- `shared/api`: cliente de API centralizado
+- `shared/storage`: helpers de persistencia local
+
+## Padroes adotados
+
+- Feature-oriented structure para agrupar codigo por responsabilidade
+- Componentizacao para reduzir componentes grandes e blocos repetidos
+- Single Responsibility Principle nos componentes principais
+- Separation of Concerns entre UI, estado, persistencia e roteamento
+- Providers globais concentrados em `AppProviders`
+- Roteamento protegido com `RequireAuth`
+- Persistencia local com `localStorage`
+- Alias `@/` para simplificar imports a partir de `src/`
+
+## Fluxos principais
+
+### Autenticacao
+
+- `LoginPage` exibe o layout animado de login e cadastro
+- `AuthLayout` controla a troca entre `SignInForm` e `SignUpForm`
+- `Overlay` aciona a alternancia visual entre os paineis
+- `ProfileEditModal` permite editar ou excluir o cadastro autenticado
+- `RequireAuth` bloqueia acesso sem sessao ativa
+
+### Campanhas
+
+- `DonationsPage` renderiza a barra superior, a busca e a listagem filtrada
+- `Search` coleta os filtros de titulo, empresa e local
+- `Donations` aplica os filtros e abre o modal da campanha selecionada
+- `DonationsEditPage` concentra a manutencao de campanhas com formularios e listas dedicadas
+
+### Home
+
+- `HeroPage` compoe a pagina inicial com header, conteudo e footer
+- `HeroContent` monta a secao principal sobre a imagem de fundo
+- `HeroCard` e `HeroContentButton` estruturam o call to action
+
+## Processo de refatoracao
+
+A base original estava mais espalhada e dependia de arquivos legados e caminhos paralelos. A organizacao atual seguiu estes passos:
+
+1. Centralizacao do bootstrap em `src/app`
+2. Separacao do estado global em providers especificos por dominio
+3. Migracao para features coesas em `src/features`
+4. Extracao de subcomponentes para reduzir duplicacao
+5. Consolidacao de servicos de autenticacao e persistencia
+6. Mantencao de compatibilidade durante a transicao, quando necessario
+
+## O que foi melhorado
+
+- Componentes grandes foram quebrados em partes menores e reutilizaveis
+- A navegacao principal ficou declarativa em um unico arquivo de rotas
+- A autenticacao passou a ser encapsulada por contexto e servico
+- O fluxo de campanhas ficou mais previsivel com hooks e componentes dedicados
+- A landing page foi isolada em uma feature propria
+- A camada compartilhada ganhou componentes base para evitar repeticao
 
 ## Tecnologias utilizadas
 
@@ -78,50 +119,74 @@ Métrica medida com `npx vitest run --coverage`:
 - PropTypes
 - localStorage do navegador
 
-## Estrutura de pastas
+## Testes
 
-```txt
-src/
-  app/
-    index.jsx
-    providers/
-    router/
-  features/
-    auth/
-    donations/
-  shared/
-    api/
-    contexts/
-    storage/
-    ui/
-  pages/
-  Components/
-```
+A base possui testes para os fluxos principais de autenticacao, campanhas e storage.
 
-## Instalação
+- `src/features/auth/services/authService.test.js`
+- `src/features/auth/context/AuthProvider.test.jsx`
+- `src/features/auth/components/RequireAuth.test.jsx`
+- `src/features/auth/components/SignInForm.test.jsx`
+- `src/features/auth/components/SignUpForm.test.jsx`
+- `src/shared/storage/localStorage.test.js`
+- `src/features/donations/components/Donations.test.jsx`
+- `src/features/donations/components/Modal.test.jsx`
+- `src/features/donations/services/userDonationStorage.test.js`
+
+## Como executar
+
+Instalar dependencias:
 
 ```bash
 npm install
 ```
 
-## Execução
+Rodar em desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-## Scripts disponíveis
+Gerar build:
 
-- `npm run dev`
-- `npm run build`
-- `npm run test`
-- `npm run lint`
-- `npm run preview`
+```bash
+npm run build
+```
 
-## Melhorias futuras
+Executar testes:
 
-- Introduzir `entities/user` e `entities/donation` quando houver recorte de domínio suficiente para evitar abstração prematura
-- Migrar gradualmente os componentes legados restantes em `src/Components`
-- Reduzir a dependência de compatibilidade entre `src/context` e `src/shared/contexts`
-- Adicionar testes para o shell de aplicação e para o roteamento principal
-- Revisar os assets de fonte apontados em `src/index.css`
+```bash
+npm run test
+```
+
+Executar lint:
+
+```bash
+npm run lint
+```
+
+Rodar preview da build:
+
+```bash
+npm run preview
+```
+
+## Estrutura resumida
+
+```txt
+src/
+  app/
+  features/
+    auth/
+    donations/
+    hero/
+  shared/
+```
+
+## Proximos passos
+
+- Concluir a remocao completa de qualquer estrutura legada remanescente
+- Expandir a cobertura de testes para rotas e composicao do shell da aplicacao
+- Evoluir a separacao de dominio se novas features forem adicionadas
+- Revisar helpers e estilos repetidos quando surgirem novos pontos de duplicacao
+

@@ -1,237 +1,139 @@
 # Changelog
 
+O changelog abaixo resume a evolucao tecnica do projeto e destaca a transicao para a arquitetura atual.
+
+## [Unreleased]
+
+### Adicionado
+
+- Documentacao atualizada no `README.md` com a arquitetura vigente, o mapa de features e os fluxos principais da aplicacao.
+- Registro do processo de migracao de uma base legada para uma estrutura orientada por features.
+- Consolidacao da visao de componentizacao aplicada em autenticacao, campanhas e landing page.
+
+### Alterado
+
+- Bootstrap centralizado em `src/app`.
+- Providers globais compostos em `AppProviders`.
+- Autenticacao isolada em `src/features/auth` com contexto, hooks, servicos e paginas proprias.
+- Fluxo de campanhas isolado em `src/features/donations` com componentes menores para listagem, formulario, modal e filtragem.
+- Landing page isolada em `src/features/hero` com header, content, footer e dados separados.
+- Codigo compartilhado movido para `src/shared` para reutilizacao entre features.
+
+### Refatorado
+
+- `AuthLayout` e `Overlay` passaram a compor a experiencia visual de login e cadastro.
+- `ProfileEditModal` centraliza edicao e exclusao de cadastro via `useAuth`.
+- `Donations` usa `matchesFilters` e `DonationCard` para simplificar filtragem e renderizacao.
+- `DonationsEditPage` organiza manutencao de campanhas com `DonationForm`, `DonationList`, `DonationModal` e `AddDonationButton`.
+- `HeroPage` consolida `HeroHeader`, `HeroContent`, `HeroCard`, `HeroContentButton` e `HeroFooter`.
+- `RequireAuth` protege as rotas autenticadas.
+
+### Observado
+
+- Esta entrada reflete principalmente a reorganizacao da base e a documentacao do estado atual, sem alterar o comportamento funcional nesta rodada.
+- A migracao continua incremental e ainda pode existir compatibilidade temporaria com caminhos historicos ou arquivos legados no historico do repositorio.
+
 ## [1.1.2] - 2026-06-21
 
 ### Refatorado
 
-- `Donations.jsx`: extraído subcomponente `DonationCard` para a renderização de cada item da lista; extraída função `matchesFilters` para a lógica de filtragem, antes embutida diretamente no `.filter`.
-- `Modal.jsx`: `campaign` passou a ser desestruturado no topo do componente em vez de repetir `campaign.title`, `campaign.location`, etc.; lista de opções de doação extraída para a constante `DONATION_OPTIONS`, renderizada via `.map`.
-- `NavBar.jsx`: estados e handlers renomeados para maior clareza semântica (`openModal` → `isEditModalOpen`, `dropdownOpen` → `isDropdownOpen`, `handleOpenModal`/`handleCloseModal` → `openEditModal`/`closeEditModal`).
-- `Search.jsx`: os três campos de busca (termo, empresa, local), antes blocos JSX quase idênticos, unificados em um array de configuração `SEARCH_FIELDS` mapeado; os três `useState` separados consolidados em um único estado `terms`.
-- `FooterDiv.jsx`: listas de links "Recursos"/"Empresa" extraídas para as constantes `RESOURCE_LINKS`/`COMPANY_LINKS` e renderizadas por um novo subcomponente `FooterLinkList`; ícones sociais extraídos para o array `SOCIAL_ICONS` e renderizados via `.map`; indentação do arquivo corrigida.
+- `Donations.jsx`: extraido `DonationCard` para renderizacao de cada item e `matchesFilters` para a logica de filtragem.
+- `Modal.jsx`: campanha desestruturada no topo do componente e opcoes de doacao concentradas em `DONATION_OPTIONS`.
+- `NavBar.jsx`: estados e handlers renomeados para maior clareza semantica.
+- `Search.jsx`: tres campos de busca consolidados em configuracao orientada por dados.
+- `FooterDiv.jsx`: links e icones extraidos para constantes e renderizados por subcomponentes dedicados.
 
 ### Code Smells Identificados e Tratados
 
 #### Duplicated Code / Long Method
 
-**Situação anterior:**
-Em `src/Components/TaylorComponents/`, vários componentes repetiam blocos de JSX quase idênticos (campos de busca em `Search.jsx`, links e ícones em `FooterDiv.jsx`, acesso repetido a propriedades de `campaign` em `Modal.jsx`) e concentravam lógica de renderização e filtragem em funções únicas e extensas (`Donations.jsx`).
+Situacao anterior:
+- Componentes repetiam blocos de JSX quase identicos e misturavam renderizacao com regras de filtro.
 
-**Solução aplicada:**
-Extração de subcomponentes (`DonationCard`, `FooterLinkList`), de funções auxiliares (`matchesFilters`) e de estruturas de dados (`SEARCH_FIELDS`, `DONATION_OPTIONS`, `RESOURCE_LINKS`, `COMPANY_LINKS`, `SOCIAL_ICONS`), eliminando duplicação e reduzindo o tamanho e a complexidade dos componentes principais.
+Solucao aplicada:
+- Extracao de subcomponentes, funcoes auxiliares e estruturas de dados para reduzir duplicacao e complexidade.
 
-**Prática aplicada:**
-- DRY (Don't Repeat Yourself);
-- Single Responsibility Principle (SRP);
-- Data Driven Components.
+Pratica aplicada:
+- DRY
+- SRP
+- Data Driven Components
 
 ### Observado
 
-- Nenhuma classe CSS, texto, `data-testid`, prop ou estrutura de DOM foi alterada nesta versão.
-- Suítes de teste existentes (`Donations.test.jsx`, `Modal.test.jsx`, `Search.test.jsx`) continuam válidas sem necessidade de ajustes.
+- Nenhuma classe CSS, texto, `data-testid`, prop ou estrutura de DOM foi alterada nesta versao.
+- As suites de teste existentes continuaram validas sem ajuste estrutural.
 
 ## [1.1.1] - 2026-06-19
 
 ### Corrigido
 
-- Removidos `import React` desnecessários em todos os arquivos JSX e de teste (React 18 com transform automático não exige o import).
-- Adicionados imports explícitos de `beforeEach` e `vi` do Vitest nos arquivos de teste que usavam as funções como globais implícitas, resolvendo erro `no-undef` do ESLint.
-- Adicionado `// eslint-disable-next-line react/prop-types` no mock de `DonationsProvider` em `Donations.test.jsx`, onde prop-types não é aplicável a funções de mock.
-- Corrigido `vitest.config.js` para incluir `@vitejs/plugin-react`, habilitando o transform JSX automático nos arquivos de teste.
+- Removidos `import React` desnecessarios em arquivos JSX e de teste.
+- Adicionados imports explicitos de `beforeEach` e `vi` do Vitest nos testes que dependiam desses globais.
+- Corrigido mock de `DonationsProvider` em `Donations.test.jsx` para evitar aviso de `prop-types`.
+- Atualizado `vitest.config.js` para incluir `@vitejs/plugin-react`.
 
 ### Alterado
 
-- `AuthContext` extraído de `AuthProvider.jsx` para `src/features/auth/context/AuthContext.js`, eliminando o aviso `react-refresh/only-export-components` que impedia `npm run lint` de passar com zero warnings.
-- `useAuth.js` atualizado para importar `AuthContext` de `AuthContext.js` em vez de reexportá-lo de `AuthProvider.jsx`.
-- `AuthProvider.test.jsx` atualizado para importar `useAuth` de `../hooks/useAuth` em vez de `./AuthProvider`.
+- `AuthContext` extraido de `AuthProvider.jsx` para `src/features/auth/context/AuthContext.js`.
+- `useAuth.js` atualizado para consumir o novo `AuthContext`.
+- `AuthProvider.test.jsx` ajustado para importar `useAuth` do hook real.
 
 ### Adicionado
 
-- Dependência `@vitest/coverage-v8` para geração de relatório de cobertura via `npx vitest run --coverage`.
-
-### Code Smells Identificados e Tratados
-
-#### Improper Input Validation / NaN Safety
-
-**Situação anterior:**
-A validação de `input.value` em `DonationsEdit.jsx` usava `Number(input.value) <= 0`. Como `NaN <= 0` retorna `false` em JavaScript, entradas não-numéricas passavam pela validação sem serem bloqueadas.
-
-**Solução aplicada:**
-Condição alterada para `isNaN(Number(input.value)) || Number(input.value) <= 0`, rejeitando explicitamente valores que não convertam em número válido.
-
-**Prática aplicada:**
-- Defensive Programming;
-- Null/NaN Safety.
-
-Todas as mudanças relevantes deste projeto serão documentadas neste arquivo.
-
-O formato segue as recomendações do [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/), e este projeto segue versionamento semântico sempre que aplicável.
+- Dependencia `@vitest/coverage-v8` para gerar relatorios de cobertura.
 
 ## [1.1.0] - 2026-06-18
 
 ### Adicionado
 
-- Estrutura `src/features/auth/` com separação por responsabilidade: `components/`, `context/`, `hooks/`, `services/` e `pages/`.
-- `src/features/auth/services/authService.js` centralizando toda a lógica de autenticação: `login`, `register`, `logout`, `updateUser`, `deleteUser` e `initAuth`.
-- Suíte de testes unitários com `Vitest`, incluindo `src/features/auth/services/authService.test.js` e `src/shared/storage/localStorage.test.js`.
-- Dependência de ambiente `happy-dom` adicionada para execução de testes em `Vitest`, evitando conflito compatibilidade ESM/CJS com `jsdom`.
-- Script `npm test` para execução da suíte de testes.
-- `src/features/auth/context/AuthProvider.jsx` substituindo `UserContext`: expõe `user`, `login`, `register`, `logout`, `updateUser`, `deleteUser` e `loading`.
-- `src/features/auth/hooks/useAuth.js` como ponto único de acesso ao contexto de autenticação.
-- `src/features/auth/components/RequireAuth.jsx` protegendo rotas privadas (`/Donations`, `/DonationsEdit`) com redirecionamento automático para `/login`.
-- `src/shared/api/apiClient.js` com instância Axios centralizada, pronta para interceptors futuros.
-- Persistência de sessão: usuário autenticado é restaurado do `localStorage` ao recarregar a página via `authService.initAuth`.
+- Estrutura `src/features/auth/` com `components`, `context`, `hooks`, `services` e `pages`.
+- `authService.js` centralizando login, cadastro, logout, atualizacao, exclusao e inicializacao da sessao.
+- `AuthProvider` e `useAuth` como ponto unico de acesso ao estado de autenticacao.
+- `RequireAuth` protegendo rotas privadas com redirecionamento para `/login`.
+- `apiClient.js` como instancia Axios centralizada.
+- Restauracao de sessao autenticada via `localStorage` no carregamento.
 
 ### Alterado
 
-- `src/main.jsx` substituindo `UserProvider` por `AuthProvider`.
-- `src/app/router/index.jsx` corrigindo import de `LoginPage` (apontava para stub `pages/Login/index.jsx` que retornava `null`) e adicionando `RequireAuth` nas rotas protegidas.
-- `NavBar.jsx` migrado de `useUser` para `useAuth`; logout agora chama `logout()` do contexto em vez de `setUser(null)` direto.
-- `Search.jsx` migrado de `useUser` para `useAuth`.
-- Correção da suíte de testes `Vitest`: adicionados imports de `React` em arquivos JSX, ajustados mocks e validações em `SignInForm`, `SignUpForm`, `Search`, `Modal` e `Donations` para rodar com `happy-dom`.
-- `ModalEdit.jsx` migrado de `useUser` para `useAuth`; edição e exclusão de cadastro delegadas para `updateUser` e `deleteUser` do contexto, removendo manipulação direta de `localStorage`.
+- `main.jsx` passou a usar `AuthProvider`.
+- `router/index.jsx` passou a proteger rotas autenticadas.
+- Fluxos de login e cadastro migraram para a estrutura nova de autenticacao.
 
 ### Removido
 
-- `src/Components/MiguelComponents/Layout.jsx` substituído por `AuthLayout.jsx`.
-- `src/Components/MiguelComponents/SignInForm.jsx` movido para `features/auth/components/`.
-- `src/Components/MiguelComponents/SignUpForm.jsx` movido para `features/auth/components/`.
-- `src/Components/MiguelComponents/Overlay.jsx` movido para `features/auth/components/`.
-- `src/Components/MiguelComponents/LayoutStyles.css` movido para `features/auth/components/`.
-- `src/Components/MiguelComponents/Miguelstyles.css` removido (CSS legado substituído por Tailwind).
-- `src/pages/LoginPage.jsx` e `src/pages/Login/index.jsx` substituídos por `features/auth/pages/LoginPage.jsx`.
-- `src/context/UserContext.jsx` substituído por `AuthProvider`; imports atualizados em todos os consumidores.
-
-### Refatorado
-
-- Separação clara de responsabilidades no fluxo de autenticação: UI (`SignInForm`, `SignUpForm`) não acessa mais `localStorage` diretamente; toda persistência passa pelo `authService`.
-- `AuthLayout.jsx` encapsula o contêiner animado de login/cadastro, isolando o estado de painel (`rightPanelActive`) da página.
-
-### Code Smells Identificados e Tratados
-
-#### Inappropriate Intimacy / Feature Envy
-
-**Situação anterior:**
-`SignInForm` e `SignUpForm` acessavam `localStorage` diretamente, misturando lógica de UI com lógica de persistência. `ModalEdit` também manipulava `localStorage` diretamente para editar e deletar usuários.
-
-**Solução aplicada:**
-Criação de `authService.js` centralizando toda operação de armazenamento. Os componentes de UI passaram a delegar ao contexto via `useAuth`.
-
-**Prática aplicada:**
-- Single Responsibility Principle (SRP);
-- Separation of Concerns (SoC).
-
-#### God Context / Large Class
-
-**Situação anterior:**
-`UserContext` expunha `setUser` diretamente, fazendo com que qualquer componente pudesse mutá-lo livremente sem controle de side effects (sem persistir no `localStorage`, sem limpar sessão, etc.).
-
-**Solução aplicada:**
-`AuthProvider` expõe apenas ações nomeadas (`login`, `logout`, `register`, `updateUser`, `deleteUser`), ocultando o setter e garantindo que toda mutação de estado seja acompanhada de persistência.
-
-**Prática aplicada:**
-- Encapsulamento;
-- Command Pattern.
-
-#### Dead Code / Stub
-
-**Situação anterior:**
-`src/pages/Login/index.jsx` retornava `null`. O router importava esse stub, tornando a rota `/login` completamente inoperante.
-
-**Solução aplicada:**
-Arquivo removido e router atualizado para importar a `LoginPage` real de `features/auth/pages/`.
-
-**Prática aplicada:**
-- Remoção de código morto;
-- Clean routing.
-
-#### Missing Route Protection
-
-**Situação anterior:**
-Rotas `/Donations` e `/DonationsEdit` eram acessíveis sem autenticação via URL direta.
-
-**Solução aplicada:**
-`RequireAuth` envolve as rotas privadas, redirecionando para `/login` quando não há usuário autenticado.
-
-**Prática aplicada:**
-- Defensive Programming;
-- Separation of Concerns.
-
-#### Scattered Architecture (Feature Scattering)
-
-**Situação anterior:**
-Código de autenticação distribuído em `src/Components/MiguelComponents/`, `src/pages/`, `src/context/` e `src/shared/contexts/` sem agrupamento por feature.
-
-**Solução aplicada:**
-Toda a feature de autenticação consolidada em `src/features/auth/` seguindo estrutura feature-based.
-
-**Prática aplicada:**
-- High Cohesion;
-- Feature-Oriented Structure.
-
-### Adicionado
-
-- Atualização feita para Node.js 22 em `package.json`.
-- `packageManager` com npm 10 em `package.json`.
-- Estrutura alvo em `src/app` para futura centralização de bootstrap, providers e rotas.
-- Estrutura alvo em `src/components` com pastas atômicas e arquivos `index.jsx`, `data.js` e `style.js` quando aplicável.
-- Estrutura alvo em `src/pages` para migração gradual das telas.
-- Estrutura alvo em `src/shared` para contextos e dados compartilhados.
-- Documentação da arquitetura alvo e dos motivos técnicos no `README.md`.
-
-### Alterado
-
-- Atualizado `package-lock.json` para `lockfileVersion: 3`, gerado por npm moderno via Corepack.
-- Atualizado `README.md` para refletir Node 22, organização proposta e estratégia incremental.
-- Atualizado `package.json` para remover dependências de interface legadas (`@mui/material`, `@emotion/react`, `@emotion/styled`, `bootstrap`, `mui`).
-- Simplificado `src/index.css` para manter apenas configurações globais, fontes e Tailwind.
-- Refatorados componentes legados para Tailwind CSS com classes utilitárias em vez de arquivos CSS isolados.
-
-### Refatorado
-
-- Projeto completamente migrado para Tailwind CSS em Header, Footer, TelaInicial, login, cadastro, modais e listagens.
-- Componentes de `MiguelComponents`, `EduardoComponents`, `ErycComponents` e `TaylorComponents` adaptados para Tailwind.
-- Mantido apenas `src/Components/MiguelComponents/LayoutStyles.css` para animações específicas de transição de painel.
-- Atualizado `tailwind.config.js` com cores e fontes customizadas.
-- Documentação de limpeza e finalização consolidada no `CHANGELOG.md`.
-
-### Observado
-
-- As telas legadas foram mantidas sem reajuste visual nesta etapa.
-- Os arquivos da nova estrutura de componentes foram criados vazios ou mínimos para servir como base de migração.
-- O projeto ainda não possui suíte de testes automatizados nem ferramenta de cobertura.
-- O lint foi estabilizado na versao `1.0.2`; novas pendencias devem ser tratadas em versoes futuras.
+- Estruturas antigas da autenticacao foram substituidas pela feature `auth`.
+- Paginas stub e pontos de entrada paralelos foram eliminados.
 
 ## [1.0.2] - 2026-06-17
 
 ### Corrigido
 
-- Removidas duplicacoes de JSX/export em `SignUpForm.jsx` e `NavBar.jsx`.
-- Corrigidos imports com capitalizacao incorreta em `Hero/index.jsx` e `router/routes.jsx`.
-- Corrigido login para atualizar o usuario autenticado no contexto.
-- Corrigido logout para limpar a sessao com `setUser(null)`.
-- Corrigida busca de doacoes para enviar os valores atualizados ao componente pai.
-- Corrigidos filtros de doacoes para tolerar dados incompletos vindos do storage.
-- Corrigida geracao de IDs de doacoes para evitar colisoes apos exclusoes.
-- Protegida a pagina de edicao de cadastro contra acesso sem `location.state`.
+- Duplicacoes de JSX/export em formularios e navegacao.
+- Imports com capitalizacao incorreta.
+- Fluxos de login, logout, busca e edicao vinculados ao contexto correto.
 
 ### Refatorado
 
-- Criado `src/shared/storage/localStorage.js` para centralizar leitura e escrita no browser storage.
-- Substituidos `alert`, `confirm` e `console.log` por feedback controlado na interface.
-- Ajustado `main.jsx` para usar `createRoot` diretamente.
-- Adicionada validacao de `children` nos providers legados.
-
-### Alterado
-
-- Atualizada a versao do pacote para `1.0.2`.
-- Atualizado `package-lock.json` para `lockfileVersion: 3`.
-- Declarada a dependencia `prop-types`, ja utilizada por componentes existentes.
+- Centralizacao da leitura e escrita no `localStorage`.
+- Ajustes no `main.jsx` para `createRoot`.
 
 ### Validado
 
-- `npm run lint`.
-- `npm run build`.
+- `npm run lint`
+- `npm run build`
+
+## [1.0.1] - 2026-06-05
+
+### Adicionado
+
+- Estrutura modular inicial baseada em componentes.
+- Pagina principal composta por hero, header e footer.
+- Componentes especializados para conteudo estatico e CTA.
+
+### Refatorado
+
+- Separacao entre conteudo, layout e apresentacao.
+- Reducao de acoplamento entre partes da interface.
 
 ## [1.0.0] - 2026-05-30
 
@@ -239,244 +141,8 @@ Toda a feature de autenticação consolidada em `src/features/auth/` seguindo es
 
 - Estrutura inicial do front-end Donation Compass.
 - Landing page institucional.
-- Fluxo de login e cadastro de usuários.
-- Listagem e busca de campanhas de arrecadação.
-- Criação, edição e exclusão de campanhas.
-- Edição e exclusão de cadastro de usuário.
-- Persistência local de usuários e campanhas via `localStorage`.
-- Configuração inicial com React, Vite, Tailwind CSS, Material UI, Bootstrap, React Router e ESLint.
+- Fluxo de login e cadastro.
+- Listagem e busca de campanhas.
+- Criacao, edicao e exclusao de campanhas.
+- Persistencia local de usuarios e campanhas via `localStorage`.
 
-## [1.0.1] - 2026-06-05
-
-### Adicionado
-- Estrutura modular em src/components, organizada por contexto e responsabilidade.
-- Página HeroScreen responsável pela composição da tela inicial.
-- Componentes especializados para título, textos, botões e cartões da seção Hero.
-- Arquivo data.js para centralização dos conteúdos estáticos da tela inicial.
-- Organização hierárquica de componentes visando reutilização e escalabilidade.
-- Padronização de nomes de imagens utilizando convenção kebab-case.
-
-### Alterado
-- Reestruturação da arquitetura do front-end para uma abordagem baseada em componentes.
-- Substituição da implementação monolítica da antiga TelaInicial.jsx.
-- Remoção dos arquivos CSS específicos em favor da utilização de Tailwind CSS.
-- Simplificação da rota principal através da abstração da página HeroScreen.
-- Padronização da organização dos arquivos utilizando index.jsx.
-
-
-### Refatorado
-- Extração do conteúdo estático da interface para estruturas de dados independentes.
-- Separação entre conteúdo, layout e apresentação.
-- Redução do acoplamento entre componentes.
-- Aumento da coesão através do agrupamento de arquivos relacionados.
-- Melhoria da legibilidade e manutenção do código.
-- Melhorias de Arquitetura
-
-## Antes
-
-A arquitetura anterior possuía:
-- Componentes concentrando múltiplas responsabilidades.
-- Mistura entre conteúdo, layout e estilização.
-- Arquivos CSS independentes para cada componente.
-- Estrutura de diretórios sem separação clara por domínio.
-- Alto acoplamento entre as partes da página principal.
-- Grande quantidade de conteúdo estático diretamente dentro dos componentes.
-
-## Depois
-
-A arquitetura passou a adotar:
-- Componentização em múltiplos níveis.
-- Componentes com responsabilidade única.
-- Centralização dos dados em arquivos específicos.
-- Estrutura baseada em contexto funcional.
-- Separação entre apresentação e conteúdo.
-- Reutilização e composição de componentes.
-- Padronização de nomenclatura e organização.
-- Code Smells Identificados e Tratados
-- Large Class / God Component
-
-### Situação anterior
-TelaInicial.jsx concentrava:
-- Layout;
-- Conteúdo textual;
-- Estrutura da página;
-- Navegação;
-- Estilização.
-
-Caracterizando um componente excessivamente grande e com múltiplas responsabilidades.
-
-### Solução aplicada
-- Quebra do componente em unidades menores.
-
-Criação de:
-- HeroScreen
-- HeroContent
-- HeroCard
-- HeroContentTitle
-- HeroContentParagraph
-- HeroContentButton
-
-Prática aplicada
-- Single Responsibility Principle (SRP);
-- Component Composition;
-
-Alta coesão.
-- Divergent Change
-- Situação anterior
-
-Qualquer alteração textual ou estrutural exigia modificações em um único arquivo extenso.
-
-## Solução aplicada
-
-Separação do conteúdo em data.js, permitindo alterações independentes da estrutura visual.
-
-Prática aplicada
-Separation of Concerns;
-Encapsulamento.
-Shotgun Surgery
-Situação anterior
-
-Mudanças em elementos da Hero exigiam alterações em vários trechos do mesmo componente.
-
-Solução aplicada
-
-Separação em componentes especializados e reutilizáveis.
-
-Prática aplicada
-Componentização;
-Baixo acoplamento.
-Duplicated Code
-Situação anterior
-
-Estruturas semelhantes de títulos e parágrafos tendiam a se repetir.
-
-Solução aplicada
-
-Criação de componentes reutilizáveis.
-
-Prática aplicada
-DRY (Don't Repeat Yourself).
-Primitive Obsession
-Situação anterior
-
-Grande quantidade de textos hardcoded dentro do JSX.
-
-Solução aplicada
-
-Centralização das informações em data.js.
-
-Prática aplicada
-- Data Driven Components;
-- Separation of Concerns.
-- Inconsistent Naming
-- Situação anterior
-
-Existência de nomenclaturas inconsistentes:
-- HeaderDN;
-- Telainicial;
-- arquivos com diferentes padrões de escrita.
-
-### Solução aplicada
-
-Padronização da nomenclatura dos componentes e imagens.
-
-### Prática aplicada
-- Convention over Configuration;
-- Consistência semântica.
-- Excessive Coupling
-
-### Situação anterior
-A rota principal precisava conhecer diretamente:
-- Header;
-- TelaInicial;
-- Footer.
-
-### Solução aplicada
-Introdução da abstração HeroScreen.
-
-Prática aplicada
-- Encapsulamento;
-- Baixo acoplamento.
-- CSS Scattering
-
-Situação anterior
-Estilos distribuídos em múltiplos arquivos:
-- header.css;
-- footer.css;
-- telainicial.css.
-
-Gerando maior dispersão e dificuldade de manutenção.
-
-Solução aplicada
-Adoção de Tailwind CSS.
-
-Prática aplicada
-- Colocation;
-- Utility First CSS.
-- Baixa Coesão da Estrutura
-
-Situação anterior
-- Arquivos relacionados encontravam-se dispersos dentro de uma única pasta.
-
-### Arquitetura Antiga
-src
-|___Components
-    |___IsiComponents
-        |___footer.css
-        |___Footer.jsx
-        |___header.css
-        |___Header.jsx
-        |___TelaInicial.css
-        |___TelaInicial.jsx
-
-### Solução aplicada
-
-Organização baseada em contexto:
-components
-├── Header
-├── Footer
-├── HeroContent
-   ├── HeroCard
-   ├── HeroContentTitle
-   ├── HeroContentParagraph
-   ├── HeroContentButton
-   ├── data.js
-   └── index.jsx
-
-Prática aplicada
-- High Cohesion;
-- Feature-Oriented Structure.
-
-Princípios de Clean Code Aplicados
-- Single Responsibility Principle (SRP);
-- Separation of Concerns (SoC);
-- DRY (Don't Repeat Yourself);
-- Baixo acoplamento;
-- Alta coesão;
-- Encapsulamento;
-- Component Composition;
-- Convention over Configuration;
-- Data Driven Components;
-- Feature-Oriented Structure;
-- Utility First CSS;
-- Maior legibilidade e manutenibilidade;
-- Maior escalabilidade da arquitetura;
-- Melhor reutilização dos componentes;
-- Redução da complexidade ciclomática dos componentes de alto nível.
-
-### Resultado Esperado
-
-A nova arquitetura proporciona:
-- Melhor legibilidade do código;
-- Maior facilidade de manutenção;
-- Menor impacto de futuras alterações;
-- Maior reutilização de componentes;
-- Maior escalabilidade da aplicação;
-- Redução do acoplamento entre módulos;
-- Melhor aderência às práticas de Clean Code e princípios SOLID.
-
-## [1.0.2] - 2026-06-17
-Organização das cores para seguir mesmo padrão do css antigo e remoção de arquivos de contextualização para limpeza do repositório
-
-## [1.0.3] - 2026-06-21
-Aplicação de componentes em todas as telas que faziam uso da estrutura antiga/individual dos mesmos.

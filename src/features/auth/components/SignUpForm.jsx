@@ -58,7 +58,7 @@ const SignUpForm = () => {
         />
         <Button
           name="Cadastrar"
-          className="bg-gradient-to-r from-orange-700 to-orange-500 text-white font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l"
+          className="bg-gradient-to-r from-orange-700 to-orange-500 text-orange-500 font-bold py-3 px-12 m-2 rounded-lg cursor-pointer border-none text-center uppercase transition-all duration-500 hover:bg-gradient-to-l"
           type="submit"
         >
           Cadastrar

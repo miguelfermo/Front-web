@@ -1,4 +1,4 @@
-import { readStorage, writeStorage } from '../../../shared/storage/localStorage'
+import { readStorage, writeStorage } from '@/shared/storage/localStorage'
 
 export function login({ name, password }) {
   const users = readStorage('users', [])

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import PropTypes from "prop-types"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../../features/auth/hooks/useAuth"
+import { useAuth } from "../hooks/useAuth"
 import Subtitle from "@/shared/ui/Subtitle"
 import Input from "@/shared/ui/Input"
 import Button from "@/shared/ui/Button"

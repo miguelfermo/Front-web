@@ -27,7 +27,7 @@ export default function PaginaEditarCadastro({ onSave }) {
       return
     }
 
-    navigate("/Donations")
+    navigate("/donations")
   }
 
   return (
@@ -108,7 +108,7 @@ export default function PaginaEditarCadastro({ onSave }) {
           primaryText="Salvar"
           secondaryText="Cancelar"
           onPrimaryClick={handleSubmit}
-          onSecondaryClick={() => navigate("/Donations")}
+          onSecondaryClick={() => navigate("/donations")}
           primaryVariant="primary"
           secondaryVariant="secondary"
         />
