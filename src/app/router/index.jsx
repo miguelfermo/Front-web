@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom"
-import HeroScreen from "@/pages/Hero"
-import DonationsPage from "@/pages/DonationsPage"
+import HeroScreen from "@/features/hero/pages/HeroPage"
+import DonationsPage from "@/features/donations/pages/DonationsPage"
 import DonationsEditPage from "@/features/donations/pages/DonationsEditPage"
 import LoginPage from "@/features/auth/pages/LoginPage"
 import RequireAuth from "@/features/auth/components/RequireAuth"
 import Navbar from "@/features/donations/components/NavBar"
-import PaginaEditarCadastro from "@/Components/EduardoComponents/PageEdit"
+import PaginaEditarCadastro from "@/features/auth/pages/PageEdit"
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
     element: <HeroScreen />,
   },
   {
-    path: "/Donations",
+    path: "/donations",
     element: (
       <RequireAuth>
         <DonationsPage />
@@ -24,21 +24,17 @@ export const router = createBrowserRouter([
     path: "/donations/edit/",
     element: (
       <RequireAuth>
-        <div>
-          <Navbar />
-          <DonationsEditPage />
-        </div>
+        <Navbar />
+        <DonationsEditPage />
       </RequireAuth>
     ),
   },
   {
-    path: "/PaginaEditarCadastro",
+    path: "/register/edit/",
     element: (
       <RequireAuth>
-        <div>
-          <Navbar />
-          <PaginaEditarCadastro />
-        </div>
+        <Navbar />
+        <PaginaEditarCadastro />
       </RequireAuth>
     ),
   },

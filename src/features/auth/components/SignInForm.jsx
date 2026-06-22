@@ -21,7 +21,7 @@ const SignInForm = () => {
     }
     try {
       login({ name, password })
-      navigate('/Donations')
+      navigate('/donations')
     } catch (err) {
       setError(err.message)
     }

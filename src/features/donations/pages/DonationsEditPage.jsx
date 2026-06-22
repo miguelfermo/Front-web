@@ -2,7 +2,7 @@ import DonationForm from "../components/DonationForm";
 import DonationList from "../components/DonationList";
 import DonationModal from "../components/DonationModal";
 import AddDonationButton from "../components/AddDonationButton";
-import { useDonations } from "../context/useDonations";
+import { useDonations } from "../hooks/useDonations";
 
 export default function DonationsEditPage() {
     const {

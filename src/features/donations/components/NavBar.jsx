@@ -2,7 +2,7 @@ import { useState, useCallback } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import logo from "@/assets/logo-name.png"
 import { useAuth } from "@/features/auth/hooks/useAuth"
-import ModalEdit from "@/Components/EduardoComponents/ModalEdit"
+import ModalEdit from "@/features/auth/components/ProfileEditModal"
 import Button from "@/shared/ui/Button"
 
 const NavBar = () => {
