@@ -1,5 +1,216 @@
 # Changelog
 
+O changelog abaixo resume a evolucao tecnica do projeto e destaca a transicao para a arquitetura atual.
+
+## [Unreleased]
+
+### Adicionado
+
+- Documentacao atualizada no `README.md` com a arquitetura vigente, o mapa de features e os fluxos principais da aplicacao.
+- Registro do processo de migracao de uma base legada para uma estrutura orientada por features.
+- Consolidacao da visao de componentizacao aplicada em autenticacao, campanhas e landing page.
+- Registro explicito dos principais code smells tratados na base atual, com mapeamento entre problema, solucao e pratica de Clean Code.
+- Documentacao do repositorio alinhada ao estado atual da estrutura em `src/app`, `src/features` e `src/shared`.
+
+### Alterado
+
+- Bootstrap centralizado em `src/app`.
+- Providers globais compostos em `AppProviders`.
+- Autenticacao isolada em `src/features/auth` com contexto, hooks, servicos e paginas proprias.
+- Fluxo de campanhas isolado em `src/features/donations` com componentes menores para listagem, formulario, modal e filtragem.
+- Landing page isolada em `src/features/hero` com header, content, footer e dados separados.
+- Codigo compartilhado movido para `src/shared` para reutilizacao entre features.
+- Rotas consolidadas em `src/app/router/index.jsx`, com `RequireAuth` protegendo `/donations`, `/donations/edit/` e `/register/edit/`.
+- Providers globais consolidados em `src/app/providers/index.jsx`, combinando `AuthProvider` e `DonationsProvider`.
+- `src/main.jsx` simplificado para carregar `AppProviders` e `App`.
+- `src/app/index.jsx` reduzido a um ponto de entrada que apenas instancia o `RouterProvider`.
+
+### Refatorado
+
+- `src/features/auth/components/AuthLayout.jsx` passou a ser o shell visual da tela de login, controlando a troca entre os formularios de entrada e cadastro.
+- `src/features/auth/components/Overlay.jsx` concentrou a camada animada de alternancia entre os paineis de login e cadastro, substituindo duplicacao de markup.
+- `src/features/auth/components/SignInForm.jsx` e `SignUpForm.jsx` foram simplificados para delegar autenticacao ao `useAuth`, centralizando validacao e fluxo de navegacao.
+- `src/features/auth/components/ProfileEditModal.jsx` assumiu edicao e exclusao de cadastro, com fluxo de confirmacao mais explicito e integracao com `useAuth`.
+- `src/features/auth/context/AuthProvider.jsx` encapsula side effects de login, logout, cadastro, edicao e exclusao, sem expor mutacao direta de estado para consumidores.
+- `src/features/auth/services/authService.js` concentra persistencia de usuarios e sessao, removendo acesso direto ao storage dos componentes de UI.
+- `src/features/auth/pages/LoginPage.jsx` e `src/features/auth/pages/PageEdit.jsx` passaram a compor telas especificas, reduzindo responsabilidade dos componentes de dominio.
+- `src/features/donations/components/Donations.jsx` extraiu a logica de filtragem para `matchesFilters` e a renderizacao de itens para `DonationCard`, deixando o container mais previsivel.
+- `src/features/donations/components/NavBar.jsx` ganhou nomes de estado e handlers mais semanticos, com fluxo de menu e modal mais legivel.
+- `src/features/donations/components/Search.jsx` passou a usar `SEARCH_FIELDS` e um unico estado agregado `terms`, eliminando repeticao de JSX e estados dispersos.
+- `src/features/donations/components/Modal.jsx` desestruturou `campaign` e moveu as opcoes de doacao para `DONATION_OPTIONS`, reduzindo duplicacao e melhorando leitura.
+- `src/features/donations/pages/DonationsPage.jsx` isolou o estado de filtros da listagem principal e fez a comunicacao com `Search` e `Donations` de forma declarativa.
+- `src/features/donations/pages/DonationsEditPage.jsx` organizou a manutencao de campanhas em torno de `AddDonationButton`, `DonationList`, `DonationForm` e `DonationModal`.
+- `src/features/donations/context/DonationsProvider.jsx` passou a fornecer o estado da feature por contexto dedicado.
+- `src/features/donations/hooks/useDonation.js` concentrou carregamento, validacao, persistencia, edicao e exclusao de campanhas em um unico hook de dominio.
+- `src/features/donations/services/donationStorage.js`, `donationService.js`, `userDonationStorage.js` e `utils/initialInputState.js` separaram persistencia, transformacao e estado inicial.
+- `src/features/hero/pages/HeroPage.jsx` passou a compor `HeroHeader`, `HeroContent` e `HeroFooter` como pagina de entrada.
+- `src/features/hero/components/HeroContent.jsx`, `HeroHeader.jsx`, `HeroFooter.jsx`, `HeroCard.jsx` e `HeroContentButton.jsx` passaram a dividir layout, conteudo e CTA em componentes de responsabilidade unica.
+- `src/features/hero/data/heroData.js` concentra conteudos estaticos da home, reduzindo hardcode dentro da interface.
+- `src/shared/ui/*` consolidou componentes visuais reutilizaveis para evitar repeticao de botao, input, modal, titulo, subtitulo, paragrafo e acoes.
+- `src/shared/storage/localStorage.js` ficou como camada unica de leitura e escrita do storage do navegador.
+
+### Observado
+
+- Esta entrada reflete principalmente a reorganizacao da base e a documentacao do estado atual, sem alterar o comportamento funcional nesta rodada.
+- A migracao continua incremental e ainda pode existir compatibilidade temporaria com caminhos historicos ou arquivos legados no historico do repositorio.
+
+### Code Smells Identificados e Tratados
+
+#### Scattered Architecture / Feature Scattering
+
+Situacao anterior:
+- Rotas, providers, contexts, services e componentes estavam espalhados em diretorios paralelos, com fluxos duplicados entre `src/Components`, `src/context`, `src/pages`, `src/router` e `src/shared/contexts`.
+- Havia ponto de entrada de aplicacao duplicado em diferentes camadas, com responsabilidade difusa sobre bootstrap, roteamento e providers.
+- A feature de autenticacao e a feature de campanhas apareciam fragmentadas entre componentes legados e paginas de composicao.
+
+Solucao aplicada:
+- Centralizacao do bootstrap em `src/app`, consolidacao de rotas em um unico router, e reorganizacao do codigo por features em `src/features` com utilitarios compartilhados em `src/shared`.
+- Reagrupamento das responsabilidades por dominio: autenticacao, campanhas e home.
+- Padronizacao do caminho de importacao com alias `@/` e concentracao de codigo compartilhado em `src/shared`.
+
+Pratica aplicada:
+- Feature-Oriented Structure
+- Separation of Concerns
+- High Cohesion
+- Consistent module boundaries
+
+#### Large Class / God Component
+
+Situacao anterior:
+- Telas de autenticacao, campanhas e home concentravam estado, regras de negocio, markup e integracao com storage em componentes grandes e de manutencao cara.
+- Formularios e modais acumulavam validacao, persistencia e renderizacao no mesmo escopo.
+- O componente principal de campanhas acumulava filtragem, selecao, modal e renderizacao da lista ao mesmo tempo.
+
+Solucao aplicada:
+- Extracao de subcomponentes e paginas especificas, como `AuthLayout`, `Overlay`, `DonationCard`, `DonationForm`, `DonationList`, `DonationModal`, `HeroHeader`, `HeroContent` e `HeroFooter`.
+- Separacao do shell visual, da interacao de usuario e da persistencia em unidades menores.
+- Quebra de telas em componentes de composicao e em hooks de dominio.
+
+Pratica aplicada:
+- Single Responsibility Principle
+- Component Composition
+- Extract Class
+- High Cohesion
+- Low Cognitive Load
+
+#### Duplicated Code
+
+Situacao anterior:
+- Estruturas similares de interface e logica de renderizacao se repetiam em campos de busca, opcoes de doacao, botoes, cards e blocos de layout.
+- Campos de busca eram blocos quase iguais, diferindo apenas em icone, placeholder e chave de estado.
+- Opcoes de doacao e partes do modal eram recriadas manualmente em vez de derivar de configuracao.
+- Componentes visuais basicos eram repetidos em varios pontos da UI, com classes e estrutura semelhantes.
+
+Solucao aplicada:
+- Uso de arrays de configuracao, mapeamento por dados e componentes reutilizaveis para eliminar repeticao visual e estrutural.
+- Criacao de estruturas de dados como `SEARCH_FIELDS` e `DONATION_OPTIONS`.
+- Reaproveitamento de componentes base em `src/shared/ui`.
+- Extracao de `DonationCard` para a lista de campanhas.
+
+Pratica aplicada:
+- DRY
+- Data Driven Components
+- Reuse over Copy/Paste
+- Component Reuse
+- Mapping over configuration
+
+#### Long Method
+
+Situacao anterior:
+- Funcoes de interacao misturavam validacao, persistencia, montagem de objetos e atualizacao de estado em blocos longos e de leitura dificil.
+- A validacao de campanha ficava presa no fluxo de salvar e nao era isolada.
+- A logica de selecao, edicao e delecao de campanhas estava concentrada em um unico hook.
+- A acao de doacao no modal fazia mais de uma coisa sem separar montagens de payload e persistencia.
+
+Solucao aplicada:
+- Separacao da logica em funcoes menores e mais previsiveis, como `validateForm`, `saveDonation`, `handleDonate`, `login`, `register`, `updateUser`, `deleteUser` e `initAuth`.
+- Extracao de helpers de dominio como `matchesFilters`, `resetForm`, `updateTerm`, `toggleDropdown`, `openEditModal` e `closeEditModal`.
+- Separacao de carregamento, validacao, persistencia e transicao de estado em funcoes menores.
+
+Pratica aplicada:
+- Extract Method
+- SRP
+- Readability First
+- Stepwise Refinement
+- Small Functions
+
+#### Inappropriate Intimacy / Feature Envy
+
+Situacao anterior:
+- Componentes de UI acessavam `localStorage` diretamente e misturavam detalhes de persistencia com comportamento visual.
+- Telas de autenticacao manipulavam o formato de dados do usuario em vez de delegar para services.
+- A UI conhecia detalhes de storage, chaves e estrutura de persistencia de campanhas e usuarios.
+
+Solucao aplicada:
+- Centralizacao da persistencia em `authService`, `donationStorage`, `userDonationStorage` e `shared/storage/localStorage`, deixando os componentes consumirem apenas os hooks e services apropriados.
+- A UI passou a receber dados e acionar services, sem implementar acesso ao storage diretamente.
+- O contrato entre camada visual e dominio ficou mais simples: componentes emitem eventos, services executam mutacoes.
+
+Pratica aplicada:
+- Separation of Concerns
+- Encapsulation
+- Service Layer
+- Tell, Don't Ask
+- Boundary Respect
+
+#### God Context / Hidden Side Effects
+
+Situacao anterior:
+- O estado global permitia mutacoes diretas e nao deixava claros os side effects de login, logout, cadastro, edicao e exclusao.
+- Qualquer consumidor podia alterar o usuario sem passar por uma operacao de dominio.
+- A atualizacao de sessao podia acontecer sem sincronizar `localStorage`, tornando o comportamento inconsistente.
+
+Solucao aplicada:
+- `AuthProvider` passou a expor acoes nomeadas, encapsulando persistencia e atualizacao do usuario por meio de metodos explicitamente definidos.
+- Os efeitos colaterais foram transferidos para a camada de service e orquestrados pelo provider.
+- O estado passou a ser atualizado apenas por operacoes de dominio com nome semantico.
+
+Pratica aplicada:
+- Encapsulation
+- Command-like API
+- Controlled Mutation
+- Explicit Intent
+- State Ownership
+
+#### Dead Code / Stub and Missing Route Protection
+
+Situacao anterior:
+- Existiam pontos de entrada paralelos e rotas sem protecao consistente, o que deixava partes do fluxo expostas ou inoperantes.
+- Havia paginas stub ou rotas que nao entregavam a tela funcional correspondente.
+- A navegacao direta para rotas autenticadas nao era bloqueada de forma consistente.
+
+Solucao aplicada:
+- Remocao de entradas stub, consolidacao do roteamento em `src/app/router/index.jsx` e protecao das rotas autenticadas com `RequireAuth`.
+- Remocao da dependencia de rotas duplicadas e padronizacao do fluxo por `createBrowserRouter`.
+- Encapsulamento das rotas privadas com redirecionamento para `/login` quando nao ha sessao.
+
+Pratica aplicada:
+- Clean Routing
+- Defensive Programming
+- Removal of Dead Code
+- Guarded Routes
+- Explicit Application Shell
+
+#### Inconsistent Naming and CSS Scattering
+
+Situacao anterior:
+- Nomes de estados, handlers, arquivos e estruturas eram inconsistentes, e havia dispersao de estilo entre arquivos legados e utilitarios modernos.
+- Variaveis de estado e funcoes tinham nomes pouco semanticos, dificultando rastreio do fluxo.
+- Havia mistura de classes, estilos legados e organizacao inconsistente de layout.
+
+Solucao aplicada:
+- Padronizacao de nomes semanticos, migracao para Tailwind CSS e concentracao dos estilos no proprio componente quando necessario.
+- Renomeacao de handlers para refletir intencao real.
+- Uso de classes utilitarias proximas ao componente que as consome.
+- Reducao da necessidade de folhas de estilo externas para a maior parte da interface.
+
+Pratica aplicada:
+- Semantic Naming
+- Colocation
+- Utility First CSS
+- Consistent Naming
+- Local Styling Ownership
+
 ## [1.1.2] - 2026-06-21
 
 ### Refatorado
